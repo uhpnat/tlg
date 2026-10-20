@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Trang kiểm thử WebView</title>
+<style>
+  :root {
+    --bg: #f5f6f4;
+    --surface: #ffffff;
+    --ink: #1b2320;
+    --muted: #5d6a65;
+    --line: #dfe4e1;
+    --accent: #0f6b5c;
+    --accent-ink: #ffffff;
+    --ok: #1c7a3d;   --ok-bg: #e1f3e7;
+    --warn: #8a5a00; --warn-bg: #fbeccb;
+    --bad: #b3261e;  --bad-bg: #fbe0dd;
+    --idle: #4a5551; --idle-bg: #e7ebe9;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111614;
+      --surface: #1a211e;
+      --ink: #e8eeeb;
+      --muted: #9aa8a2;
+      --line: #2b3531;
+      --accent: #4fc3a8;
+      --accent-ink: #06231c;
+      --ok: #7fd89c;   --ok-bg: #173323;
+      --warn: #f1c46a; --warn-bg: #3a2e12;
+      --bad: #ff9a92;  --bad-bg: #3d1b18;
+      --idle: #b4c0bb; --idle-bg: #26302c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111614; --surface: #1a211e; --ink: #e8eeeb; --muted: #9aa8a2; --line: #2b3531;
+    --accent: #4fc3a8; --accent-ink: #06231c;
+    --ok: #7fd89c; --ok-bg: #173323; --warn: #f1c46a; --warn-bg: #3a2e12;
+    --bad: #ff9a92; --bad-bg: #3d1b18; --idle: #b4c0bb; --idle-bg: #26302c;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  main { max-width: 640px; margin: 0 auto; display: grid; gap: 16px; }
+  h1 { font-size: 22px; line-height: 1.25; margin: 4px 0 0; }
+  h2 { font-size: 17px; margin: 0 0 10px; }
+  p { margin: 0 0 8px; }
+  .sub { color: var(--muted); font-size: 14px; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+
+  .banner { border-radius: 14px; padding: 18px 16px; border: 1px solid transparent; }
+  .banner .state { font-size: 26px; font-weight: 700; line-height: 1.2; }
+  .banner .detail { margin-top: 4px; font-size: 15px; }
+  .banner[data-s="logged_in"] { background: var(--ok-bg); color: var(--ok); }
+  .banner[data-s="otp_required"] { background: var(--warn-bg); color: var(--warn); }
+  .banner[data-s="logged_out"] { background: var(--idle-bg); color: var(--idle); }
+  .banner[data-s="expired"], .banner[data-s="revoked"] { background: var(--bad-bg); color: var(--bad); }
+
+  label { display: block; font-size: 14px; color: var(--muted); margin: 10px 0 4px; }
+  input[type="text"], input[type="password"], input[type="tel"], select {
+    width: 100%; font: inherit; font-size: 16px; /* 16px tránh iOS tự zoom */
+    color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    border-radius: 10px; padding: 11px 14px; min-height: 44px;
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:active { transform: translateY(1px); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .row > * { flex: 1 1 auto; }
+
+  .msg { margin-top: 10px; font-size: 14px; min-height: 1.4em; }
+  .msg.bad { color: var(--bad); }
+  .msg.ok { color: var(--ok); }
+
+  dl { margin: 0; display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 6px 12px; font-size: 14px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; word-break: break-word; }
+  .yes { color: var(--ok); font-weight: 600; }
+  .no { color: var(--bad); font-weight: 600; }
+  .unk { color: var(--warn); font-weight: 600; }
+
+  .secret { font-family: var(--mono); font-size: 15px; letter-spacing: 0.04em; word-break: break-all;
+            background: var(--bg); border: 1px dashed var(--line); border-radius: 8px; padding: 8px 10px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; font-size: 15px; }
+  a { color: var(--accent); }
+
+  pre, .log { font-family: var(--mono); font-size: 12px; line-height: 1.5; background: var(--bg);
+              border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin: 0;
+              overflow-x: auto; max-height: 260px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+  .log div { padding: 1px 0; }
+  .log .t { color: var(--muted); }
+  .warnbox { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  details > summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+  #safeProbe { position: fixed; visibility: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+  @media (prefers-reduced-motion: reduce) { button:active { transform: none; } }
+</style>
+</head>
+<body>
+<div id="safeProbe"></div>
+<main>
+  <header>
+    <h1>Trang kiểm thử WebView</h1>
+    <p class="sub">Dùng để thử đăng nhập, giữ phiên và hành vi của WebView trong app. Mọi thứ chạy trên máy bạn, không có máy chủ.</p>
+  </header>
+
+  <section class="banner" id="banner" data-s="logged_out" aria-live="polite">
+    <div class="state" id="bannerState">Chưa đăng nhập</div>
+    <div class="detail" id="bannerDetail"></div>
+  </section>
+
+  <div class="warnbox">Đây là mô phỏng phía trình duyệt. Mật khẩu và khóa mã nằm ngay trong trang này, nên chỉ dùng để thử. Không dùng cho tài khoản thật.</div>
+
+  <section class="card" id="loginCard">
+    <h2>Đăng nhập thử</h2>
+    <div id="step1">
+      <label for="user">Tài khoản</label>
+      <input id="user" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" value="demo">
+      <label for="pass">Mật khẩu</label>
+      <input id="pass" type="password" autocomplete="current-password" value="demo1234">
+      <label for="ttl">Thời hạn phiên</label>
+      <select id="ttl">
+        <option value="1209600">14 ngày</option>
+        <option value="3600">1 giờ</option>
+        <option value="300">5 phút (thử hết hạn nhanh)</option>
+        <option value="60">1 phút (thử hết hạn nhanh)</option>
+      </select>
+      <div class="row"><button class="primary" id="btnLogin">Tiếp tục</button></div>
+    </div>
+    <div id="step2" hidden>
+      <p>Lấy mã 6 số của tài khoản này từ app Authenticator rồi nhập vào đây. Nếu app chưa có tài khoản, làm theo mục "Thêm tài khoản" bên dưới, hoặc bấm "Hiện mã" để thử nhanh.</p>
+      <label for="otp">Mã 6 số</label>
+      <input id="otp" type="tel" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="000000">
+      <div class="row">
+        <button class="primary" id="btnOtp">Đăng nhập</button>
+        <button id="btnShowCode">Hiện mã (chỉ để thử)</button>
+        <button id="btnBack">Quay lại</button>
+      </div>
+      <div class="msg" id="codeShow" aria-live="off"></div>
+    </div>
+    <div class="msg" id="loginMsg" role="status"></div>
+
+    <details open style="margin-top:12px">
+      <summary>Thêm tài khoản vào app Authenticator (làm một lần)</summary>
+      <p class="sub" style="margin-top:8px">Vì bạn đang dùng cùng một điện thoại nên không quét mã QR được. Làm thủ công: bấm "Sao chép khóa", mở app Authenticator, thêm tài khoản mới bằng cách nhập khóa thiết lập, dán khóa vào, đặt loại là theo thời gian, rồi lưu. Tên nút có thể khác theo app và phiên bản. Mã sẽ hiện ra với chu kỳ 30 giây (SHA-1, 6 số).</p>
+      <div class="secret" id="secretBox"></div>
+      <div class="row"><button id="btnCopySecret">Sao chép khóa</button></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Phiên đăng nhập</h2>
+    <dl id="sessionDl"></dl>
+    <div class="row">
+      <button id="btnLogout">Đăng xuất</button>
+      <button id="btnReload">Tải lại trang</button>
+    </div>
+    <p class="sub" style="margin-top:10px">Cách thử: đăng nhập, vuốt tắt hẳn app rồi mở lại. Nếu "Cookie" và "localStorage" còn, phiên giữ được. Mở trang với <code>?logout=1</code> để đăng xuất từ liên kết.</p>
+  </section>
+
+  <section class="card">
+    <h2>Vòng đời trang</h2>
+    <dl id="lifeDl"></dl>
+    <p class="sub" style="margin-top:10px">Mã lần tải đổi nghĩa là trang vừa bị tải lại. Chuyển sang app Authenticator rồi quay lại: mã này phải giữ nguyên.</p>
+  </section>
+
+  <section class="card">
+    <h2>Môi trường WebView</h2>
+    <dl id="envDl"></dl>
+  </section>
+
+  <section class="card">
+    <h2>Thử tính năng WebView</h2>
+    <div class="row">
+      <button id="btnAlert">alert</button>
+      <button id="btnConfirm">confirm</button>
+      <button id="btnPrompt">prompt</button>
+      <button id="btnOpen">window.open</button>
+    </div>
+    <div class="row">
+      <button id="btnBackNav">Lùi</button>
+      <button id="btnFwdNav">Tiến</button>
+      <button id="btnPasskey">Thử tạo passkey</button>
+    </div>
+    <div class="links">
+      <a href="https://example.com" target="_blank" rel="noopener">Liên kết target=_blank</a>
+      <a href="https://example.com">Liên kết ngoài</a>
+      <a href="tel:+84900000000">tel:</a>
+      <a href="mailto:test@example.com">mailto:</a>
+      <a href="sms:+84900000000">sms:</a>
+    </div>
+    <p class="sub" style="margin-top:10px">Passkey: nút này tạo passkey cho tên miền của trang này và báo kết quả. Nếu thành công, passkey thật được lưu vào Mật khẩu của iPhone; xóa trong Cài đặt > Mật khẩu nếu không cần.</p>
+    <div class="msg" id="featMsg" role="status"></div>
+  </section>
+
+  <section class="card">
+    <h2>Trạng thái (JSON)</h2>
+    <pre id="json"></pre>
+    <div class="row"><button id="btnCopyJson">Sao chép JSON</button></div>
+    <p class="sub" style="margin-top:10px">App có thể đọc cùng dữ liệu này bằng <code>window.__wvTestStatus()</code>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Nhật ký sự kiện</h2>
+    <div class="log" id="log"></div>
+    <div class="row"><button id="btnClearLog">Xóa nhật ký</button></div>
+  </section>
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  // ===== Cấu hình thử nghiệm (chỉnh được) =====
+  const DEMO_USER = 'demo';
+  const DEMO_PASS = 'demo1234';
+  const SECRET_B32 = 'JBSWY3DPEHPK3PXP';      // khóa TOTP thử nghiệm, ai đọc trang đều thấy
+  const ISSUER = 'WebView Test';
+  const STEP = 30;                             // giây
+  const MAX_TRIES = 5;
+  const LOCK_MS = 30000;
+
+  const KEY_SESSION = 'wvtest.session';
+  const KEY_FIRST = 'wvtest.firstSeen';
+  const KEY_LOADS = 'wvtest.loadCount';
+  const KEY_PENDING = 'wvtest.pending';
+  const COOKIE = 'wvtest_session';
+  const basePath = location.pathname.replace(/[^/]*$/, '') || '/';
+
+  const $ = (id) => document.getElementById(id);
+  const loadId = Math.random().toString(36).slice(2, 8);
+  const startedAt = Date.now();
+  const last = { alert: null, confirm: null, prompt: null, passkey: null };
+  const counters = { visibilityChanges: 0, pageshows: 0, offlineEvents: 0 };
+  let state = 'logged_out';
+  let tries = 0, lockedUntil = 0;
+  let platformAuth = null;
+  let codeTimer = null;
+
+  // ===== Tiện ích lưu trữ (bọc try/catch) =====
+  const ls = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); return true; } catch { return false; } },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+    ok() { try { localStorage.setItem('wvtest.probe', '1'); localStorage.removeItem('wvtest.probe'); return true; } catch { return false; } }
+  };
+  const ss = {
+    get(k) { try { return sessionStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { sessionStorage.setItem(k, v); } catch {} },
+    del(k) { try { sessionStorage.removeItem(k); } catch {} }
+  };
+  function getCookie(name) {
+    const m = document.cookie.split('; ').find((c) => c.startsWith(name + '='));
+    return m ? decodeURIComponent(m.slice(name.length + 1)) : null;
+  }
+  function setCookie(name, value, maxAgeSec) {
+    const secure = location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAgeSec}; Path=${basePath}; SameSite=Lax${secure}`;
+  }
+  function delCookie(name) {
+    document.cookie = `${name}=; Max-Age=0; Path=${basePath}; SameSite=Lax`;
+  }
+
+  // ===== Nhật ký =====
+  function log(text) {
+    const el = $('log');
+    const row = document.createElement('div');
+    const t = document.createElement('span');
+    t.className = 't';
+    t.textContent = new Date().toLocaleTimeString('vi-VN', { hour12: false }) + '  ';
+    row.append(t, document.createTextNode(text));
+    el.prepend(row);
+    while (el.childNodes.length > 80) el.removeChild(el.lastChild);
+  }
+
+  // ===== TOTP (RFC 6238, SHA-1, 6 số) =====
+  function base32ToBytes(s) {
+    const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    let bits = '';
+    for (const ch of s.replace(/=+$/, '').toUpperCase()) {
+      const v = alpha.indexOf(ch);
+      if (v >= 0) bits += v.toString(2).padStart(5, '0');
+    }
+    const out = [];
+    for (let i = 0; i + 8 <= bits.length; i += 8) out.push(parseInt(bits.slice(i, i + 8), 2));
+    return new Uint8Array(out);
+  }
+  async function totp(counter) {
+    const key = await crypto.subtle.importKey('raw', base32ToBytes(SECRET_B32), { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
+    const buf = new ArrayBuffer(8);
+    const dv = new DataView(buf);
+    dv.setUint32(0, Math.floor(counter / 4294967296));
+    dv.setUint32(4, counter >>> 0);
+    const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, buf));
+    const o = sig[19] & 0xf;
+    const n = ((sig[o] & 0x7f) << 24) | (sig[o + 1] << 16) | (sig[o + 2] << 8) | sig[o + 3];
+    return String(n % 1000000).padStart(6, '0');
+  }
+  async function verifyOtp(code) {
+    const c = Math.floor(Date.now() / 1000 / STEP);
+    for (const d of [-1, 0, 1]) {
+      if (await totp(c + d) === code) return true;
+    }
+    return false;
+  }
+
+  // ===== Phiên =====
+  function readSession() {
+    const raw = ls.get(KEY_SESSION);
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+  }
+  function clearSession() {
+    ls.del(KEY_SESSION);
+    delCookie(COOKIE);
+  }
+  function startSession(user, ttlSec) {
+    const now = Date.now();
+    const s = { user, token: Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2),
+                loginAt: now, expiresAt: now + ttlSec * 1000, ttlSec };
+    ls.set(KEY_SESSION, JSON.stringify(s));
+    setCookie(COOKIE, s.token, ttlSec);
+  }
+  function fmtDuration(ms) {
+    if (ms <= 0) return '0';
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+    if (d) return `${d} ngày ${h} giờ`;
+    if (h) return `${h} giờ ${m} phút`;
+    if (m) return `${m} phút ${sec} giây`;
+    return `${sec} giây`;
+  }
+  const fmtTime = (t) => t ? new Date(t).toLocaleString('vi-VN', { hour12: false }) : '-';
+
+  function evaluate() {
+    const s = readSession();
+    const cookie = getCookie(COOKIE);
+    const pending = ss.get(KEY_PENDING);
+    let next = 'logged_out';
+    if (s) {
+      if (Date.now() >= s.expiresAt) { next = 'expired'; clearSession(); }
+      else if (cookie && cookie !== s.token) { next = 'revoked'; }       // cookie không khớp
+      else next = 'logged_in';
+    } else if (pending) {
+      const p = Number(pending);
+      if (Date.now() - p < 5 * 60 * 1000) next = 'otp_required';
+      else ss.del(KEY_PENDING);
+    }
+    if (state !== next) { log(`Trạng thái: ${state} → ${next}`); state = next; }
+    return { s: readSession(), cookie };
+  }
+
+  // ===== Hiển thị =====
+  function yn(v, yes = 'có', no = 'không') {
+    const sp = document.createElement('span');
+    if (v === null || v === undefined) { sp.className = 'unk'; sp.textContent = 'chưa rõ'; }
+    else { sp.className = v ? 'yes' : 'no'; sp.textContent = v ? yes : no; }
+    return sp;
+  }
+  function fillDl(dl, rows) {
+    dl.replaceChildren();
+    for (const [k, v] of rows) {
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd');
+      if (v instanceof Node) dd.appendChild(v); else dd.textContent = String(v);
+      dl.append(dt, dd);
+    }
+  }
+  function safeInsets() {
+    const cs = getComputedStyle($('safeProbe'));
+    return `trên ${cs.paddingTop}, dưới ${cs.paddingBottom}, trái ${cs.paddingLeft}, phải ${cs.paddingRight}`;
+  }
+  function guessWebView() {
+    const ua = navigator.userAgent;
+    if (!/iPhone|iPad|iPod/.test(ua)) return null;
+    return !/Safari\//.test(ua);   // WKWebView thường không có "Safari/" trong UA (ước đoán)
+  }
+
+  const bannerText = {
+    logged_out: 'Chưa đăng nhập',
+    otp_required: 'Đang chờ mã 6 số',
+    logged_in: 'Đã đăng nhập',
+    expired: 'Phiên đã hết hạn',
+    revoked: 'Phiên không còn hợp lệ'
+  };
+
+  function render() {
+    const { s, cookie } = evaluate();
+    $('banner').dataset.s = state;
+    $('bannerState').textContent = bannerText[state];
+    let detail = '';
+    if (state === 'logged_in') detail = `Tài khoản ${s.user}. Còn ${fmtDuration(s.expiresAt - Date.now())}.`;
+    else if (state === 'otp_required') detail = 'Nhập mã từ app Authenticator để hoàn tất.';
+    else if (state === 'expired') detail = 'Đăng nhập lại để tiếp tục.';
+    else if (state === 'revoked') detail = 'Cookie không khớp với phiên đã lưu.';
+    $('bannerDetail').textContent = detail;
+
+    if (state !== 'otp_required' && codeTimer) { clearInterval(codeTimer); codeTimer = null; $('codeShow').textContent = ''; }
+    $('step1').hidden = state === 'otp_required' || state === 'logged_in';
+    $('step2').hidden = state !== 'otp_required';
+    $('loginCard').querySelector('h2').textContent = state === 'logged_in' ? 'Đã đăng nhập' : 'Đăng nhập thử';
+    if (state === 'logged_in') { $('step1').hidden = true; $('step2').hidden = true; }
+
+    fillDl($('sessionDl'), [
+      ['Trạng thái', state],
+      ['Tài khoản', s ? s.user : '-'],
+      ['Đăng nhập lúc', s ? fmtTime(s.loginAt) : '-'],
+      ['Hết hạn lúc', s ? fmtTime(s.expiresAt) : '-'],
+      ['Còn lại', s ? fmtDuration(s.expiresAt - Date.now()) : '-'],
+      ['Cookie', yn(!!cookie, 'còn', 'không có')],
+      ['localStorage', yn(!!s, 'còn', 'không có')]
+    ]);
+
+    const loads = Number(ls.get(KEY_LOADS) || 0);
+    fillDl($('lifeDl'), [
+      ['Mã lần tải', loadId],
+      ['Tải lúc', fmtTime(startedAt)],
+      ['Đã mở trang', `${loads} lần (tính từ lần đầu)`],
+      ['Lần đầu thấy', fmtTime(Number(ls.get(KEY_FIRST)) || null)],
+      ['Đã chạy', fmtDuration(Date.now() - startedAt)],
+      ['Ẩn/hiện trang', `${counters.visibilityChanges} lần`],
+      ['Khôi phục từ bộ nhớ đệm', `${counters.pageshows} lần pageshow`]
+    ]);
+
+    fillDl($('envDl'), [
+      ['Có vẻ là WebView', yn(guessWebView(), 'có', 'không (ước đoán)')],
+      ['Địa chỉ', location.href],
+      ['Kết nối mạng', yn(navigator.onLine, 'trực tuyến', 'ngoại tuyến')],
+      ['Cookie bật', yn(navigator.cookieEnabled)],
+      ['localStorage', yn(ls.ok(), 'dùng được', 'không dùng được')],
+      ['Bối cảnh bảo mật (HTTPS)', yn(window.isSecureContext)],
+      ['WebAuthn có sẵn', yn(!!window.PublicKeyCredential)],
+      ['Xác thực nền tảng', yn(platformAuth)],
+      ['Kích thước', `${innerWidth} x ${innerHeight}`],
+      ['Vùng an toàn', safeInsets()],
+      ['Chế độ tối', yn(matchMedia('(prefers-color-scheme: dark)').matches)],
+      ['Ngôn ngữ', navigator.language],
+      ['User agent', navigator.userAgent]
+    ]);
+
+    $('json').textContent = JSON.stringify(status(), null, 2);
+  }
+
+  function status() {
+    const s = readSession();
+    return {
+      timestamp: new Date().toISOString(),
+      page: { loadId, loadCount: Number(ls.get(KEY_LOADS) || 0), firstSeenAt: Number(ls.get(KEY_FIRST)) || null, url: location.href },
+      session: {
+        state,
+        user: s ? s.user : null,
+        loginAt: s ? s.loginAt : null,
+        expiresAt: s ? s.expiresAt : null,
+        remainingMs: s ? Math.max(0, s.expiresAt - Date.now()) : 0,
+        cookiePresent: !!getCookie(COOKIE),
+        localStoragePresent: !!s
+      },
+      env: {
+        likelyWebView: guessWebView(),
+        online: navigator.onLine,
+        secureContext: window.isSecureContext,
+        cookiesEnabled: navigator.cookieEnabled,
+        localStorage: ls.ok(),
+        viewport: { w: innerWidth, h: innerHeight },
+        safeArea: safeInsets(),
+        userAgent: navigator.userAgent
+      },
+      capabilities: { webauthn: !!window.PublicKeyCredential, platformAuthenticator: platformAuth },
+      counters: { ...counters },
+      lastResults: { ...last }
+    };
+  }
+  window.__wvTestStatus = () => JSON.stringify(status());
+
+  // ===== Hành động =====
+  function setLoginMsg(text, cls) { const m = $('loginMsg'); m.textContent = text; m.className = 'msg' + (cls ? ' ' + cls : ''); }
+
+  $('btnLogin').addEventListener('click', () => {
+    const u = $('user').value.trim(), p = $('pass').value;
+    if (u !== DEMO_USER || p !== DEMO_PASS) {
+      setLoginMsg('Sai tài khoản hoặc mật khẩu. Dùng demo / demo1234.', 'bad');
+      log('Đăng nhập bước 1: sai thông tin');
+      return;
+    }
+    ss.set(KEY_PENDING, String(Date.now()));
+    ss.set('wvtest.ttl', $('ttl').value);
+    setLoginMsg('', '');
+    log('Đăng nhập bước 1: đúng, chờ mã 6 số');
+    render();
+    $('otp').focus();
+  });
+
+  $('btnBack').addEventListener('click', () => { ss.del(KEY_PENDING); setLoginMsg('', ''); log('Hủy bước mã 6 số'); render(); });
+
+  $('btnOtp').addEventListener('click', async () => {
+    if (Date.now() < lockedUntil) {
+      setLoginMsg(`Thử quá nhiều lần. Chờ ${Math.ceil((lockedUntil - Date.now()) / 1000)} giây.`, 'bad');
+      return;
+    }
+    const code = $('otp').value.replace(/\D/g, '');
+    if (code.length !== 6) { setLoginMsg('Nhập đủ 6 số.', 'bad'); return; }
+    let ok = false;
+    try { ok = await verifyOtp(code); }
+    catch (e) { setLoginMsg('Không tính được mã trong WebView này: ' + e.name, 'bad'); log('TOTP lỗi: ' + e.message); return; }
+    if (!ok) {
+      tries += 1;
+      if (tries >= MAX_TRIES) { lockedUntil = Date.now() + LOCK_MS; tries = 0; setLoginMsg('Sai quá nhiều lần. Khóa 30 giây.', 'bad'); }
+      else setLoginMsg(`Mã không đúng (${tries}/${MAX_TRIES}). Kiểm tra giờ trên máy và thử mã mới.`, 'bad');
+      log('Mã 6 số: sai');
+      return;
+    }
+    tries = 0;
+    const ttl = Number(ss.get('wvtest.ttl') || 1209600);
+    startSession(DEMO_USER, ttl);
+    ss.del(KEY_PENDING); ss.del('wvtest.ttl');
+    $('otp').value = '';
+    setLoginMsg('', '');
+    log(`Đăng nhập thành công, hạn ${fmtDuration(ttl * 1000)}`);
+    render();
+  });
+
+  function doLogout(reason) {
+    clearSession(); ss.del(KEY_PENDING);
+    log(reason || 'Đăng xuất');
+    render();
+  }
+  $('btnLogout').addEventListener('click', () => doLogout('Đăng xuất (bấm nút)'));
+  $('btnReload').addEventListener('click', () => { log('Tải lại trang'); location.reload(); });
+
+  $('btnAlert').addEventListener('click', () => { alert('Thử alert'); last.alert = 'đã đóng'; $('featMsg').textContent = 'alert: đã đóng'; log('alert đã đóng'); });
+  $('btnConfirm').addEventListener('click', () => { const r = confirm('Thử confirm: chọn OK hoặc Hủy'); last.confirm = r; $('featMsg').textContent = 'confirm: ' + (r ? 'OK' : 'Hủy'); log('confirm = ' + r); });
+  $('btnPrompt').addEventListener('click', () => { const r = prompt('Thử prompt: nhập chữ bất kỳ', 'xin chào'); last.prompt = r; $('featMsg').textContent = 'prompt: ' + (r === null ? 'Hủy' : r); log('prompt = ' + JSON.stringify(r)); });
+  $('btnOpen').addEventListener('click', () => {
+    const w = window.open('https://example.com', '_blank');
+    const msg = w ? 'window.open: trả về cửa sổ' : 'window.open: bị chặn hoặc không trả cửa sổ';
+    $('featMsg').textContent = msg; log(msg);
+  });
+  $('btnBackNav').addEventListener('click', () => { log('history.back()'); history.back(); });
+  $('btnFwdNav').addEventListener('click', () => { log('history.forward()'); history.forward(); });
+
+  $('btnPasskey').addEventListener('click', async () => {
+    const out = $('featMsg');
+    if (!window.PublicKeyCredential || !navigator.credentials) {
+      last.passkey = { ok: false, error: 'WebAuthn không có' };
+      out.textContent = 'Passkey: WebView này không có WebAuthn.'; log('Passkey: không có WebAuthn'); return;
+    }
+    try {
+      const rnd = (n) => crypto.getRandomValues(new Uint8Array(n));
+      const cred = await navigator.credentials.create({
+        publicKey: {
+          rp: { name: ISSUER, id: location.hostname },
+          user: { id: rnd(16), name: DEMO_USER, displayName: 'Tài khoản thử' },
+          challenge: rnd(32),
+          pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+          authenticatorSelection: { residentKey: 'preferred', userVerification: 'preferred' },
+          timeout: 60000
+        }
+      });
+      last.passkey = { ok: true, type: cred.type, idPrefix: cred.id.slice(0, 12) };
+      out.textContent = 'Passkey: tạo được (' + cred.id.slice(0, 12) + '…)'; log('Passkey: tạo được');
+    } catch (e) {
+      last.passkey = { ok: false, error: e.name, message: e.message };
+      out.textContent = `Passkey: lỗi ${e.name}. ${e.message}`; log(`Passkey: lỗi ${e.name}`);
+    }
+    render();
+  });
+
+  $('btnCopyJson').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(JSON.stringify(status(), null, 2)); $('featMsg').textContent = 'Đã sao chép JSON.'; log('Đã sao chép JSON'); }
+    catch { $('featMsg').textContent = 'Không sao chép được. Chọn và sao chép tay trong khung JSON.'; }
+  });
+  $('btnCopySecret').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(SECRET_B32); log('Đã sao chép khóa'); }
+    catch { log('Không sao chép được khóa'); }
+  });
+  $('btnShowCode').addEventListener('click', async () => {
+    const out = $('codeShow');
+    clearInterval(codeTimer);
+    const tick = async () => {
+      const code = await totp(Math.floor(Date.now() / 1000 / STEP));
+      const left = STEP - (Math.floor(Date.now() / 1000) % STEP);
+      out.textContent = `Mã hiện tại: ${code} (còn ${left} giây)`;
+    };
+    try { await tick(); codeTimer = setInterval(tick, 1000); log('Hiện mã thử'); }
+    catch (e) { out.textContent = 'Không tính được mã: ' + e.name; }
+  });
+  $('btnClearLog').addEventListener('click', () => { $('log').replaceChildren(); });
+
+  // ===== Sự kiện vòng đời =====
+  document.addEventListener('visibilitychange', () => {
+    counters.visibilityChanges += 1;
+    log('Trang ' + (document.hidden ? 'bị ẩn' : 'hiện lại'));
+    if (!document.hidden) render();
+  });
+  window.addEventListener('pageshow', (e) => { counters.pageshows += 1; log('pageshow' + (e.persisted ? ' (từ bộ nhớ đệm)' : '')); });
+  window.addEventListener('pagehide', () => { log('pagehide'); });
+  window.addEventListener('online', () => { log('Có mạng'); render(); });
+  window.addEventListener('offline', () => { counters.offlineEvents += 1; log('Mất mạng'); render(); });
+  window.addEventListener('resize', () => render());
+
+  // ===== Khởi động =====
+  $('secretBox').textContent = SECRET_B32;
+  if (!ls.get(KEY_FIRST)) ls.set(KEY_FIRST, String(Date.now()));
+  ls.set(KEY_LOADS, String(Number(ls.get(KEY_LOADS) || 0) + 1));
+  log(`Tải trang, mã ${loadId}`);
+
+  if (new URLSearchParams(location.search).get('logout') === '1') {
+    clearSession(); ss.del(KEY_PENDING);
+    log('Đăng xuất qua ?logout=1');
+    history.replaceState(null, '', location.pathname);
+  }
+  if (ss.get(KEY_PENDING)) log('Khôi phục bước nhập mã 6 số sau khi tải lại');
+
+  if (window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+    PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then((v) => { platformAuth = v; render(); }).catch(() => { platformAuth = null; });
+  }
+
+  render();
+  setInterval(render, 1000);
+})();
+</script>
+</body>
+</html>
