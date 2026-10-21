@@ -1,641 +1,1233 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<title>Trang kiểm thử WebView</title>
-<style>
-  :root {
-    --bg: #f5f6f4;
-    --surface: #ffffff;
-    --ink: #1b2320;
-    --muted: #5d6a65;
-    --line: #dfe4e1;
-    --accent: #0f6b5c;
-    --accent-ink: #ffffff;
-    --ok: #1c7a3d;   --ok-bg: #e1f3e7;
-    --warn: #8a5a00; --warn-bg: #fbeccb;
-    --bad: #b3261e;  --bad-bg: #fbe0dd;
-    --idle: #4a5551; --idle-bg: #e7ebe9;
-    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  }
-  :root:not([data-theme="light"]) { }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #111614;
-      --surface: #1a211e;
-      --ink: #e8eeeb;
-      --muted: #9aa8a2;
-      --line: #2b3531;
-      --accent: #4fc3a8;
-      --accent-ink: #06231c;
-      --ok: #7fd89c;   --ok-bg: #173323;
-      --warn: #f1c46a; --warn-bg: #3a2e12;
-      --bad: #ff9a92;  --bad-bg: #3d1b18;
-      --idle: #b4c0bb; --idle-bg: #26302c;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Yêu Thương UI</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-main: linear-gradient(180deg, #FDEBF1 0%, #F8D6E4 100%);
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-pink: #FFF5F8;
+      --bg-input: #F6F0F3;
+
+      --primary-gradient: linear-gradient(135deg, #FF6B8B 0%, #9E68E6 100%);
+      --chat-card-gradient: linear-gradient(95deg, #F26A8D 0%, #9B65E4 100%);
+      --primary-pink: #E85C81;
+      --primary-purple: #9C6ADE;
+
+      --badge-red: #FF2E4C;
+      --status-online: #34C759;
+
+      --text-primary: #4A1E34;
+      --text-secondary: #8C6D7D;
+      --text-white: #FFFFFF;
+
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-pill: 9999px;
+
+      --shadow-soft: 0 8px 20px -4px rgba(74, 30, 52, 0.07);
+      --shadow-floating: 0 12px 28px -6px rgba(158, 104, 230, 0.3);
+
+      /* Hỗ trợ Safe Area cho tai thỏ / thanh điều hướng iOS & Android khi nhúng App */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
-  }
-  :root[data-theme="dark"] {
-    --bg: #111614; --surface: #1a211e; --ink: #e8eeeb; --muted: #9aa8a2; --line: #2b3531;
-    --accent: #4fc3a8; --accent-ink: #06231c;
-    --ok: #7fd89c; --ok-bg: #173323; --warn: #f1c46a; --warn-bg: #3a2e12;
-    --bad: #ff9a92; --bad-bg: #3d1b18; --idle: #b4c0bb; --idle-bg: #26302c;
-  }
 
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-  }
-  main { max-width: 640px; margin: 0 auto; display: grid; gap: 16px; }
-  h1 { font-size: 22px; line-height: 1.25; margin: 4px 0 0; }
-  h2 { font-size: 17px; margin: 0 0 10px; }
-  p { margin: 0 0 8px; }
-  .sub { color: var(--muted); font-size: 14px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+    }
 
-  .banner { border-radius: 14px; padding: 18px 16px; border: 1px solid transparent; }
-  .banner .state { font-size: 26px; font-weight: 700; line-height: 1.2; }
-  .banner .detail { margin-top: 4px; font-size: 15px; }
-  .banner[data-s="logged_in"] { background: var(--ok-bg); color: var(--ok); }
-  .banner[data-s="otp_required"] { background: var(--warn-bg); color: var(--warn); }
-  .banner[data-s="logged_out"] { background: var(--idle-bg); color: var(--idle); }
-  .banner[data-s="expired"], .banner[data-s="revoked"] { background: var(--bad-bg); color: var(--bad); }
+    /* Container chính chiếm trọn khung nhúng của App */
+    .app-root {
+      width: 100%;
+      height: 100dvh;
+      max-width: 480px; /* Giới hạn nhẹ nếu mở trên màn hình lớn, tự full 100% trên mobile */
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-main);
+    }
 
-  label { display: block; font-size: 14px; color: var(--muted); margin: 10px 0 4px; }
-  input[type="text"], input[type="password"], input[type="tel"], select {
-    width: 100%; font: inherit; font-size: 16px; /* 16px tránh iOS tự zoom */
-    color: var(--ink); background: var(--bg);
-    border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px;
-  }
-  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
-    outline: 2px solid var(--accent); outline-offset: 2px;
-  }
-  button {
-    font: inherit; font-weight: 600; cursor: pointer;
-    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-    border-radius: 10px; padding: 11px 14px; min-height: 44px;
-  }
-  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-  button:active { transform: translateY(1px); }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .row > * { flex: 1 1 auto; }
+    .screen {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+      padding-top: var(--safe-top);
+      animation: fadeIn 0.2s ease-out;
+    }
+    .screen.active {
+      display: flex;
+    }
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
 
-  .msg { margin-top: 10px; font-size: 14px; min-height: 1.4em; }
-  .msg.bad { color: var(--bad); }
-  .msg.ok { color: var(--ok); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  dl { margin: 0; display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 6px 12px; font-size: 14px; }
-  dt { color: var(--muted); }
-  dd { margin: 0; word-break: break-word; }
-  .yes { color: var(--ok); font-weight: 600; }
-  .no { color: var(--bad); font-weight: 600; }
-  .unk { color: var(--warn); font-weight: 600; }
+    h1, h2, h3, .heading-font {
+      font-family: 'Quicksand', sans-serif;
+    }
 
-  .secret { font-family: var(--mono); font-size: 15px; letter-spacing: 0.04em; word-break: break-all;
-            background: var(--bg); border: 1px dashed var(--line); border-radius: 8px; padding: 8px 10px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; font-size: 15px; }
-  a { color: var(--accent); }
+    /* ==========================================
+       MÀN HÌNH 1: ĐĂNG NHẬP & KẾT NỐI
+       ========================================== */
+    .login-screen {
+      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px);
+      justify-content: space-between;
+    }
+    .login-hero {
+      text-align: center;
+    }
+    .couple-illustration {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 30%, #ffd6e5 100%);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      border: 3px solid #fff;
+    }
+    .couple-illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .app-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .app-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
 
-  pre, .log { font-family: var(--mono); font-size: 12px; line-height: 1.5; background: var(--bg);
-              border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin: 0;
-              overflow-x: auto; max-height: 260px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
-  .log div { padding: 1px 0; }
-  .log .t { color: var(--muted); }
-  .warnbox { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
-  details > summary { cursor: pointer; font-weight: 600; min-height: 32px; }
-  #safeProbe { position: fixed; visibility: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
-  @media (prefers-reduced-motion: reduce) { button:active { transform: none; } }
-</style>
+    .login-form {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-box input {
+      width: 100%;
+      padding: 13px 40px 13px 18px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid transparent;
+      background: var(--bg-input);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-primary);
+      outline: none;
+      transition: 0.2s;
+    }
+    .input-box input:focus {
+      border-color: var(--primary-pink);
+      background: #fff;
+    }
+    .input-box .input-icon {
+      position: absolute;
+      right: 16px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: var(--radius-pill);
+      background: var(--primary-gradient);
+      color: var(--text-white);
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(232, 92, 129, 0.35);
+      transition: transform 0.15s;
+    }
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .pairing-card {
+      background: var(--bg-card-pink);
+      border: 2px dashed #E5A4CB;
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+    .pairing-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .pairing-input-group {
+      display: flex;
+      background: #fff;
+      border-radius: var(--radius-pill);
+      padding: 4px 4px 4px 16px;
+      border: 1px solid #f2d6e3;
+      align-items: center;
+    }
+    .pairing-input-group input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: transparent;
+    }
+    .btn-pair {
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--radius-pill);
+      background: var(--primary-gradient);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .social-login {
+      text-align: center;
+    }
+    .social-divider {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* ==========================================
+       MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (DASHBOARD)
+       ========================================== */
+    .dashboard-content {
+      flex: 1;
+      padding: 16px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dash-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .notif-bell {
+      position: relative;
+      font-size: 20px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .bell-dot {
+      position: absolute;
+      top: 0;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      background: var(--badge-red);
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+    }
+
+    .couple-banner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 12px 16px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .heart-avatar-frame {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      border: 3px solid var(--primary-pink);
+      padding: 3px;
+      background: #fff;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .heart-avatar-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .heart-badge-icon {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background: var(--primary-pink);
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      border: 2px solid #fff;
+    }
+    .couple-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .days-count {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .countdown-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .countdown-timer {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-pink);
+      letter-spacing: 1px;
+    }
+
+    /* Featured Chat Widget + Unread Badge góc trên bên phải */
+    .chat-widget-wrapper {
+      background: var(--bg-card);
+      padding: 14px 16px 16px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-floating);
+      border: 1px solid #fff;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .chat-widget-wrapper:active {
+      transform: scale(0.98);
+    }
+    .widget-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+    .chat-banner-box {
+      position: relative;
+      background: var(--chat-card-gradient);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(155, 101, 228, 0.35);
+    }
+    .partner-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .chat-preview-info {
+      flex: 1;
+      overflow: hidden;
+    }
+    .partner-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .last-message {
+      font-size: 13px;
+      opacity: 0.92;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .unread-badge {
+      position: absolute;
+      top: -10px;
+      right: -8px;
+      background: var(--badge-red);
+      color: #fff;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 7px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(255, 46, 76, 0.45);
+      animation: pulseBadge 1.8s infinite;
+    }
+    .unread-badge.hidden {
+      display: none;
+    }
+    @keyframes pulseBadge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .feature-item {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 14px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .feature-item:active {
+      transform: scale(0.96);
+      background: #fff;
+    }
+    .feature-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #FDEBF1;
+      color: var(--primary-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .feature-label {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .bottom-nav {
+      height: calc(64px + var(--safe-bottom));
+      padding-bottom: var(--safe-bottom);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-left: 12px;
+      padding-right: 12px;
+      border-top: 1px solid rgba(232, 92, 129, 0.1);
+      flex-shrink: 0;
+    }
+    .nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      padding: 6px 12px;
+    }
+    .nav-tab i {
+      font-size: 18px;
+    }
+    .nav-tab.active {
+      color: var(--primary-pink);
+      font-weight: 700;
+    }
+    .nav-tab.active::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      width: 24px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--primary-pink);
+    }
+
+    /* ==========================================
+       MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN
+       ========================================== */
+    .chat-header {
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 10;
+    }
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 4px 6px;
+    }
+    .chat-header-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-pink);
+    }
+    .chat-user-meta h4 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .online-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .online-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--status-online);
+      border-radius: 50%;
+    }
+    .chat-header-actions {
+      display: flex;
+      gap: 16px;
+      color: var(--primary-purple);
+      font-size: 18px;
+    }
+    .chat-header-actions i {
+      cursor: pointer;
+    }
+
+    .message-stream {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(180deg, rgba(248, 214, 228, 0.35), rgba(158, 104, 230, 0.15));
+    }
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      max-width: 82%;
+    }
+    .msg-row.partner {
+      align-self: flex-start;
+    }
+    .msg-row.me {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .msg-bubble {
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.4;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      word-break: break-word;
+    }
+    .msg-row.partner .msg-bubble {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      border-radius: 18px 18px 18px 4px;
+    }
+    .msg-row.me .msg-bubble {
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      border-radius: 18px 18px 4px 18px;
+    }
+
+    .quick-actions-bar {
+      padding: 10px 14px 6px;
+      background: rgba(255, 255, 255, 0.92);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .quick-action-card {
+      background: #FFF7FA;
+      border: 1px solid #F5DCE6;
+      border-radius: var(--radius-md);
+      padding: 8px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .quick-action-card:active {
+      transform: scale(0.94);
+      background: #FCE4EE;
+    }
+    .quick-action-card i {
+      font-size: 18px;
+      color: var(--primary-pink);
+    }
+    .quick-action-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .quick-action-sub {
+      font-size: 9.5px;
+      color: var(--text-secondary);
+    }
+
+    .chat-input-bar {
+      padding: 8px 14px calc(14px + var(--safe-bottom));
+      background: rgba(255, 255, 255, 0.92);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chat-input-wrapper {
+      flex: 1;
+      background: var(--bg-input);
+      border-radius: var(--radius-pill);
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chat-input-wrapper input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text-primary);
+    }
+    .chat-input-wrapper i {
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .send-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Animations & Toast */
+    .shake-anim {
+      animation: shakeView 0.45s ease-in-out;
+    }
+    @keyframes shakeView {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .floating-heart {
+      position: absolute;
+      bottom: 80px;
+      font-size: 22px;
+      pointer-events: none;
+      animation: floatUp 2s ease-out forwards;
+      z-index: 50;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(0.8); }
+      100% { opacity: 0; transform: translateY(-320px) scale(1.5) rotate(15deg); }
+    }
+
+    .toast-box {
+      position: absolute;
+      top: calc(var(--safe-top) + 16px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(74, 30, 52, 0.92);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      white-space: nowrap;
+    }
+    .toast-box.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-<div id="safeProbe"></div>
-<main>
-  <header>
-    <h1>Trang kiểm thử WebView</h1>
-    <p class="sub">Dùng để thử đăng nhập, giữ phiên và hành vi của WebView trong app. Mọi thứ chạy trên máy bạn, không có máy chủ.</p>
-  </header>
 
-  <section class="banner" id="banner" data-s="logged_out" aria-live="polite">
-    <div class="state" id="bannerState">Chưa đăng nhập</div>
-    <div class="detail" id="bannerDetail"></div>
-  </section>
+  <!-- ROOT CONTAINER NHÚNG TRỰC TIẾP VÀO APP -->
+  <div class="app-root" id="appRoot">
+    
+    <div class="toast-box" id="toastBox"></div>
 
-  <div class="warnbox">Đây là mô phỏng phía trình duyệt. Mật khẩu và khóa mã nằm ngay trong trang này, nên chỉ dùng để thử. Không dùng cho tài khoản thật.</div>
-
-  <section class="card" id="loginCard">
-    <h2>Đăng nhập thử</h2>
-    <div id="step1">
-      <label for="user">Tài khoản</label>
-      <input id="user" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" value="demo">
-      <label for="pass">Mật khẩu</label>
-      <input id="pass" type="password" autocomplete="current-password" value="demo1234">
-      <label for="ttl">Thời hạn phiên</label>
-      <select id="ttl">
-        <option value="1209600">14 ngày</option>
-        <option value="3600">1 giờ</option>
-        <option value="300">5 phút (thử hết hạn nhanh)</option>
-        <option value="60">1 phút (thử hết hạn nhanh)</option>
-      </select>
-      <div class="row"><button class="primary" id="btnLogin">Tiếp tục</button></div>
-    </div>
-    <div id="step2" hidden>
-      <p>Lấy mã 6 số của tài khoản này từ app Authenticator rồi nhập vào đây. Nếu app chưa có tài khoản, làm theo mục "Thêm tài khoản" bên dưới, hoặc bấm "Hiện mã" để thử nhanh.</p>
-      <label for="otp">Mã 6 số</label>
-      <input id="otp" type="tel" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="000000">
-      <div class="row">
-        <button class="primary" id="btnOtp">Đăng nhập</button>
-        <button id="btnShowCode">Hiện mã (chỉ để thử)</button>
-        <button id="btnBack">Quay lại</button>
+    <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
+    <section class="screen login-screen active" id="screen-login">
+      <div class="login-hero">
+        <div class="couple-illustration">
+          <img id="loginHeroImg" src="" alt="Couple Illustration">
+        </div>
+        <h1 class="app-title" id="loginAppTitle"></h1>
+        <p class="app-subtitle" id="loginAppSubtitle"></p>
       </div>
-      <div class="msg" id="codeShow" aria-live="off"></div>
-    </div>
-    <div class="msg" id="loginMsg" role="status"></div>
 
-    <details open style="margin-top:12px">
-      <summary>Thêm tài khoản vào app Authenticator (làm một lần)</summary>
-      <p class="sub" style="margin-top:8px">Vì bạn đang dùng cùng một điện thoại nên không quét mã QR được. Làm thủ công: bấm "Sao chép khóa", mở app Authenticator, thêm tài khoản mới bằng cách nhập khóa thiết lập, dán khóa vào, đặt loại là theo thời gian, rồi lưu. Tên nút có thể khác theo app và phiên bản. Mã sẽ hiện ra với chu kỳ 30 giây (SHA-1, 6 số).</p>
-      <div class="secret" id="secretBox"></div>
-      <div class="row"><button id="btnCopySecret">Sao chép khóa</button></div>
-    </details>
-  </section>
+      <form class="login-form" id="loginForm">
+        <div class="input-box">
+          <input type="text" id="inputAccount" required>
+        </div>
+        <div class="input-box">
+          <input type="password" id="inputPassword" required>
+          <i class="fa-regular fa-eye-slash input-icon" id="togglePwdBtn"></i>
+        </div>
+        <button type="submit" class="btn-primary" id="btnLoginSubmit"></button>
+      </form>
 
-  <section class="card">
-    <h2>Phiên đăng nhập</h2>
-    <dl id="sessionDl"></dl>
-    <div class="row">
-      <button id="btnLogout">Đăng xuất</button>
-      <button id="btnReload">Tải lại trang</button>
-    </div>
-    <p class="sub" style="margin-top:10px">Cách thử: đăng nhập, vuốt tắt hẳn app rồi mở lại. Nếu "Cookie" và "localStorage" còn, phiên giữ được. Mở trang với <code>?logout=1</code> để đăng xuất từ liên kết.</p>
-  </section>
+      <div class="pairing-card">
+        <div class="pairing-title" id="pairingTitle"></div>
+        <div class="pairing-input-group">
+          <input type="text" id="inputPairCode">
+          <button type="button" class="btn-pair" id="btnPairSubmit"></button>
+        </div>
+      </div>
 
-  <section class="card">
-    <h2>Vòng đời trang</h2>
-    <dl id="lifeDl"></dl>
-    <p class="sub" style="margin-top:10px">Mã lần tải đổi nghĩa là trang vừa bị tải lại. Chuyển sang app Authenticator rồi quay lại: mã này phải giữ nguyên.</p>
-  </section>
+      <div class="social-login">
+        <div class="social-divider" id="socialDividerText"></div>
+        <div class="social-icons" id="socialButtonsContainer"></div>
+      </div>
+    </section>
 
-  <section class="card">
-    <h2>Môi trường WebView</h2>
-    <dl id="envDl"></dl>
-  </section>
+    <!-- MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (MAIN DASHBOARD) -->
+    <section class="screen" id="screen-dashboard">
+      <div class="dashboard-content">
+        <div class="dash-header">
+          <h2 class="dash-title" id="dashHeaderTitle"></h2>
+          <div class="notif-bell" id="notifBellBtn">
+            <i class="fa-regular fa-bell"></i>
+            <span class="bell-dot" id="bellDot"></span>
+          </div>
+        </div>
 
-  <section class="card">
-    <h2>Thử tính năng WebView</h2>
-    <div class="row">
-      <button id="btnAlert">alert</button>
-      <button id="btnConfirm">confirm</button>
-      <button id="btnPrompt">prompt</button>
-      <button id="btnOpen">window.open</button>
-    </div>
-    <div class="row">
-      <button id="btnBackNav">Lùi</button>
-      <button id="btnFwdNav">Tiến</button>
-      <button id="btnPasskey">Thử tạo passkey</button>
-    </div>
-    <div class="links">
-      <a href="https://example.com" target="_blank" rel="noopener">Liên kết target=_blank</a>
-      <a href="https://example.com">Liên kết ngoài</a>
-      <a href="tel:+84900000000">tel:</a>
-      <a href="mailto:test@example.com">mailto:</a>
-      <a href="sms:+84900000000">sms:</a>
-    </div>
-    <p class="sub" style="margin-top:10px">Passkey: nút này tạo passkey cho tên miền của trang này và báo kết quả. Nếu thành công, passkey thật được lưu vào Mật khẩu của iPhone; xóa trong Cài đặt > Mật khẩu nếu không cần.</p>
-    <div class="msg" id="featMsg" role="status"></div>
-  </section>
+        <div class="couple-banner">
+          <div class="heart-avatar-frame">
+            <img id="dashCoupleAvatar" src="" alt="Couple">
+            <div class="heart-badge-icon"><i class="fa-solid fa-heart"></i></div>
+          </div>
+          <div class="couple-stats">
+            <div class="days-count" id="dashDaysTogether"></div>
+            <div class="countdown-label" id="dashCountdownLabel"></div>
+            <div class="countdown-timer" id="dashCountdownTimer"></div>
+          </div>
+        </div>
 
-  <section class="card">
-    <h2>Trạng thái (JSON)</h2>
-    <pre id="json"></pre>
-    <div class="row"><button id="btnCopyJson">Sao chép JSON</button></div>
-    <p class="sub" style="margin-top:10px">App có thể đọc cùng dữ liệu này bằng <code>window.__wvTestStatus()</code>.</p>
-  </section>
+        <!-- Mục Chat Nổi Bật + Huy Hiệu Góc Trên Bên Phải -->
+        <div class="chat-widget-wrapper" id="featuredChatCard">
+          <div class="widget-section-title" id="chatWidgetHeading"></div>
+          <div class="chat-banner-box">
+            <img class="partner-avatar" id="chatWidgetAvatar" src="" alt="Partner">
+            <div class="chat-preview-info">
+              <div class="partner-name" id="chatWidgetPartnerName"></div>
+              <div class="last-message" id="chatWidgetLastMsg"></div>
+            </div>
+            <div class="unread-badge" id="chatUnreadBadge"></div>
+          </div>
+        </div>
 
-  <section class="card">
-    <h2>Nhật ký sự kiện</h2>
-    <div class="log" id="log"></div>
-    <div class="row"><button id="btnClearLog">Xóa nhật ký</button></div>
-  </section>
-</main>
+        <div class="feature-grid" id="featureGridContainer"></div>
+      </div>
 
-<script>
-(() => {
-  'use strict';
+      <nav class="bottom-nav" id="bottomNavContainer"></nav>
+    </section>
 
-  // ===== Cấu hình thử nghiệm (chỉnh được) =====
-  const DEMO_USER = 'demo';
-  const DEMO_PASS = 'demo1234';
-  const SECRET_B32 = 'JBSWY3DPEHPK3PXP';      // khóa TOTP thử nghiệm, ai đọc trang đều thấy
-  const ISSUER = 'WebView Test';
-  const STEP = 30;                             // giây
-  const MAX_TRIES = 5;
-  const LOCK_MS = 30000;
+    <!-- MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN -->
+    <section class="screen" id="screen-chat">
+      <header class="chat-header">
+        <div class="chat-header-left">
+          <button class="back-btn" id="btnBackToDash"><i class="fa-solid fa-chevron-left"></i></button>
+          <img class="chat-header-avatar" id="chatRoomAvatar" src="" alt="Avatar">
+          <div class="chat-user-meta">
+            <h4 id="chatRoomTitle"></h4>
+            <div class="online-badge">
+              <span class="online-dot"></span>
+              <span id="chatRoomStatus"></span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <i class="fa-solid fa-phone" id="btnAudioCall"></i>
+          <i class="fa-solid fa-video" id="btnVideoCall"></i>
+        </div>
+      </header>
 
-  const KEY_SESSION = 'wvtest.session';
-  const KEY_FIRST = 'wvtest.firstSeen';
-  const KEY_LOADS = 'wvtest.loadCount';
-  const KEY_PENDING = 'wvtest.pending';
-  const COOKIE = 'wvtest_session';
-  const basePath = location.pathname.replace(/[^/]*$/, '') || '/';
+      <div class="message-stream" id="messageStream"></div>
+      <div class="quick-actions-bar" id="quickActionsContainer"></div>
 
-  const $ = (id) => document.getElementById(id);
-  const loadId = Math.random().toString(36).slice(2, 8);
-  const startedAt = Date.now();
-  const last = { alert: null, confirm: null, prompt: null, passkey: null };
-  const counters = { visibilityChanges: 0, pageshows: 0, offlineEvents: 0 };
-  let state = 'logged_out';
-  let tries = 0, lockedUntil = 0;
-  let platformAuth = null;
-  let codeTimer = null;
+      <form class="chat-input-bar" id="chatInputForm">
+        <div class="chat-input-wrapper">
+          <input type="text" id="chatMessageInput" autocomplete="off">
+          <i class="fa-regular fa-image"></i>
+        </div>
+        <button type="submit" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+      </form>
+    </section>
 
-  // ===== Tiện ích lưu trữ (bọc try/catch) =====
-  const ls = {
-    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); return true; } catch { return false; } },
-    del(k) { try { localStorage.removeItem(k); } catch {} },
-    ok() { try { localStorage.setItem('wvtest.probe', '1'); localStorage.removeItem('wvtest.probe'); return true; } catch { return false; } }
-  };
-  const ss = {
-    get(k) { try { return sessionStorage.getItem(k); } catch { return null; } },
-    set(k, v) { try { sessionStorage.setItem(k, v); } catch {} },
-    del(k) { try { sessionStorage.removeItem(k); } catch {} }
-  };
-  function getCookie(name) {
-    const m = document.cookie.split('; ').find((c) => c.startsWith(name + '='));
-    return m ? decodeURIComponent(m.slice(name.length + 1)) : null;
-  }
-  function setCookie(name, value, maxAgeSec) {
-    const secure = location.protocol === 'https:' ? '; Secure' : '';
-    document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAgeSec}; Path=${basePath}; SameSite=Lax${secure}`;
-  }
-  function delCookie(name) {
-    document.cookie = `${name}=; Max-Age=0; Path=${basePath}; SameSite=Lax`;
-  }
+  </div>
 
-  // ===== Nhật ký =====
-  function log(text) {
-    const el = $('log');
-    const row = document.createElement('div');
-    const t = document.createElement('span');
-    t.className = 't';
-    t.textContent = new Date().toLocaleTimeString('vi-VN', { hour12: false }) + '  ';
-    row.append(t, document.createTextNode(text));
-    el.prepend(row);
-    while (el.childNodes.length > 80) el.removeChild(el.lastChild);
-  }
-
-  // ===== TOTP (RFC 6238, SHA-1, 6 số) =====
-  function base32ToBytes(s) {
-    const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-    let bits = '';
-    for (const ch of s.replace(/=+$/, '').toUpperCase()) {
-      const v = alpha.indexOf(ch);
-      if (v >= 0) bits += v.toString(2).padStart(5, '0');
-    }
-    const out = [];
-    for (let i = 0; i + 8 <= bits.length; i += 8) out.push(parseInt(bits.slice(i, i + 8), 2));
-    return new Uint8Array(out);
-  }
-  async function totp(counter) {
-    const key = await crypto.subtle.importKey('raw', base32ToBytes(SECRET_B32), { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
-    const buf = new ArrayBuffer(8);
-    const dv = new DataView(buf);
-    dv.setUint32(0, Math.floor(counter / 4294967296));
-    dv.setUint32(4, counter >>> 0);
-    const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, buf));
-    const o = sig[19] & 0xf;
-    const n = ((sig[o] & 0x7f) << 24) | (sig[o + 1] << 16) | (sig[o + 2] << 8) | sig[o + 3];
-    return String(n % 1000000).padStart(6, '0');
-  }
-  async function verifyOtp(code) {
-    const c = Math.floor(Date.now() / 1000 / STEP);
-    for (const d of [-1, 0, 1]) {
-      if (await totp(c + d) === code) return true;
-    }
-    return false;
-  }
-
-  // ===== Phiên =====
-  function readSession() {
-    const raw = ls.get(KEY_SESSION);
-    if (!raw) return null;
-    try { return JSON.parse(raw); } catch { return null; }
-  }
-  function clearSession() {
-    ls.del(KEY_SESSION);
-    delCookie(COOKIE);
-  }
-  function startSession(user, ttlSec) {
-    const now = Date.now();
-    const s = { user, token: Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2),
-                loginAt: now, expiresAt: now + ttlSec * 1000, ttlSec };
-    ls.set(KEY_SESSION, JSON.stringify(s));
-    setCookie(COOKIE, s.token, ttlSec);
-  }
-  function fmtDuration(ms) {
-    if (ms <= 0) return '0';
-    const s = Math.floor(ms / 1000);
-    const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
-    if (d) return `${d} ngày ${h} giờ`;
-    if (h) return `${h} giờ ${m} phút`;
-    if (m) return `${m} phút ${sec} giây`;
-    return `${sec} giây`;
-  }
-  const fmtTime = (t) => t ? new Date(t).toLocaleString('vi-VN', { hour12: false }) : '-';
-
-  function evaluate() {
-    const s = readSession();
-    const cookie = getCookie(COOKIE);
-    const pending = ss.get(KEY_PENDING);
-    let next = 'logged_out';
-    if (s) {
-      if (Date.now() >= s.expiresAt) { next = 'expired'; clearSession(); }
-      else if (cookie && cookie !== s.token) { next = 'revoked'; }       // cookie không khớp
-      else next = 'logged_in';
-    } else if (pending) {
-      const p = Number(pending);
-      if (Date.now() - p < 5 * 60 * 1000) next = 'otp_required';
-      else ss.del(KEY_PENDING);
-    }
-    if (state !== next) { log(`Trạng thái: ${state} → ${next}`); state = next; }
-    return { s: readSession(), cookie };
-  }
-
-  // ===== Hiển thị =====
-  function yn(v, yes = 'có', no = 'không') {
-    const sp = document.createElement('span');
-    if (v === null || v === undefined) { sp.className = 'unk'; sp.textContent = 'chưa rõ'; }
-    else { sp.className = v ? 'yes' : 'no'; sp.textContent = v ? yes : no; }
-    return sp;
-  }
-  function fillDl(dl, rows) {
-    dl.replaceChildren();
-    for (const [k, v] of rows) {
-      const dt = document.createElement('dt'); dt.textContent = k;
-      const dd = document.createElement('dd');
-      if (v instanceof Node) dd.appendChild(v); else dd.textContent = String(v);
-      dl.append(dt, dd);
-    }
-  }
-  function safeInsets() {
-    const cs = getComputedStyle($('safeProbe'));
-    return `trên ${cs.paddingTop}, dưới ${cs.paddingBottom}, trái ${cs.paddingLeft}, phải ${cs.paddingRight}`;
-  }
-  function guessWebView() {
-    const ua = navigator.userAgent;
-    if (!/iPhone|iPad|iPod/.test(ua)) return null;
-    return !/Safari\//.test(ua);   // WKWebView thường không có "Safari/" trong UA (ước đoán)
-  }
-
-  const bannerText = {
-    logged_out: 'Chưa đăng nhập',
-    otp_required: 'Đang chờ mã 6 số',
-    logged_in: 'Đã đăng nhập',
-    expired: 'Phiên đã hết hạn',
-    revoked: 'Phiên không còn hợp lệ'
-  };
-
-  function render() {
-    const { s, cookie } = evaluate();
-    $('banner').dataset.s = state;
-    $('bannerState').textContent = bannerText[state];
-    let detail = '';
-    if (state === 'logged_in') detail = `Tài khoản ${s.user}. Còn ${fmtDuration(s.expiresAt - Date.now())}.`;
-    else if (state === 'otp_required') detail = 'Nhập mã từ app Authenticator để hoàn tất.';
-    else if (state === 'expired') detail = 'Đăng nhập lại để tiếp tục.';
-    else if (state === 'revoked') detail = 'Cookie không khớp với phiên đã lưu.';
-    $('bannerDetail').textContent = detail;
-
-    if (state !== 'otp_required' && codeTimer) { clearInterval(codeTimer); codeTimer = null; $('codeShow').textContent = ''; }
-    $('step1').hidden = state === 'otp_required' || state === 'logged_in';
-    $('step2').hidden = state !== 'otp_required';
-    $('loginCard').querySelector('h2').textContent = state === 'logged_in' ? 'Đã đăng nhập' : 'Đăng nhập thử';
-    if (state === 'logged_in') { $('step1').hidden = true; $('step2').hidden = true; }
-
-    fillDl($('sessionDl'), [
-      ['Trạng thái', state],
-      ['Tài khoản', s ? s.user : '-'],
-      ['Đăng nhập lúc', s ? fmtTime(s.loginAt) : '-'],
-      ['Hết hạn lúc', s ? fmtTime(s.expiresAt) : '-'],
-      ['Còn lại', s ? fmtDuration(s.expiresAt - Date.now()) : '-'],
-      ['Cookie', yn(!!cookie, 'còn', 'không có')],
-      ['localStorage', yn(!!s, 'còn', 'không có')]
-    ]);
-
-    const loads = Number(ls.get(KEY_LOADS) || 0);
-    fillDl($('lifeDl'), [
-      ['Mã lần tải', loadId],
-      ['Tải lúc', fmtTime(startedAt)],
-      ['Đã mở trang', `${loads} lần (tính từ lần đầu)`],
-      ['Lần đầu thấy', fmtTime(Number(ls.get(KEY_FIRST)) || null)],
-      ['Đã chạy', fmtDuration(Date.now() - startedAt)],
-      ['Ẩn/hiện trang', `${counters.visibilityChanges} lần`],
-      ['Khôi phục từ bộ nhớ đệm', `${counters.pageshows} lần pageshow`]
-    ]);
-
-    fillDl($('envDl'), [
-      ['Có vẻ là WebView', yn(guessWebView(), 'có', 'không (ước đoán)')],
-      ['Địa chỉ', location.href],
-      ['Kết nối mạng', yn(navigator.onLine, 'trực tuyến', 'ngoại tuyến')],
-      ['Cookie bật', yn(navigator.cookieEnabled)],
-      ['localStorage', yn(ls.ok(), 'dùng được', 'không dùng được')],
-      ['Bối cảnh bảo mật (HTTPS)', yn(window.isSecureContext)],
-      ['WebAuthn có sẵn', yn(!!window.PublicKeyCredential)],
-      ['Xác thực nền tảng', yn(platformAuth)],
-      ['Kích thước', `${innerWidth} x ${innerHeight}`],
-      ['Vùng an toàn', safeInsets()],
-      ['Chế độ tối', yn(matchMedia('(prefers-color-scheme: dark)').matches)],
-      ['Ngôn ngữ', navigator.language],
-      ['User agent', navigator.userAgent]
-    ]);
-
-    $('json').textContent = JSON.stringify(status(), null, 2);
-  }
-
-  function status() {
-    const s = readSession();
-    return {
-      timestamp: new Date().toISOString(),
-      page: { loadId, loadCount: Number(ls.get(KEY_LOADS) || 0), firstSeenAt: Number(ls.get(KEY_FIRST)) || null, url: location.href },
-      session: {
-        state,
-        user: s ? s.user : null,
-        loginAt: s ? s.loginAt : null,
-        expiresAt: s ? s.expiresAt : null,
-        remainingMs: s ? Math.max(0, s.expiresAt - Date.now()) : 0,
-        cookiePresent: !!getCookie(COOKIE),
-        localStoragePresent: !!s
+  <!-- =========================================================================
+       MOCK API SERVICE & APP EMBED BRIDGE
+       ========================================================================= -->
+  <script>
+    // 1. Dữ liệu mặc định từ Mock API
+    const MOCK_BACKEND_RESPONSE = {
+      notifications: {
+        loginSuccess: "Đăng nhập thành công! ❤️",
+        pairRequested: "Đã gửi lời mời ghép đôi tới mã: ",
+        featureOpened: "Mở tính năng: ",
+        touchSent: "👋 Đã gửi rung máy tới người ấy!",
+        heartbeatSent: "💓 Đang đồng bộ nhịp đập trái tim...",
+        incomingMsgAlert: "💌 Người ấy vừa nhắn tin cho bạn!"
       },
-      env: {
-        likelyWebView: guessWebView(),
-        online: navigator.onLine,
-        secureContext: window.isSecureContext,
-        cookiesEnabled: navigator.cookieEnabled,
-        localStorage: ls.ok(),
-        viewport: { w: innerWidth, h: innerHeight },
-        safeArea: safeInsets(),
-        userAgent: navigator.userAgent
-      },
-      capabilities: { webauthn: !!window.PublicKeyCredential, platformAuthenticator: platformAuth },
-      counters: { ...counters },
-      lastResults: { ...last }
-    };
-  }
-  window.__wvTestStatus = () => JSON.stringify(status());
-
-  // ===== Hành động =====
-  function setLoginMsg(text, cls) { const m = $('loginMsg'); m.textContent = text; m.className = 'msg' + (cls ? ' ' + cls : ''); }
-
-  $('btnLogin').addEventListener('click', () => {
-    const u = $('user').value.trim(), p = $('pass').value;
-    if (u !== DEMO_USER || p !== DEMO_PASS) {
-      setLoginMsg('Sai tài khoản hoặc mật khẩu. Dùng demo / demo1234.', 'bad');
-      log('Đăng nhập bước 1: sai thông tin');
-      return;
-    }
-    ss.set(KEY_PENDING, String(Date.now()));
-    ss.set('wvtest.ttl', $('ttl').value);
-    setLoginMsg('', '');
-    log('Đăng nhập bước 1: đúng, chờ mã 6 số');
-    render();
-    $('otp').focus();
-  });
-
-  $('btnBack').addEventListener('click', () => { ss.del(KEY_PENDING); setLoginMsg('', ''); log('Hủy bước mã 6 số'); render(); });
-
-  $('btnOtp').addEventListener('click', async () => {
-    if (Date.now() < lockedUntil) {
-      setLoginMsg(`Thử quá nhiều lần. Chờ ${Math.ceil((lockedUntil - Date.now()) / 1000)} giây.`, 'bad');
-      return;
-    }
-    const code = $('otp').value.replace(/\D/g, '');
-    if (code.length !== 6) { setLoginMsg('Nhập đủ 6 số.', 'bad'); return; }
-    let ok = false;
-    try { ok = await verifyOtp(code); }
-    catch (e) { setLoginMsg('Không tính được mã trong WebView này: ' + e.name, 'bad'); log('TOTP lỗi: ' + e.message); return; }
-    if (!ok) {
-      tries += 1;
-      if (tries >= MAX_TRIES) { lockedUntil = Date.now() + LOCK_MS; tries = 0; setLoginMsg('Sai quá nhiều lần. Khóa 30 giây.', 'bad'); }
-      else setLoginMsg(`Mã không đúng (${tries}/${MAX_TRIES}). Kiểm tra giờ trên máy và thử mã mới.`, 'bad');
-      log('Mã 6 số: sai');
-      return;
-    }
-    tries = 0;
-    const ttl = Number(ss.get('wvtest.ttl') || 1209600);
-    startSession(DEMO_USER, ttl);
-    ss.del(KEY_PENDING); ss.del('wvtest.ttl');
-    $('otp').value = '';
-    setLoginMsg('', '');
-    log(`Đăng nhập thành công, hạn ${fmtDuration(ttl * 1000)}`);
-    render();
-  });
-
-  function doLogout(reason) {
-    clearSession(); ss.del(KEY_PENDING);
-    log(reason || 'Đăng xuất');
-    render();
-  }
-  $('btnLogout').addEventListener('click', () => doLogout('Đăng xuất (bấm nút)'));
-  $('btnReload').addEventListener('click', () => { log('Tải lại trang'); location.reload(); });
-
-  $('btnAlert').addEventListener('click', () => { alert('Thử alert'); last.alert = 'đã đóng'; $('featMsg').textContent = 'alert: đã đóng'; log('alert đã đóng'); });
-  $('btnConfirm').addEventListener('click', () => { const r = confirm('Thử confirm: chọn OK hoặc Hủy'); last.confirm = r; $('featMsg').textContent = 'confirm: ' + (r ? 'OK' : 'Hủy'); log('confirm = ' + r); });
-  $('btnPrompt').addEventListener('click', () => { const r = prompt('Thử prompt: nhập chữ bất kỳ', 'xin chào'); last.prompt = r; $('featMsg').textContent = 'prompt: ' + (r === null ? 'Hủy' : r); log('prompt = ' + JSON.stringify(r)); });
-  $('btnOpen').addEventListener('click', () => {
-    const w = window.open('https://example.com', '_blank');
-    const msg = w ? 'window.open: trả về cửa sổ' : 'window.open: bị chặn hoặc không trả cửa sổ';
-    $('featMsg').textContent = msg; log(msg);
-  });
-  $('btnBackNav').addEventListener('click', () => { log('history.back()'); history.back(); });
-  $('btnFwdNav').addEventListener('click', () => { log('history.forward()'); history.forward(); });
-
-  $('btnPasskey').addEventListener('click', async () => {
-    const out = $('featMsg');
-    if (!window.PublicKeyCredential || !navigator.credentials) {
-      last.passkey = { ok: false, error: 'WebAuthn không có' };
-      out.textContent = 'Passkey: WebView này không có WebAuthn.'; log('Passkey: không có WebAuthn'); return;
-    }
-    try {
-      const rnd = (n) => crypto.getRandomValues(new Uint8Array(n));
-      const cred = await navigator.credentials.create({
-        publicKey: {
-          rp: { name: ISSUER, id: location.hostname },
-          user: { id: rnd(16), name: DEMO_USER, displayName: 'Tài khoản thử' },
-          challenge: rnd(32),
-          pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
-          authenticatorSelection: { residentKey: 'preferred', userVerification: 'preferred' },
-          timeout: 60000
+      authScreen: {
+        appTitle: "Yêu Thương",
+        appSubtitle: "Không gian riêng tư chỉ dành cho hai ta",
+        heroImageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80",
+        accountPlaceholder: "Email / Số điện thoại",
+        passwordPlaceholder: "Mật khẩu",
+        defaultAccountValue: "",
+        defaultPasswordValue: "",
+        loginButtonText: "ĐĂNG NHẬP",
+        pairingSection: {
+          title: "KẾT NỐI ĐÔI",
+          inputPlaceholder: "Nhập mã của người ấy",
+          buttonText: "Kết nối"
+        },
+        socialSection: {
+          dividerText: "Đăng nhập mạng xã hội",
+          providers: [
+            { id: "facebook", icon: "fa-brands fa-facebook-f", bgColor: "#1877F2" },
+            { id: "twitter", icon: "fa-brands fa-twitter", bgColor: "#1DA1F2" },
+            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#FF0000" },
+            { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#000000" }
+          ]
         }
-      });
-      last.passkey = { ok: true, type: cred.type, idPrefix: cred.id.slice(0, 12) };
-      out.textContent = 'Passkey: tạo được (' + cred.id.slice(0, 12) + '…)'; log('Passkey: tạo được');
-    } catch (e) {
-      last.passkey = { ok: false, error: e.name, message: e.message };
-      out.textContent = `Passkey: lỗi ${e.name}. ${e.message}`; log(`Passkey: lỗi ${e.name}`);
-    }
-    render();
-  });
-
-  $('btnCopyJson').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(JSON.stringify(status(), null, 2)); $('featMsg').textContent = 'Đã sao chép JSON.'; log('Đã sao chép JSON'); }
-    catch { $('featMsg').textContent = 'Không sao chép được. Chọn và sao chép tay trong khung JSON.'; }
-  });
-  $('btnCopySecret').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(SECRET_B32); log('Đã sao chép khóa'); }
-    catch { log('Không sao chép được khóa'); }
-  });
-  $('btnShowCode').addEventListener('click', async () => {
-    const out = $('codeShow');
-    clearInterval(codeTimer);
-    const tick = async () => {
-      const code = await totp(Math.floor(Date.now() / 1000 / STEP));
-      const left = STEP - (Math.floor(Date.now() / 1000) % STEP);
-      out.textContent = `Mã hiện tại: ${code} (còn ${left} giây)`;
+      },
+      dashboardScreen: {
+        headerTitle: "Góc Nhỏ Của Tôi",
+        hasNotification: true,
+        coupleBanner: {
+          avatarUrl: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80",
+          daysTogetherPrefix: "Bên nhau:",
+          daysCount: 520,
+          daysUnit: "ngày",
+          countdownLabel: "Đếm ngược sự kiện:",
+          countdownInitialSeconds: 50400
+        },
+        featuredChatWidget: {
+          sectionHeading: "TRÒ CHUYỆN VỚI NGƯỜI ẤY",
+          partnerName: "Người ấy",
+          partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+          lastMessagePreview: "Anh sắp về đến nhà rồi...",
+          unreadCount: 5
+        },
+        featuresGrid: [
+          { id: "diary", title: "Nhật ký chung", icon: "fa-solid fa-book-medical" },
+          { id: "wishlist", title: "Danh sách mong ước", icon: "fa-solid fa-clipboard-check" },
+          { id: "calendar", title: "Lịch hẹn hò", icon: "fa-regular fa-calendar-check" },
+          { id: "games", title: "Trò chơi cặp đôi", icon: "fa-solid fa-gamepad" },
+          { id: "map", title: "Bản đồ cặp đôi", icon: "fa-solid fa-map-location-dot" },
+          { id: "bank", title: "Ngân hàng tình yêu", icon: "fa-solid fa-piggy-bank" }
+        ],
+        bottomNav: [
+          { id: "home", label: "Trang chủ", icon: "fa-solid fa-house", isActive: false },
+          { id: "corner", label: "Góc Nhỏ", icon: "fa-solid fa-book-open", isActive: true },
+          { id: "call", label: "Gọi nhanh", icon: "fa-solid fa-phone-volume", isActive: false },
+          { id: "moments", label: "Kỷ niệm", icon: "fa-regular fa-heart", isActive: false },
+          { id: "profile", label: "Cá nhân", icon: "fa-regular fa-user", isActive: false }
+        ]
+      },
+      chatScreen: {
+        roomTitle: "Yêu Thương ❤️",
+        onlineStatusText: "Đang hoạt động",
+        partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+        inputPlaceholder: "Gửi lời yêu thương...",
+        quickActions: [
+          { id: "heart", title: "Thả tim nhanh", subtitle: "(mưa tim)", icon: "fa-solid fa-heart" },
+          { id: "touch", title: "Chạm tay", subtitle: "(rung máy)", icon: "fa-solid fa-hand-sparkles" },
+          { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
+        ],
+        messages: [
+          { id: 101, sender: "partner", text: "Hôm nay công việc của anh thế nào?" },
+          { id: 102, sender: "me", text: "Anh vừa hoàn thành xong phần app rồi, chuẩn bị nhúng giao diện vào nè!" },
+          { id: 103, sender: "partner", text: "Giỏi quá ta! Tối nay mình đi ăn lẩu nha?" },
+          { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
+          { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
+        ]
+      }
     };
-    try { await tick(); codeTimer = setInterval(tick, 1000); log('Hiện mã thử'); }
-    catch (e) { out.textContent = 'Không tính được mã: ' + e.name; }
-  });
-  $('btnClearLog').addEventListener('click', () => { $('log').replaceChildren(); });
 
-  // ===== Sự kiện vòng đời =====
-  document.addEventListener('visibilitychange', () => {
-    counters.visibilityChanges += 1;
-    log('Trang ' + (document.hidden ? 'bị ẩn' : 'hiện lại'));
-    if (!document.hidden) render();
-  });
-  window.addEventListener('pageshow', (e) => { counters.pageshows += 1; log('pageshow' + (e.persisted ? ' (từ bộ nhớ đệm)' : '')); });
-  window.addEventListener('pagehide', () => { log('pagehide'); });
-  window.addEventListener('online', () => { log('Có mạng'); render(); });
-  window.addEventListener('offline', () => { counters.offlineEvents += 1; log('Mất mạng'); render(); });
-  window.addEventListener('resize', () => render());
+    let appState = structuredClone(MOCK_BACKEND_RESPONSE);
+    let currentScreenId = 'screen-login';
 
-  // ===== Khởi động =====
-  $('secretBox').textContent = SECRET_B32;
-  if (!ls.get(KEY_FIRST)) ls.set(KEY_FIRST, String(Date.now()));
-  ls.set(KEY_LOADS, String(Number(ls.get(KEY_LOADS) || 0) + 1));
-  log(`Tải trang, mã ${loadId}`);
+    // Phát sự kiện từ HTML ra ngoài App (Host App / Parent Window / React Native WebView)
+    function emitEventToHostApp(eventName, payload) {
+      window.parent.postMessage({ source: 'COUPLE_UI_EMBED', event: eventName, data: payload }, '*');
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ event: eventName, data: payload }));
+      }
+    }
 
-  if (new URLSearchParams(location.search).get('logout') === '1') {
-    clearSession(); ss.del(KEY_PENDING);
-    log('Đăng xuất qua ?logout=1');
-    history.replaceState(null, '', location.pathname);
-  }
-  if (ss.get(KEY_PENDING)) log('Khôi phục bước nhập mã 6 số sau khi tải lại');
+    function showToast(message) {
+      const toast = document.getElementById('toastBox');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2400);
+    }
 
-  if (window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
-    PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then((v) => { platformAuth = v; render(); }).catch(() => { platformAuth = null; });
-  }
+    function navigateTo(screenId) {
+      currentScreenId = screenId;
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
 
-  render();
-  setInterval(render, 1000);
-})();
-</script>
+      if (screenId === 'screen-chat') {
+        appState.dashboardScreen.featuredChatWidget.unreadCount = 0;
+        renderUnreadBadge();
+        scrollToBottomChat();
+      }
+      emitEventToHostApp('SCREEN_CHANGED', { screenId });
+    }
+
+    function hydrateUI(data) {
+      // 1. Auth Screen
+      const auth = data.authScreen;
+      document.getElementById('loginHeroImg').src = auth.heroImageUrl;
+      document.getElementById('loginAppTitle').textContent = auth.appTitle;
+      document.getElementById('loginAppSubtitle').textContent = auth.appSubtitle;
+      document.getElementById('inputAccount').placeholder = auth.accountPlaceholder;
+      document.getElementById('inputAccount').value = auth.defaultAccountValue || '';
+      document.getElementById('inputPassword').placeholder = auth.passwordPlaceholder;
+      document.getElementById('inputPassword').value = auth.defaultPasswordValue || '';
+      document.getElementById('btnLoginSubmit').textContent = auth.loginButtonText;
+      document.getElementById('pairingTitle').textContent = auth.pairingSection.title;
+      document.getElementById('inputPairCode').placeholder = auth.pairingSection.inputPlaceholder;
+      document.getElementById('btnPairSubmit').textContent = auth.pairingSection.buttonText;
+      document.getElementById('socialDividerText').textContent = auth.socialSection.dividerText;
+
+      document.getElementById('socialButtonsContainer').innerHTML = auth.socialSection.providers.map(p => `
+        <button type="button" class="social-btn" style="background: ${p.bgColor}" onclick="emitEventToHostApp('SOCIAL_LOGIN', '${p.id}')">
+          <i class="${p.icon}"></i>
+        </button>
+      `).join('');
+
+      // 2. Dashboard Screen
+      const dash = data.dashboardScreen;
+      document.getElementById('dashHeaderTitle').textContent = dash.headerTitle;
+      document.getElementById('bellDot').style.display = dash.hasNotification ? 'block' : 'none';
+      document.getElementById('dashCoupleAvatar').src = dash.coupleBanner.avatarUrl;
+      document.getElementById('dashDaysTogether').textContent = 
+        `${dash.coupleBanner.daysTogetherPrefix} ${dash.coupleBanner.daysCount} ${dash.coupleBanner.daysUnit}`;
+      document.getElementById('dashCountdownLabel').textContent = dash.coupleBanner.countdownLabel;
+
+      document.getElementById('chatWidgetHeading').textContent = dash.featuredChatWidget.sectionHeading;
+      document.getElementById('chatWidgetAvatar').src = dash.featuredChatWidget.partnerAvatarUrl;
+      document.getElementById('chatWidgetPartnerName').textContent = dash.featuredChatWidget.partnerName;
+      document.getElementById('chatWidgetLastMsg').textContent = dash.featuredChatWidget.lastMessagePreview;
+      renderUnreadBadge();
+
+      document.getElementById('featureGridContainer').innerHTML = dash.featuresGrid.map(feat => `
+        <div class="feature-item" onclick="handleFeatureClick('${feat.id}', '${feat.title}')">
+          <div class="feature-icon-box"><i class="${feat.icon}"></i></div>
+          <div class="feature-label">${feat.title}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('bottomNavContainer').innerHTML = dash.bottomNav.map(tab => `
+        <div class="nav-tab ${tab.isActive ? 'active' : ''}" onclick="handleNavClick('${tab.id}')">
+          <i class="${tab.icon}"></i>
+          <span>${tab.label}</span>
+        </div>
+      `).join('');
+
+      // 3. Chat Screen
+      const chat = data.chatScreen;
+      document.getElementById('chatRoomAvatar').src = chat.partnerAvatarUrl;
+      document.getElementById('chatRoomTitle').textContent = chat.roomTitle;
+      document.getElementById('chatRoomStatus').textContent = chat.onlineStatusText;
+      document.getElementById('chatMessageInput').placeholder = chat.inputPlaceholder;
+
+      document.getElementById('quickActionsContainer').innerHTML = chat.quickActions.map(act => `
+        <div class="quick-action-card" onclick="triggerCoupleAction('${act.id}')">
+          <i class="${act.icon}"></i>
+          <div class="quick-action-title">${act.title}</div>
+          <div class="quick-action-sub">${act.subtitle}</div>
+        </div>
+      `).join('');
+
+      renderMessagesList();
+    }
+
+    function renderUnreadBadge() {
+      const badge = document.getElementById('chatUnreadBadge');
+      const count = appState.dashboardScreen.featuredChatWidget.unreadCount;
+      badge.textContent = count > 99 ? '99+' : count;
+      badge.classList.toggle('hidden', count <= 0);
+    }
+
+    function renderMessagesList() {
+      const stream = document.getElementById('messageStream');
+      const partnerAvatar = appState.chatScreen.partnerAvatarUrl;
+      stream.innerHTML = appState.chatScreen.messages.map(msg => `
+        <div class="msg-row ${msg.sender}">
+          ${msg.sender === 'partner' ? `<img class="msg-avatar" src="${partnerAvatar}" alt="p">` : ''}
+          <div class="msg-bubble">${msg.text}</div>
+        </div>
+      `).join('');
+    }
+
+    function scrollToBottomChat() {
+      const stream = document.getElementById('messageStream');
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    // Event Listeners nội bộ
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const account = document.getElementById('inputAccount').value;
+      emitEventToHostApp('LOGIN_SUBMIT', { account });
+      showToast(appState.notifications.loginSuccess);
+      navigateTo('screen-dashboard');
+    });
+
+    document.getElementById('togglePwdBtn').addEventListener('click', function() {
+      const pwd = document.getElementById('inputPassword');
+      const isPwd = pwd.type === 'password';
+      pwd.type = isPwd ? 'text' : 'password';
+      this.className = isPwd ? 'fa-regular fa-eye input-icon' : 'fa-regular fa-eye-slash input-icon';
+    });
+
+    document.getElementById('btnPairSubmit').addEventListener('click', () => {
+      const code = document.getElementById('inputPairCode').value.trim();
+      emitEventToHostApp('PAIR_SUBMIT', { code });
+      showToast(appState.notifications.pairRequested + (code || 'LOVE520'));
+    });
+
+    document.getElementById('featuredChatCard').addEventListener('click', () => navigateTo('screen-chat'));
+    document.getElementById('btnBackToDash').addEventListener('click', () => navigateTo('screen-dashboard'));
+
+    function handleFeatureClick(featureId, featureTitle) {
+      emitEventToHostApp('FEATURE_CLICKED', { featureId, featureTitle });
+      showToast(appState.notifications.featureOpened + featureTitle);
+    }
+
+    function handleNavClick(tabId) {
+      appState.dashboardScreen.bottomNav.forEach(t => t.isActive = (t.id === tabId));
+      hydrateUI(appState);
+      emitEventToHostApp('NAV_TAB_CHANGED', { tabId });
+    }
+
+    document.getElementById('chatInputForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('chatMessageInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const newMsg = { id: Date.now(), sender: 'me', text };
+      appState.chatScreen.messages.push(newMsg);
+      appState.dashboardScreen.featuredChatWidget.lastMessagePreview = text;
+      input.value = '';
+      renderMessagesList();
+      document.getElementById('chatWidgetLastMsg').textContent = text;
+      scrollToBottomChat();
+      emitEventToHostApp('MESSAGE_SENT', newMsg);
+    });
+
+    function triggerCoupleAction(actionId) {
+      const root = document.getElementById('appRoot');
+      if (actionId === 'heart') {
+        for (let i = 0; i < 8; i++) setTimeout(() => createFloatingHeart(root), i * 110);
+      } else if (actionId === 'touch') {
+        root.classList.remove('shake-anim');
+        void root.offsetWidth;
+        root.classList.add('shake-anim');
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        showToast(appState.notifications.touchSent);
+      } else if (actionId === 'pulse') {
+        createFloatingHeart(root, '💓');
+        showToast(appState.notifications.heartbeatSent);
+      }
+      emitEventToHostApp('COUPLE_QUICK_ACTION', { actionId });
+    }
+
+    function createFloatingHeart(container, symbol = '❤️') {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = symbol;
+      heart.style.left = Math.floor(Math.random() * 75 + 12) + '%';
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+
+    function startCountdownTimer() {
+      let totalSeconds = appState.dashboardScreen.coupleBanner.countdownInitialSeconds;
+      const timerEl = document.getElementById('dashCountdownTimer');
+      setInterval(() => {
+        if (totalSeconds > 0) totalSeconds--;
+        const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(totalSeconds % 60).padStart(2, '0');
+        timerEl.textContent = `${hrs} h ${mins} m ${secs} s`;
+      }, 1000);
+    }
+
+    /**
+     * =========================================================================
+     * GLOBAL BRIDGE API CHO APP BÊN NGOÀI GỌI VÀO (`window.CoupleApp`)
+     * =========================================================================
+     */
+    window.CoupleApp = {
+      // Gọi hàm này từ App để truyền cục JSON thật từ Backend vào ghi đè lên Mock Data
+      setBackendData: function(newBackendData) {
+        appState = { ...appState, ...newBackendData };
+        hydrateUI(appState);
+      },
+      // Chuyển màn hình từ code App: 'screen-login' | 'screen-dashboard' | 'screen-chat'
+      navigate: function(screenId) {
+        navigateTo(screenId);
+      },
+      // Khi App nhận được tin nhắn mới qua Socket/API, gọi hàm này để đẩy tin nhắn vào UI và tăng số góc phải
+      pushIncomingMessage: function(text) {
+        appState.chatScreen.messages.push({ id: Date.now(), sender: 'partner', text });
+        appState.dashboardScreen.featuredChatWidget.lastMessagePreview = text;
+        document.getElementById('chatWidgetLastMsg').textContent = text;
+
+        if (currentScreenId !== 'screen-chat') {
+          appState.dashboardScreen.featuredChatWidget.unreadCount += 1;
+          renderUnreadBadge();
+        } else {
+          renderMessagesList();
+          scrollToBottomChat();
+        }
+        showToast(appState.notifications.incomingMsgAlert);
+      }
+    };
+
+    // Lắng nghe message từ App cha (nếu nhúng qua iframe)
+    window.addEventListener('message', (event) => {
+      const { action, payload } = event.data || {};
+      if (action === 'SET_DATA') window.CoupleApp.setBackendData(payload);
+      if (action === 'NAVIGATE') window.CoupleApp.navigate(payload);
+      if (action === 'INCOMING_MSG') window.CoupleApp.pushIncomingMessage(payload);
+    });
+
+    // Khởi tạo
+    window.addEventListener('DOMContentLoaded', () => {
+      // Cho phép mở thẳng màn hình bất kỳ qua URL param, ví dụ: couple-embed.html?screen=dashboard
+      const params = new URLSearchParams(window.location.search);
+      const initScreen = params.get('screen');
+      hydrateUI(appState);
+      startCountdownTimer();
+      if (initScreen && document.getElementById(`screen-${initScreen}`)) {
+        navigateTo(`screen-${initScreen}`);
+      }
+    });
+  </script>
 </body>
 </html>
