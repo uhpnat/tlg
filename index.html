@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Yêu Thương UI</title>
+  <title>Yêu Thương UI - Ice Emerald & Modern Minimal</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,32 +13,42 @@
 
   <style>
     :root {
-      --bg-main: linear-gradient(180deg, #FDEBF1 0%, #F8D6E4 100%);
-      --bg-card: rgba(255, 255, 255, 0.92);
-      --bg-card-pink: #FFF5F8;
-      --bg-input: #F6F0F3;
+      /* --- BẢNG MÀU MỚI: ICE EMERALD & MODERN MINIMAL --- */
+      --mint-primary: #0D9488;
+      --mint-light: #CCFBF1;
+      --mint-dark: #115E59;
+      --accent-champagne: #F59E0B;
+      
+      /* Hệ thống nền & Kính mờ */
+      --bg-main: linear-gradient(135deg, #F0FDF4 0%, #E0F2FE 50%, #F5F3FF 100%);
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --bg-glass-strong: rgba(255, 255, 255, 0.96);
+      --bg-input: rgba(241, 245, 249, 0.85);
 
-      --primary-gradient: linear-gradient(135deg, #FF6B8B 0%, #9E68E6 100%);
-      --chat-card-gradient: linear-gradient(95deg, #F26A8D 0%, #9B65E4 100%);
-      --primary-pink: #E85C81;
-      --primary-purple: #9C6ADE;
+      /* Gradient cực kỳ mềm mại, không bị cứng */
+      --primary-gradient: linear-gradient(105deg, #0D9488 0%, #14B8A6 60%, #0284C7 100%);
+      --chat-card-gradient: linear-gradient(105deg, #115E59 0%, #0D9488 50%, #0369A1 100%);
 
-      --badge-red: #FF2E4C;
-      --status-online: #34C759;
+      /* Trạng thái */
+      --badge-red: #EF4444;
+      --status-online: #10B981;
 
-      --text-primary: #4A1E34;
-      --text-secondary: #8C6D7D;
+      /* Typography sắc nét, trầm ấm */
+      --text-primary: #1E293B;
+      --text-accent: #0D9488;
+      --text-secondary: #64748B;
       --text-white: #FFFFFF;
 
+      /* Bo góc & Đổ bóng tinh tế */
       --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 14px;
       --radius-pill: 9999px;
 
-      --shadow-soft: 0 8px 20px -4px rgba(74, 30, 52, 0.07);
-      --shadow-floating: 0 12px 28px -6px rgba(158, 104, 230, 0.3);
+      --shadow-soft: 0 10px 25px -5px rgba(13, 148, 136, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --shadow-floating: 0 16px 35px -8px rgba(13, 148, 136, 0.2), 0 0 20px rgba(204, 251, 241, 0.5);
+      --border-shimmer: 1px solid rgba(255, 255, 255, 0.9);
 
-      /* Hỗ trợ Safe Area cho tai thỏ / thanh điều hướng iOS & Android khi nhúng App */
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -56,21 +66,51 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Nunito', sans-serif;
-      background: var(--bg-main);
       color: var(--text-primary);
+      background: linear-gradient(-45deg, #E2ECE9, #F1F8F6, #E0F2FE, #F5F3FF);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
     }
 
-    /* Container chính chiếm trọn khung nhúng của App */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .app-root {
       width: 100%;
       height: 100dvh;
-      max-width: 480px; /* Giới hạn nhẹ nếu mở trên màn hình lớn, tự full 100% trên mobile */
+      max-width: 480px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      background: var(--bg-main);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    /* Hiệu ứng hạt lấp lánh (Sparkles) */
+    .sparkle-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .sparkle-dot {
+      position: absolute;
+      color: var(--mint-primary);
+      text-shadow: 0 0 8px rgba(13, 148, 136, 0.6);
+      animation: twinkle 4s infinite ease-in-out;
+      font-size: 10px;
+      opacity: 0.6;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(0.7) rotate(0deg); }
+      50% { opacity: 0.8; transform: scale(1.2) rotate(45deg); }
     }
 
     .screen {
@@ -81,6 +121,7 @@
       overflow-x: hidden;
       position: relative;
       padding-top: var(--safe-top);
+      z-index: 2;
       animation: fadeIn 0.2s ease-out;
     }
     .screen.active {
@@ -99,9 +140,7 @@
       font-family: 'Quicksand', sans-serif;
     }
 
-    /* ==========================================
-       MÀN HÌNH 1: ĐĂNG NHẬP & KẾT NỐI
-       ========================================== */
+    /* MÀN HÌNH 1: ĐĂNG NHẬP */
     .login-screen {
       padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px);
       justify-content: space-between;
@@ -110,14 +149,14 @@
       text-align: center;
     }
     .couple-illustration {
-      width: 130px;
-      height: 130px;
+      width: 124px;
+      height: 124px;
       margin: 0 auto 12px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fff 30%, #ffd6e5 100%);
-      box-shadow: var(--shadow-soft);
+      background: linear-gradient(135deg, #CCFBF1 0%, #FFFFFF 100%);
+      box-shadow: 0 12px 30px rgba(13, 148, 136, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
       overflow: hidden;
-      border: 3px solid #fff;
+      border: 2px solid var(--mint-primary);
     }
     .couple-illustration img {
       width: 100%;
@@ -125,8 +164,9 @@
       object-fit: cover;
     }
     .app-title {
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 700;
+      color: var(--text-accent);
       margin-bottom: 4px;
     }
     .app-subtitle {
@@ -135,14 +175,15 @@
     }
 
     .login-form {
-      background: var(--bg-card);
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      border: var(--border-shimmer);
       padding: 20px;
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
       gap: 12px;
-      backdrop-filter: blur(10px);
     }
     .input-box {
       position: relative;
@@ -153,7 +194,7 @@
       width: 100%;
       padding: 13px 40px 13px 18px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid transparent;
+      border: 1.5px solid rgba(204, 251, 241, 0.9);
       background: var(--bg-input);
       font-family: inherit;
       font-size: 14px;
@@ -162,8 +203,9 @@
       transition: 0.2s;
     }
     .input-box input:focus {
-      border-color: var(--primary-pink);
+      border-color: var(--mint-primary);
       background: #fff;
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
     }
     .input-box .input-icon {
       position: absolute;
@@ -182,34 +224,40 @@
       font-family: 'Quicksand', sans-serif;
       font-weight: 700;
       font-size: 15px;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 6px 16px rgba(232, 92, 129, 0.35);
-      transition: transform 0.15s;
+      box-shadow: 0 6px 18px -4px rgba(13, 148, 136, 0.35);
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.05);
     }
     .btn-primary:active {
       transform: scale(0.97);
     }
 
     .pairing-card {
-      background: var(--bg-card-pink);
-      border: 2px dashed #E5A4CB;
+      background: rgba(204, 251, 241, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1.5px dashed rgba(13, 148, 136, 0.4);
       border-radius: var(--radius-lg);
       padding: 14px;
       text-align: center;
       box-shadow: var(--shadow-soft);
     }
     .pairing-title {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
+      color: var(--text-accent);
       margin-bottom: 10px;
       letter-spacing: 0.5px;
     }
     .pairing-input-group {
       display: flex;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-pill);
       padding: 4px 4px 4px 16px;
-      border: 1px solid #f2d6e3;
+      border: 1px solid rgba(204, 251, 241, 0.9);
       align-items: center;
     }
     .pairing-input-group input {
@@ -222,7 +270,7 @@
       background: transparent;
     }
     .btn-pair {
-      padding: 8px 16px;
+      padding: 8px 18px;
       border: none;
       border-radius: var(--radius-pill);
       background: var(--primary-gradient);
@@ -251,17 +299,19 @@
       border-radius: 50%;
       border: none;
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);
+      transition: transform 0.15s;
+    }
+    .social-btn:hover {
+      transform: translateY(-2px);
     }
 
-    /* ==========================================
-       MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (DASHBOARD)
-       ========================================== */
+    /* MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (DASHBOARD) */
     .dashboard-content {
       flex: 1;
       padding: 16px 20px 20px;
@@ -278,19 +328,29 @@
     .dash-title {
       font-size: 22px;
       font-weight: 700;
+      color: var(--text-accent);
     }
     .notif-bell {
       position: relative;
-      font-size: 20px;
-      color: var(--text-primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-glass);
+      border: var(--border-shimmer);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-accent);
       cursor: pointer;
+      box-shadow: var(--shadow-soft);
     }
     .bell-dot {
       position: absolute;
-      top: 0;
-      right: -2px;
-      width: 8px;
-      height: 8px;
+      top: 7px;
+      right: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--badge-red);
       border-radius: 50%;
       border: 1.5px solid #fff;
@@ -300,20 +360,23 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      background: rgba(255, 255, 255, 0.55);
-      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(14px);
+      padding: 13px 16px;
       border-radius: var(--radius-xl);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      border: var(--border-shimmer);
+      box-shadow: var(--shadow-soft);
     }
     .heart-avatar-frame {
-      width: 74px;
-      height: 74px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      border: 3px solid var(--primary-pink);
+      border: 2.5px solid var(--mint-primary);
       padding: 3px;
       background: #fff;
       position: relative;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
     }
     .heart-avatar-frame img {
       width: 100%;
@@ -323,48 +386,60 @@
     }
     .heart-badge-icon {
       position: absolute;
-      bottom: -4px;
-      right: -4px;
-      background: var(--primary-pink);
+      bottom: -3px;
+      right: -3px;
+      background: var(--mint-primary);
       color: #fff;
-      width: 24px;
-      height: 24px;
+      width: 23px;
+      height: 23px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 10.5px;
       border: 2px solid #fff;
     }
     .couple-stats {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
     .days-count {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 700;
+      color: var(--text-primary);
     }
     .countdown-label {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-secondary);
     }
     .countdown-timer {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      color: var(--primary-pink);
-      letter-spacing: 1px;
+      color: var(--text-accent);
+      letter-spacing: 0.6px;
+      background: rgba(13, 148, 136, 0.1);
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      width: fit-content;
     }
 
-    /* Featured Chat Widget + Unread Badge góc trên bên phải */
+    /* CHAT WIDGET */
     .chat-widget-wrapper {
-      background: var(--bg-card);
+      position: relative;
+      background: var(--bg-glass-strong);
+      backdrop-filter: blur(16px);
       padding: 14px 16px 16px;
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-floating);
-      border: 1px solid #fff;
+      border: var(--border-shimmer);
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .chat-widget-wrapper:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 35px -10px rgba(13, 148, 136, 0.3);
     }
     .chat-widget-wrapper:active {
       transform: scale(0.98);
@@ -372,32 +447,42 @@
     .widget-section-title {
       font-size: 11px;
       font-weight: 700;
+      color: var(--text-accent);
       margin-bottom: 10px;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .widget-section-title::before {
+      content: '✦';
+      color: var(--accent-champagne);
+      font-size: 13px;
     }
     .chat-banner-box {
       position: relative;
       background: var(--chat-card-gradient);
       border-radius: var(--radius-lg);
-      padding: 12px 14px;
+      padding: 13px 14px;
       display: flex;
       align-items: center;
       gap: 12px;
       color: #fff;
-      box-shadow: 0 6px 16px rgba(155, 101, 228, 0.35);
+      box-shadow: 0 6px 18px -4px rgba(13, 148, 136, 0.35);
     }
     .partner-avatar {
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: 2px solid #fff;
+      border: 2px solid rgba(255, 255, 255, 0.9);
       object-fit: cover;
       flex-shrink: 0;
     }
     .chat-preview-info {
       flex: 1;
       overflow: hidden;
+      padding-right: 12px;
     }
     .partner-name {
       font-size: 15px;
@@ -412,42 +497,46 @@
       text-overflow: ellipsis;
     }
 
+    /* HUY HIỆU SỐ TIN NHẮN */
     .unread-badge {
       position: absolute;
-      top: -10px;
-      right: -8px;
+      top: -12px;
+      right: 4px;
       background: var(--badge-red);
       color: #fff;
       min-width: 28px;
       height: 28px;
       padding: 0 7px;
       border-radius: var(--radius-pill);
-      border: 2.5px solid #fff;
+      border: 2.5px solid #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 4px 10px rgba(255, 46, 76, 0.45);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.45);
       animation: pulseBadge 1.8s infinite;
+      z-index: 10;
     }
     .unread-badge.hidden {
       display: none;
     }
     @keyframes pulseBadge {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      50% { transform: scale(1.12); }
     }
 
+    /* FEATURE GRID */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
     .feature-item {
-      background: var(--bg-card);
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
       border-radius: var(--radius-lg);
-      padding: 14px 8px;
+      padding: 16px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -455,43 +544,57 @@
       text-align: center;
       gap: 8px;
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255,255,255,0.8);
+      border: var(--border-shimmer);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .feature-item:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: #FFFFFF;
+      box-shadow: 0 12px 25px -5px rgba(13, 148, 136, 0.2);
+      border-color: rgba(13, 148, 136, 0.4);
     }
     .feature-item:active {
       transform: scale(0.96);
-      background: #fff;
     }
     .feature-icon-box {
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: #FDEBF1;
-      color: var(--primary-pink);
+      background: linear-gradient(135deg, #CCFBF1 0%, #E0F2FE 100%);
+      color: var(--mint-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 19px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+      transition: transform 0.25s;
+    }
+    .feature-item:hover .feature-icon-box {
+      transform: scale(1.1) rotate(5deg);
+      color: var(--mint-dark);
     }
     .feature-label {
       font-size: 12px;
       font-weight: 700;
+      color: var(--text-primary);
       line-height: 1.25;
     }
 
+    /* Bottom Navigation */
     .bottom-nav {
       height: calc(64px + var(--safe-bottom));
       padding-bottom: var(--safe-bottom);
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding-left: 12px;
       padding-right: 12px;
-      border-top: 1px solid rgba(232, 92, 129, 0.1);
+      border-top: 1px solid rgba(226, 232, 240, 0.7);
       flex-shrink: 0;
+      z-index: 10;
     }
     .nav-tab {
       display: flex;
@@ -504,35 +607,37 @@
       cursor: pointer;
       position: relative;
       padding: 6px 12px;
+      transition: color 0.2s;
+    }
+    .nav-tab:hover {
+      color: var(--mint-primary);
     }
     .nav-tab i {
       font-size: 18px;
     }
     .nav-tab.active {
-      color: var(--primary-pink);
+      color: var(--mint-primary);
       font-weight: 700;
     }
     .nav-tab.active::before {
       content: '';
       position: absolute;
       top: -6px;
-      width: 24px;
+      width: 22px;
       height: 3px;
       border-radius: 3px;
-      background: var(--primary-pink);
+      background: var(--mint-primary);
     }
 
-    /* ==========================================
-       MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN
-       ========================================== */
+    /* MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN */
     .chat-header {
       padding: 12px 16px;
       background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
       z-index: 10;
     }
     .chat-header-left {
@@ -544,7 +649,7 @@
       background: none;
       border: none;
       font-size: 18px;
-      color: var(--text-primary);
+      color: var(--mint-primary);
       cursor: pointer;
       padding: 4px 6px;
     }
@@ -553,11 +658,12 @@
       height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--primary-pink);
+      border: 2px solid var(--mint-primary);
     }
     .chat-user-meta h4 {
       font-size: 15px;
       font-weight: 700;
+      color: var(--text-accent);
     }
     .online-badge {
       display: flex;
@@ -575,11 +681,16 @@
     .chat-header-actions {
       display: flex;
       gap: 16px;
-      color: var(--primary-purple);
-      font-size: 18px;
+      color: var(--mint-primary);
+      font-size: 17px;
     }
     .chat-header-actions i {
       cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .chat-header-actions i:hover {
+      transform: scale(1.12);
+      color: var(--mint-dark);
     }
 
     .message-stream {
@@ -589,7 +700,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: linear-gradient(180deg, rgba(248, 214, 228, 0.35), rgba(158, 104, 230, 0.15));
+      background: linear-gradient(180deg, rgba(240, 253, 244, 0.4) 0%, rgba(224, 242, 254, 0.4) 100%);
     }
     .msg-row {
       display: flex;
@@ -614,31 +725,35 @@
     .msg-bubble {
       padding: 10px 14px;
       font-size: 13.5px;
-      line-height: 1.4;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      line-height: 1.42;
       word-break: break-word;
     }
     .msg-row.partner .msg-bubble {
-      background: #FFFFFF;
+      background: rgba(255, 255, 255, 0.92);
       color: var(--text-primary);
+      border: 1px solid rgba(226, 232, 240, 0.8);
       border-radius: 18px 18px 18px 4px;
+      box-shadow: 0 3px 8px rgba(100, 116, 139, 0.04);
     }
     .msg-row.me .msg-bubble {
       background: var(--primary-gradient);
       color: #FFFFFF;
       border-radius: 18px 18px 4px 18px;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.22);
     }
 
     .quick-actions-bar {
       padding: 10px 14px 6px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+      border-top: 1px solid rgba(226, 232, 240, 0.7);
     }
     .quick-action-card {
-      background: #FFF7FA;
-      border: 1px solid #F5DCE6;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+      border: 1px solid rgba(13, 148, 136, 0.25);
       border-radius: var(--radius-md);
       padding: 8px 4px;
       display: flex;
@@ -648,17 +763,21 @@
       cursor: pointer;
       transition: transform 0.15s, background 0.15s;
     }
+    .quick-action-card:hover {
+      background: #CCFBF1;
+      transform: translateY(-2px);
+    }
     .quick-action-card:active {
       transform: scale(0.94);
-      background: #FCE4EE;
     }
     .quick-action-card i {
-      font-size: 18px;
-      color: var(--primary-pink);
+      font-size: 17px;
+      color: var(--mint-primary);
     }
     .quick-action-title {
       font-size: 11px;
       font-weight: 700;
+      color: var(--text-primary);
       text-align: center;
     }
     .quick-action-sub {
@@ -676,6 +795,7 @@
     .chat-input-wrapper {
       flex: 1;
       background: var(--bg-input);
+      border: 1px solid rgba(204, 251, 241, 0.8);
       border-radius: var(--radius-pill);
       padding: 9px 14px;
       display: flex;
@@ -695,6 +815,10 @@
       color: var(--text-secondary);
       cursor: pointer;
       font-size: 16px;
+      transition: color 0.2s;
+    }
+    .chat-input-wrapper i:hover {
+      color: var(--mint-primary);
     }
     .send-btn {
       width: 38px;
@@ -708,6 +832,12 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .send-btn:hover {
+      filter: brightness(1.05);
+      transform: scale(1.05);
     }
 
     /* Animations & Toast */
@@ -716,20 +846,20 @@
     }
     @keyframes shakeView {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-6px); }
-      40%, 80% { transform: translateX(6px); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
     }
     .floating-heart {
       position: absolute;
       bottom: 80px;
-      font-size: 22px;
+      font-size: 20px;
       pointer-events: none;
-      animation: floatUp 2s ease-out forwards;
+      animation: floatUp 2.1s ease-out forwards;
       z-index: 50;
     }
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(0.8); }
-      100% { opacity: 0; transform: translateY(-320px) scale(1.5) rotate(15deg); }
+      100% { opacity: 0; transform: translateY(-300px) scale(1.4) rotate(10deg); }
     }
 
     .toast-box {
@@ -737,9 +867,9 @@
       top: calc(var(--safe-top) + 16px);
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(74, 30, 52, 0.92);
+      background: var(--mint-dark);
       color: #fff;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: var(--radius-pill);
       font-size: 12px;
       font-weight: 600;
@@ -748,6 +878,7 @@
       pointer-events: none;
       transition: opacity 0.25s;
       white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
     }
     .toast-box.show {
       opacity: 1;
@@ -756,9 +887,8 @@
 </head>
 <body>
 
-  <!-- ROOT CONTAINER NHÚNG TRỰC TIẾP VÀO APP -->
   <div class="app-root" id="appRoot">
-    
+    <div class="sparkle-layer" id="sparkleLayer"></div>
     <div class="toast-box" id="toastBox"></div>
 
     <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
@@ -819,7 +949,7 @@
           </div>
         </div>
 
-        <!-- Mục Chat Nổi Bật + Huy Hiệu Góc Trên Bên Phải -->
+        <!-- Mục Chat Nổi Bật + Huy Hiệu An Toàn Ở Góc Trên Bên Phải -->
         <div class="chat-widget-wrapper" id="featuredChatCard">
           <div class="widget-section-title" id="chatWidgetHeading"></div>
           <div class="chat-banner-box">
@@ -872,19 +1002,15 @@
 
   </div>
 
-  <!-- =========================================================================
-       MOCK API SERVICE & APP EMBED BRIDGE
-       ========================================================================= -->
   <script>
-    // 1. Dữ liệu mặc định từ Mock API
     const MOCK_BACKEND_RESPONSE = {
       notifications: {
-        loginSuccess: "Đăng nhập thành công! ❤️",
+        loginSuccess: "Đăng nhập thành công! ✨",
         pairRequested: "Đã gửi lời mời ghép đôi tới mã: ",
         featureOpened: "Mở tính năng: ",
         touchSent: "👋 Đã gửi rung máy tới người ấy!",
         heartbeatSent: "💓 Đang đồng bộ nhịp đập trái tim...",
-        incomingMsgAlert: "💌 Người ấy vừa nhắn tin cho bạn!"
+        incomingMsgAlert: "✨ Người ấy vừa nhắn tin cho bạn!"
       },
       authScreen: {
         appTitle: "Yêu Thương",
@@ -905,8 +1031,8 @@
           providers: [
             { id: "facebook", icon: "fa-brands fa-facebook-f", bgColor: "#1877F2" },
             { id: "twitter", icon: "fa-brands fa-twitter", bgColor: "#1DA1F2" },
-            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#FF0000" },
-            { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#000000" }
+            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#0D9488" },
+            { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#1E293B" }
           ]
         }
       },
@@ -945,19 +1071,19 @@
         ]
       },
       chatScreen: {
-        roomTitle: "Yêu Thương ❤️",
+        roomTitle: "Yêu Thương ✨",
         onlineStatusText: "Đang hoạt động",
         partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
         inputPlaceholder: "Gửi lời yêu thương...",
         quickActions: [
-          { id: "heart", title: "Thả tim nhanh", subtitle: "(mưa tim)", icon: "fa-solid fa-heart" },
+          { id: "heart", title: "Thả tim nhanh", subtitle: "(lấp lánh)", icon: "fa-solid fa-heart" },
           { id: "touch", title: "Chạm tay", subtitle: "(rung máy)", icon: "fa-solid fa-hand-sparkles" },
           { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
         ],
         messages: [
-          { id: 101, sender: "partner", text: "Hôm nay công việc của anh thế nào?" },
-          { id: 102, sender: "me", text: "Anh vừa hoàn thành xong phần app rồi, chuẩn bị nhúng giao diện vào nè!" },
-          { id: 103, sender: "partner", text: "Giỏi quá ta! Tối nay mình đi ăn lẩu nha?" },
+          { id: 101, sender: "partner", text: "Giao diện tông màu Xanh ngọc Mint nhìn mát mắt và sang quá anh ơi!" },
+          { id: 102, sender: "me", text: "Đúng rồi, phối màu này vừa nhã nhặn vừa hiện đại, nhìn rất thư giãn ✨" },
+          { id: 103, sender: "partner", text: "Tối nay mình đi ăn lẩu nha?" },
           { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
           { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
         ]
@@ -967,7 +1093,22 @@
     let appState = structuredClone(MOCK_BACKEND_RESPONSE);
     let currentScreenId = 'screen-login';
 
-    // Phát sự kiện từ HTML ra ngoài App (Host App / Parent Window / React Native WebView)
+    function initSparkles() {
+      const layer = document.getElementById('sparkleLayer');
+      const symbols = ['✦', '✧', '⋆'];
+      const count = 14;
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        const top = Math.random() * 94 + 2;
+        const left = Math.random() * 92 + 4;
+        const delay = (Math.random() * 4).toFixed(1);
+        const duration = (3 + Math.random() * 2).toFixed(1);
+        const sym = symbols[i % symbols.length];
+        html += `<span class="sparkle-dot" style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${duration}s">${sym}</span>`;
+      }
+      layer.innerHTML = html;
+    }
+
     function emitEventToHostApp(eventName, payload) {
       window.parent.postMessage({ source: 'COUPLE_UI_EMBED', event: eventName, data: payload }, '*');
       if (window.ReactNativeWebView) {
@@ -996,7 +1137,6 @@
     }
 
     function hydrateUI(data) {
-      // 1. Auth Screen
       const auth = data.authScreen;
       document.getElementById('loginHeroImg').src = auth.heroImageUrl;
       document.getElementById('loginAppTitle').textContent = auth.appTitle;
@@ -1017,7 +1157,6 @@
         </button>
       `).join('');
 
-      // 2. Dashboard Screen
       const dash = data.dashboardScreen;
       document.getElementById('dashHeaderTitle').textContent = dash.headerTitle;
       document.getElementById('bellDot').style.display = dash.hasNotification ? 'block' : 'none';
@@ -1046,7 +1185,6 @@
         </div>
       `).join('');
 
-      // 3. Chat Screen
       const chat = data.chatScreen;
       document.getElementById('chatRoomAvatar').src = chat.partnerAvatarUrl;
       document.getElementById('chatRoomTitle').textContent = chat.roomTitle;
@@ -1087,7 +1225,6 @@
       stream.scrollTop = stream.scrollHeight;
     }
 
-    // Event Listeners nội bộ
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const account = document.getElementById('inputAccount').value;
@@ -1142,7 +1279,10 @@
     function triggerCoupleAction(actionId) {
       const root = document.getElementById('appRoot');
       if (actionId === 'heart') {
-        for (let i = 0; i < 8; i++) setTimeout(() => createFloatingHeart(root), i * 110);
+        const icons = ['❤️', '✨', '🌿', '💎'];
+        for (let i = 0; i < 9; i++) {
+          setTimeout(() => createFloatingHeart(root, icons[i % icons.length]), i * 100);
+        }
       } else if (actionId === 'touch') {
         root.classList.remove('shake-anim');
         void root.offsetWidth;
@@ -1162,7 +1302,7 @@
       heart.textContent = symbol;
       heart.style.left = Math.floor(Math.random() * 75 + 12) + '%';
       container.appendChild(heart);
-      setTimeout(() => heart.remove(), 2000);
+      setTimeout(() => heart.remove(), 2100);
     }
 
     function startCountdownTimer() {
@@ -1177,22 +1317,14 @@
       }, 1000);
     }
 
-    /**
-     * =========================================================================
-     * GLOBAL BRIDGE API CHO APP BÊN NGOÀI GỌI VÀO (`window.CoupleApp`)
-     * =========================================================================
-     */
     window.CoupleApp = {
-      // Gọi hàm này từ App để truyền cục JSON thật từ Backend vào ghi đè lên Mock Data
       setBackendData: function(newBackendData) {
         appState = { ...appState, ...newBackendData };
         hydrateUI(appState);
       },
-      // Chuyển màn hình từ code App: 'screen-login' | 'screen-dashboard' | 'screen-chat'
       navigate: function(screenId) {
         navigateTo(screenId);
       },
-      // Khi App nhận được tin nhắn mới qua Socket/API, gọi hàm này để đẩy tin nhắn vào UI và tăng số góc phải
       pushIncomingMessage: function(text) {
         appState.chatScreen.messages.push({ id: Date.now(), sender: 'partner', text });
         appState.dashboardScreen.featuredChatWidget.lastMessagePreview = text;
@@ -1209,7 +1341,6 @@
       }
     };
 
-    // Lắng nghe message từ App cha (nếu nhúng qua iframe)
     window.addEventListener('message', (event) => {
       const { action, payload } = event.data || {};
       if (action === 'SET_DATA') window.CoupleApp.setBackendData(payload);
@@ -1217,9 +1348,8 @@
       if (action === 'INCOMING_MSG') window.CoupleApp.pushIncomingMessage(payload);
     });
 
-    // Khởi tạo
     window.addEventListener('DOMContentLoaded', () => {
-      // Cho phép mở thẳng màn hình bất kỳ qua URL param, ví dụ: couple-embed.html?screen=dashboard
+      initSparkles();
       const params = new URLSearchParams(window.location.search);
       const initScreen = params.get('screen');
       hydrateUI(appState);
