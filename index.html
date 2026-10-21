@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Yêu Thương UI - Ice Emerald & Modern Minimal</title>
+  <title>Yêu Thương UI - Modern Love Monotone & Sparkles</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,40 +13,40 @@
 
   <style>
     :root {
-      /* --- BẢNG MÀU MỚI: ICE EMERALD & MODERN MINIMAL --- */
-      --mint-primary: #0D9488;
-      --mint-light: #CCFBF1;
-      --mint-dark: #115E59;
-      --accent-champagne: #F59E0B;
-      
-      /* Hệ thống nền & Kính mờ */
-      --bg-main: linear-gradient(135deg, #F0FDF4 0%, #E0F2FE 50%, #F5F3FF 100%);
-      --bg-glass: rgba(255, 255, 255, 0.85);
-      --bg-glass-strong: rgba(255, 255, 255, 0.96);
-      --bg-input: rgba(241, 245, 249, 0.85);
+      /* --- TÔNG MÀU TÌNH YÊU HIỆN ĐẠI (MONOTONE ROSE & SOFT BLUSH) --- */
+      --love-primary: #D946EF;    
+      --love-dark: #831843;       
+      --love-soft: #FCE7F3;       
+      --love-accent: #FB7185;     
 
-      /* Gradient cực kỳ mềm mại, không bị cứng */
-      --primary-gradient: linear-gradient(105deg, #0D9488 0%, #14B8A6 60%, #0284C7 100%);
-      --chat-card-gradient: linear-gradient(105deg, #115E59 0%, #0D9488 50%, #0369A1 100%);
+      /* Hệ thống nền & Kính mờ */
+      --bg-main: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 50%, #FCE7F3 100%);
+      --bg-glass: rgba(255, 255, 255, 0.82);
+      --bg-glass-strong: rgba(255, 255, 255, 0.95);
+      --bg-input: rgba(255, 241, 242, 0.85);
+
+      /* Gradient mượt mà, đồng điệu màu tình yêu */
+      --primary-gradient: linear-gradient(105deg, #E11D48 0%, #F43F5E 50%, #FB7185 100%);
+      --chat-card-gradient: linear-gradient(105deg, #831843 0%, #BE123C 50%, #E11D48 100%);
 
       /* Trạng thái */
-      --badge-red: #EF4444;
+      --badge-red: #E11D48;
       --status-online: #10B981;
 
-      /* Typography sắc nét, trầm ấm */
+      /* Typography */
       --text-primary: #1E293B;
-      --text-accent: #0D9488;
+      --text-accent: #9F1239;
       --text-secondary: #64748B;
       --text-white: #FFFFFF;
 
-      /* Bo góc & Đổ bóng tinh tế */
+      /* Bo góc & Đổ bóng */
       --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 14px;
       --radius-pill: 9999px;
 
-      --shadow-soft: 0 10px 25px -5px rgba(13, 148, 136, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-      --shadow-floating: 0 16px 35px -8px rgba(13, 148, 136, 0.2), 0 0 20px rgba(204, 251, 241, 0.5);
+      --shadow-soft: 0 10px 25px -5px rgba(225, 29, 72, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --shadow-floating: 0 16px 35px -8px rgba(225, 29, 72, 0.22), 0 0 20px rgba(254, 205, 211, 0.6);
       --border-shimmer: 1px solid rgba(255, 255, 255, 0.9);
 
       --safe-top: env(safe-area-inset-top, 0px);
@@ -67,7 +67,7 @@
       overflow: hidden;
       font-family: 'Nunito', sans-serif;
       color: var(--text-primary);
-      background: linear-gradient(-45deg, #E2ECE9, #F1F8F6, #E0F2FE, #F5F3FF);
+      background: linear-gradient(-45deg, #FFF1F2, #FFE4E6, #FCE7F3, #FDF2F8);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
     }
@@ -87,30 +87,50 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
     }
 
-    /* Hiệu ứng hạt lấp lánh (Sparkles) */
-    .sparkle-layer {
+    /* --- HIỆU ỨNG BONG BÓNG TÌNH YÊU & LẤP LÁNH --- */
+    .bubble-layer, .sparkle-layer {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 1;
       overflow: hidden;
     }
+
+    .love-bubble {
+      position: absolute;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(244, 63, 94, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: floatBubble 8s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.9);
+    }
+    @keyframes floatBubble {
+      0% { transform: translateY(100dvh) scale(0.6); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
+    }
+
     .sparkle-dot {
       position: absolute;
-      color: var(--mint-primary);
-      text-shadow: 0 0 8px rgba(13, 148, 136, 0.6);
-      animation: twinkle 4s infinite ease-in-out;
-      font-size: 10px;
-      opacity: 0.6;
+      color: #F43F5E;
+      text-shadow: 0 0 10px rgba(244, 63, 94, 0.8);
+      animation: twinkle 3.5s infinite ease-in-out;
+      font-size: 11px;
+      opacity: 0.7;
     }
     @keyframes twinkle {
-      0%, 100% { opacity: 0.15; transform: scale(0.7) rotate(0deg); }
-      50% { opacity: 0.8; transform: scale(1.2) rotate(45deg); }
+      0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
+      50% { opacity: 0.95; transform: scale(1.3) rotate(45deg); }
     }
 
     .screen {
@@ -149,14 +169,14 @@
       text-align: center;
     }
     .couple-illustration {
-      width: 124px;
-      height: 124px;
+      width: 128px;
+      height: 128px;
       margin: 0 auto 12px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #CCFBF1 0%, #FFFFFF 100%);
-      box-shadow: 0 12px 30px rgba(13, 148, 136, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
+      background: linear-gradient(135deg, #FFE4E6 0%, #FFFFFF 100%);
+      box-shadow: 0 12px 30px rgba(225, 29, 72, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
       overflow: hidden;
-      border: 2px solid var(--mint-primary);
+      border: 2px solid var(--badge-red);
     }
     .couple-illustration img {
       width: 100%;
@@ -164,7 +184,7 @@
       object-fit: cover;
     }
     .app-title {
-      font-size: 27px;
+      font-size: 28px;
       font-weight: 700;
       color: var(--text-accent);
       margin-bottom: 4px;
@@ -194,7 +214,7 @@
       width: 100%;
       padding: 13px 40px 13px 18px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid rgba(204, 251, 241, 0.9);
+      border: 1.5px solid rgba(254, 205, 211, 0.9);
       background: var(--bg-input);
       font-family: inherit;
       font-size: 14px;
@@ -203,9 +223,9 @@
       transition: 0.2s;
     }
     .input-box input:focus {
-      border-color: var(--mint-primary);
+      border-color: var(--badge-red);
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
     }
     .input-box .input-icon {
       position: absolute;
@@ -226,7 +246,7 @@
       font-size: 15px;
       letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 6px 18px -4px rgba(13, 148, 136, 0.35);
+      box-shadow: 0 6px 18px -4px rgba(225, 29, 72, 0.35);
       transition: transform 0.15s, filter 0.15s;
     }
     .btn-primary:hover {
@@ -237,9 +257,9 @@
     }
 
     .pairing-card {
-      background: rgba(204, 251, 241, 0.4);
+      background: rgba(254, 226, 226, 0.45);
       backdrop-filter: blur(12px);
-      border: 1.5px dashed rgba(13, 148, 136, 0.4);
+      border: 1.5px dashed rgba(225, 29, 72, 0.4);
       border-radius: var(--radius-lg);
       padding: 14px;
       text-align: center;
@@ -257,7 +277,7 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-pill);
       padding: 4px 4px 4px 16px;
-      border: 1px solid rgba(204, 251, 241, 0.9);
+      border: 1px solid rgba(254, 205, 211, 0.9);
       align-items: center;
     }
     .pairing-input-group input {
@@ -371,12 +391,12 @@
       width: 70px;
       height: 70px;
       border-radius: 50%;
-      border: 2.5px solid var(--mint-primary);
+      border: 2.5px solid var(--badge-red);
       padding: 3px;
       background: #fff;
       position: relative;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
     }
     .heart-avatar-frame img {
       width: 100%;
@@ -388,7 +408,7 @@
       position: absolute;
       bottom: -3px;
       right: -3px;
-      background: var(--mint-primary);
+      background: var(--badge-red);
       color: #fff;
       width: 23px;
       height: 23px;
@@ -418,7 +438,7 @@
       font-weight: 700;
       color: var(--text-accent);
       letter-spacing: 0.6px;
-      background: rgba(13, 148, 136, 0.1);
+      background: rgba(225, 29, 72, 0.1);
       padding: 2px 10px;
       border-radius: var(--radius-pill);
       width: fit-content;
@@ -439,7 +459,7 @@
     }
     .chat-widget-wrapper:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 35px -10px rgba(13, 148, 136, 0.3);
+      box-shadow: 0 18px 35px -10px rgba(225, 29, 72, 0.3);
     }
     .chat-widget-wrapper:active {
       transform: scale(0.98);
@@ -456,8 +476,8 @@
       gap: 6px;
     }
     .widget-section-title::before {
-      content: '✦';
-      color: var(--accent-champagne);
+      content: '♥';
+      color: var(--badge-red);
       font-size: 13px;
     }
     .chat-banner-box {
@@ -469,7 +489,7 @@
       align-items: center;
       gap: 12px;
       color: #fff;
-      box-shadow: 0 6px 18px -4px rgba(13, 148, 136, 0.35);
+      box-shadow: 0 6px 18px -4px rgba(131, 24, 67, 0.35);
     }
     .partner-avatar {
       width: 48px;
@@ -514,7 +534,7 @@
       justify-content: center;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.45);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.45);
       animation: pulseBadge 1.8s infinite;
       z-index: 10;
     }
@@ -551,8 +571,8 @@
     .feature-item:hover {
       transform: translateY(-3px) scale(1.02);
       background: #FFFFFF;
-      box-shadow: 0 12px 25px -5px rgba(13, 148, 136, 0.2);
-      border-color: rgba(13, 148, 136, 0.4);
+      box-shadow: 0 10px 22px -5px rgba(225, 29, 72, 0.2);
+      border-color: rgba(225, 29, 72, 0.4);
     }
     .feature-item:active {
       transform: scale(0.96);
@@ -561,8 +581,8 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #CCFBF1 0%, #E0F2FE 100%);
-      color: var(--mint-primary);
+      background: linear-gradient(135deg, #FFE4E6 0%, #FCE7F3 100%);
+      color: var(--badge-red);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -572,7 +592,7 @@
     }
     .feature-item:hover .feature-icon-box {
       transform: scale(1.1) rotate(5deg);
-      color: var(--mint-dark);
+      color: var(--love-dark);
     }
     .feature-label {
       font-size: 12px;
@@ -592,7 +612,7 @@
       align-items: center;
       padding-left: 12px;
       padding-right: 12px;
-      border-top: 1px solid rgba(226, 232, 240, 0.7);
+      border-top: 1px solid rgba(254, 205, 211, 0.7);
       flex-shrink: 0;
       z-index: 10;
     }
@@ -610,13 +630,13 @@
       transition: color 0.2s;
     }
     .nav-tab:hover {
-      color: var(--mint-primary);
+      color: var(--badge-red);
     }
     .nav-tab i {
       font-size: 18px;
     }
     .nav-tab.active {
-      color: var(--mint-primary);
+      color: var(--badge-red);
       font-weight: 700;
     }
     .nav-tab.active::before {
@@ -626,7 +646,7 @@
       width: 22px;
       height: 3px;
       border-radius: 3px;
-      background: var(--mint-primary);
+      background: var(--badge-red);
     }
 
     /* MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN */
@@ -637,7 +657,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+      border-bottom: 1px solid rgba(254, 205, 211, 0.7);
       z-index: 10;
     }
     .chat-header-left {
@@ -649,7 +669,7 @@
       background: none;
       border: none;
       font-size: 18px;
-      color: var(--mint-primary);
+      color: var(--badge-red);
       cursor: pointer;
       padding: 4px 6px;
     }
@@ -658,7 +678,7 @@
       height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--mint-primary);
+      border: 2px solid var(--badge-red);
     }
     .chat-user-meta h4 {
       font-size: 15px;
@@ -681,7 +701,7 @@
     .chat-header-actions {
       display: flex;
       gap: 16px;
-      color: var(--mint-primary);
+      color: var(--badge-red);
       font-size: 17px;
     }
     .chat-header-actions i {
@@ -690,7 +710,7 @@
     }
     .chat-header-actions i:hover {
       transform: scale(1.12);
-      color: var(--mint-dark);
+      color: var(--love-dark);
     }
 
     .message-stream {
@@ -700,7 +720,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: linear-gradient(180deg, rgba(240, 253, 244, 0.4) 0%, rgba(224, 242, 254, 0.4) 100%);
+      background: linear-gradient(180deg, rgba(255, 241, 242, 0.4) 0%, rgba(252, 231, 243, 0.4) 100%);
     }
     .msg-row {
       display: flex;
@@ -731,7 +751,7 @@
     .msg-row.partner .msg-bubble {
       background: rgba(255, 255, 255, 0.92);
       color: var(--text-primary);
-      border: 1px solid rgba(226, 232, 240, 0.8);
+      border: 1px solid rgba(254, 205, 211, 0.8);
       border-radius: 18px 18px 18px 4px;
       box-shadow: 0 3px 8px rgba(100, 116, 139, 0.04);
     }
@@ -739,7 +759,7 @@
       background: var(--primary-gradient);
       color: #FFFFFF;
       border-radius: 18px 18px 4px 18px;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.22);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
     }
 
     .quick-actions-bar {
@@ -749,11 +769,11 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      border-top: 1px solid rgba(226, 232, 240, 0.7);
+      border-top: 1px solid rgba(254, 205, 211, 0.7);
     }
     .quick-action-card {
-      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
-      border: 1px solid rgba(13, 148, 136, 0.25);
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFF1F2 100%);
+      border: 1px solid rgba(254, 205, 211, 0.7);
       border-radius: var(--radius-md);
       padding: 8px 4px;
       display: flex;
@@ -764,7 +784,7 @@
       transition: transform 0.15s, background 0.15s;
     }
     .quick-action-card:hover {
-      background: #CCFBF1;
+      background: #FFE4E6;
       transform: translateY(-2px);
     }
     .quick-action-card:active {
@@ -772,7 +792,7 @@
     }
     .quick-action-card i {
       font-size: 17px;
-      color: var(--mint-primary);
+      color: var(--badge-red);
     }
     .quick-action-title {
       font-size: 11px;
@@ -795,7 +815,7 @@
     .chat-input-wrapper {
       flex: 1;
       background: var(--bg-input);
-      border: 1px solid rgba(204, 251, 241, 0.8);
+      border: 1px solid rgba(254, 205, 211, 0.8);
       border-radius: var(--radius-pill);
       padding: 9px 14px;
       display: flex;
@@ -818,7 +838,7 @@
       transition: color 0.2s;
     }
     .chat-input-wrapper i:hover {
-      color: var(--mint-primary);
+      color: var(--badge-red);
     }
     .send-btn {
       width: 38px;
@@ -832,7 +852,7 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
       transition: transform 0.15s, filter 0.15s;
     }
     .send-btn:hover {
@@ -867,7 +887,7 @@
       top: calc(var(--safe-top) + 16px);
       left: 50%;
       transform: translateX(-50%);
-      background: var(--mint-dark);
+      background: var(--love-dark);
       color: #fff;
       padding: 8px 18px;
       border-radius: var(--radius-pill);
@@ -878,7 +898,7 @@
       pointer-events: none;
       transition: opacity 0.25s;
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
+      box-shadow: 0 8px 20px rgba(131, 24, 67, 0.35);
     }
     .toast-box.show {
       opacity: 1;
@@ -888,6 +908,8 @@
 <body>
 
   <div class="app-root" id="appRoot">
+    <!-- Các lớp hiệu ứng bong bóng và lấp lánh -->
+    <div class="bubble-layer" id="bubbleLayer"></div>
     <div class="sparkle-layer" id="sparkleLayer"></div>
     <div class="toast-box" id="toastBox"></div>
 
@@ -1031,7 +1053,7 @@
           providers: [
             { id: "facebook", icon: "fa-brands fa-facebook-f", bgColor: "#1877F2" },
             { id: "twitter", icon: "fa-brands fa-twitter", bgColor: "#1DA1F2" },
-            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#0D9488" },
+            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#E11D48" },
             { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#1E293B" }
           ]
         }
@@ -1081,8 +1103,8 @@
           { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
         ],
         messages: [
-          { id: 101, sender: "partner", text: "Giao diện tông màu Xanh ngọc Mint nhìn mát mắt và sang quá anh ơi!" },
-          { id: 102, sender: "me", text: "Đúng rồi, phối màu này vừa nhã nhặn vừa hiện đại, nhìn rất thư giãn ✨" },
+          { id: 101, sender: "partner", text: "Giao diện màu tình yêu có bong bóng nổi và lấp lánh nhìn nên thơ quá anh nhỉ!" },
+          { id: 102, sender: "me", text: "Đúng rồi, tông màu đồng điệu, dịu ngọt và cực kỳ hiện đại ✨" },
           { id: 103, sender: "partner", text: "Tối nay mình đi ăn lẩu nha?" },
           { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
           { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
@@ -1093,20 +1115,36 @@
     let appState = structuredClone(MOCK_BACKEND_RESPONSE);
     let currentScreenId = 'screen-login';
 
-    function initSparkles() {
-      const layer = document.getElementById('sparkleLayer');
-      const symbols = ['✦', '✧', '⋆'];
-      const count = 14;
-      let html = '';
-      for (let i = 0; i < count; i++) {
-        const top = Math.random() * 94 + 2;
-        const left = Math.random() * 92 + 4;
+    function initVisualEffects() {
+      const sparkleLayer = document.getElementById('sparkleLayer');
+      const bubbleLayer = document.getElementById('bubbleLayer');
+      
+      const sparkleSymbols = ['✦', '✧', '⋆', '♥'];
+      let sparkleHtml = '';
+      for (let i = 0; i < 15; i++) {
+        const top = Math.random() * 96;
+        const left = Math.random() * 94;
         const delay = (Math.random() * 4).toFixed(1);
-        const duration = (3 + Math.random() * 2).toFixed(1);
-        const sym = symbols[i % symbols.length];
-        html += `<span class="sparkle-dot" style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${duration}s">${sym}</span>`;
+        const duration = (3 + Math.random() * 2.5).toFixed(1);
+        const sym = sparkleSymbols[i % sparkleSymbols.length];
+        sparkleHtml += `<span class="sparkle-dot" style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${duration}s">${sym}</span>`;
       }
-      layer.innerHTML = html;
+      sparkleLayer.innerHTML = sparkleHtml;
+
+      setInterval(() => {
+        if (bubbleLayer && bubbleLayer.childElementCount < 8) {
+          const bubble = document.createElement('div');
+          bubble.className = 'love-bubble';
+          const size = Math.floor(Math.random() * 24) + 16;
+          bubble.style.width = `${size}px`;
+          bubble.style.height = `${size}px`;
+          bubble.style.left = `${Math.random() * 88 + 6}%`;
+          bubble.style.animationDuration = `${Math.random() * 4 + 6}s`;
+          if (Math.random() > 0.6) bubble.innerHTML = '♥';
+          bubbleLayer.appendChild(bubble);
+          setTimeout(() => bubble.remove(), 10000);
+        }
+      }, 1200);
     }
 
     function emitEventToHostApp(eventName, payload) {
@@ -1279,7 +1317,7 @@
     function triggerCoupleAction(actionId) {
       const root = document.getElementById('appRoot');
       if (actionId === 'heart') {
-        const icons = ['❤️', '✨', '🌿', '💎'];
+        const icons = ['❤️', '✨', '💖', '♥'];
         for (let i = 0; i < 9; i++) {
           setTimeout(() => createFloatingHeart(root, icons[i % icons.length]), i * 100);
         }
@@ -1349,7 +1387,7 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-      initSparkles();
+      initVisualEffects();
       const params = new URLSearchParams(window.location.search);
       const initScreen = params.get('screen');
       hydrateUI(appState);
