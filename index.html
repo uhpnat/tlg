@@ -1,1502 +1,861 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>TPVT - Monotone Ice Blue</title>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<!-- Không khóa zoom (maximum-scale/user-scalable) để giữ khả năng truy cập; input đủ 16px nên iOS không tự phóng to -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E0F2FE">
+<title>TPVT - Ice Blue (v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ---------- Design tokens: Ice Blue monotone ---------- */
+    --blue-primary: #38BDF8;   /* trang trí: viền, vạch, ánh sáng (không dùng làm chữ) */
+    --blue-action-from: #0A78B5;
+    --blue-action-to: #0369A1; /* chữ trắng trên nền này đạt AA (4,8 – 5,9) */
+    --blue-dark: #0369A1;      /* chữ nhấn, icon có nghĩa */
+    --blue-mid: #0284C7;
+    --blue-light: #E0F2FE;
+    --blue-soft: #F0F9FF;
+    --blue-line: #BAE6FD;
 
-  <style>
-    :root {
-      /* --- TÔNG MÀU ĐƠN SẮC XANH DƯƠNG NHẠT (ICE BLUE MONOTONE) --- */
-      --blue-primary: #38BDF8;    /* Xanh dương nhạt chủ đạo */
-      --blue-light: #E0F2FE;      /* Xanh băng giá */
-      --blue-dark: #0369A1;       /* Xanh dương trầm sang trọng */
-      --blue-soft: #F0F9FF;       /* Nền xanh cực nhạt */
+    --text-primary: #0F172A;
+    --text-secondary: #475569; /* 7,6:1 trên trắng, 6,6:1 trên blue-light */
+    --text-on-action: #FFFFFF;
 
-      /* Hệ thống nền & Kính mờ đồng điệu */
-      --bg-main: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
-      --bg-glass: rgba(255, 255, 255, 0.85);
-      --bg-glass-strong: rgba(255, 255, 255, 0.95);
-      --bg-input: rgba(224, 242, 254, 0.5);
+    --badge-red: #E11D48;
+    --status-online: #10B981;
+    --warn: #B45309;
+    --warn-bg: #FEF3C7;
 
-      /* Gradient đơn sắc xanh nhạt mượt mà */
-      --primary-gradient: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
-      --chat-card-gradient: linear-gradient(110deg, #0284C7 0%, #0369A1 100%);
+    --glass: rgba(255, 255, 255, 0.86);
+    --glass-strong: rgba(255, 255, 255, 0.96);
+    --input-bg: rgba(224, 242, 254, 0.55);
 
-      /* Trạng thái */
-      --badge-red: #F43F5E;
-      --status-online: #10B981;
+    --action-gradient: linear-gradient(135deg, var(--blue-action-from) 0%, var(--blue-action-to) 100%);
 
-      /* Typography */
-      --text-primary: #0F172A;
-      --text-accent: #0284C7;
-      --text-secondary: #64748B;
-      --text-white: #FFFFFF;
+    --radius-xl: 24px; --radius-lg: 18px; --radius-md: 14px; --radius-pill: 9999px;
+    --shadow-soft: 0 10px 25px -5px rgba(56, 189, 248, 0.14), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    --shadow-float: 0 16px 35px -8px rgba(56, 189, 248, 0.24), 0 0 20px rgba(224, 242, 254, 0.8);
+    --shimmer: 1px solid rgba(255, 255, 255, 0.95);
 
-      /* Bo góc & Đổ bóng */
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-pill: 9999px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --tap: 44px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  }
 
-      --shadow-soft: 0 10px 25px -5px rgba(56, 189, 248, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-      --shadow-floating: 0 16px 35px -8px rgba(56, 189, 248, 0.22), 0 0 20px rgba(224, 242, 254, 0.8);
-      --border-shimmer: 1px solid rgba(255, 255, 255, 0.95);
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-    }
+  html, body {
+    width: 100%; height: 100%; overflow: hidden; overscroll-behavior: none;
+    font-family: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text-primary);
+    background: linear-gradient(160deg, #E0F2FE 0%, #F0F9FF 55%, #F8FAFC 100%);
+    -webkit-text-size-adjust: 100%;
+  }
+  /* Chặn chọn chữ ở phần giao diện, nhưng vẫn cho gõ và chọn nội dung tin nhắn */
+  body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea, .selectable { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+  h1, h2, h3, h4, .heading { font-family: 'Quicksand', 'Nunito', system-ui, sans-serif; }
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 3px solid var(--blue-mid); outline-offset: 2px; }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Nunito', sans-serif;
-      color: var(--text-primary);
-      background: linear-gradient(-45deg, #E0F2FE, #F0F9FF, #EFF6FF, #F8FAFC);
-      background-size: 400% 400%;
-      animation: gradientBG 22s ease infinite;
-    }
+  .ico { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  /* ---------- Khung ứng dụng ---------- */
+  .app-root {
+    position: relative; width: 100%; max-width: 480px; margin: 0 auto; overflow: hidden;
+    height: var(--app-h, 100dvh);   /* JS cập nhật theo visualViewport để bàn phím không che ô nhập */
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.2);
+  }
 
-    .app-root {
-      width: 100%;
-      height: 100dvh;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.2);
-    }
+  /* Hiệu ứng nền nhẹ, chỉ bằng CSS (không timer JS) */
+  .ambient { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .ambient .bub {
+    position: absolute; bottom: -60px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(56,189,248,.12));
+    border: 1px solid rgba(255,255,255,.7);
+    animation: floatUp var(--d, 12s) linear infinite; animation-delay: var(--s, 0s);
+  }
+  .ambient .spk { position: absolute; color: var(--blue-primary); font-size: 11px; opacity: .55; animation: twinkle 4s ease-in-out infinite; animation-delay: var(--s, 0s); }
+  @keyframes floatUp { 0% { transform: translateY(0) scale(.6); opacity: 0; } 15% { opacity: .55; } 85% { opacity: .55; } 100% { transform: translateY(-105dvh) scale(1.1); opacity: 0; } }
+  @keyframes twinkle { 0%,100% { opacity: .15; transform: scale(.7); } 50% { opacity: .8; transform: scale(1.25); } }
 
-    /* --- HIỆU ỨNG BONG BÓNG & TUYẾT LẤP LÁNH --- */
-    .bubble-layer, .sparkle-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
+  /* ---------- Màn hình ---------- */
+  .screen {
+    position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
+    padding-top: var(--safe-top); overflow: hidden;
+    background: linear-gradient(180deg, rgba(240,249,255,.9), rgba(224,242,254,.65));
+    visibility: hidden; opacity: 0; transform: translateX(28px); pointer-events: none;
+    transition: transform .35s var(--ease-out), opacity .3s ease, visibility 0s linear .35s;
+  }
+  .screen.active { visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
+  .screen.peek { visibility: visible; opacity: 1; }
+  .scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+  .scroll::-webkit-scrollbar { display: none; }
 
-    .love-bubble {
-      position: absolute;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(56, 189, 248, 0.12));
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      animation: floatBubble 9s infinite ease-in-out;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #38BDF8;
-      box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.9);
-    }
-    @keyframes floatBubble {
-      0% { transform: translateY(105dvh) scale(0.5); opacity: 0; }
-      20% { opacity: 0.5; }
-      80% { opacity: 0.5; }
-      100% { transform: translateY(-120px) scale(1.15); opacity: 0; }
-    }
+  /* ---------- Nút & ô nhập dùng chung ---------- */
+  .btn-primary {
+    width: 100%; min-height: 48px; padding: 12px 18px; border-radius: var(--radius-pill);
+    background: var(--action-gradient); color: var(--text-on-action);
+    font-family: 'Quicksand', system-ui, sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .4px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 6px 18px -4px rgba(3, 105, 161, 0.4);
+    transition: transform .2s var(--ease-spring), filter .2s, opacity .2s;
+  }
+  .btn-primary:active { transform: scale(.97); }
+  .btn-primary[disabled] { opacity: .65; cursor: default; }
+  .btn-ghost {
+    min-height: var(--tap); padding: 10px 18px; border-radius: var(--radius-pill);
+    border: 1.5px solid var(--blue-line); background: var(--glass-strong); color: var(--blue-dark); font-weight: 700;
+  }
+  .icon-btn {
+    width: var(--tap); height: var(--tap); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--blue-dark); font-size: 20px; transition: transform .2s var(--ease-spring), background .2s;
+  }
+  .icon-btn:active { transform: scale(.88); }
 
-    .sparkle-dot {
-      position: absolute;
-      color: #38BDF8;
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-      animation: twinkle 3.5s infinite ease-in-out;
-      font-size: 11px;
-      opacity: 0.7;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
-      50% { opacity: 0.95; transform: scale(1.3) rotate(45deg); }
-    }
+  .field {
+    width: 100%; min-height: 48px; padding: 12px 48px 12px 18px; border-radius: var(--radius-pill);
+    border: 1.5px solid var(--blue-line); background: var(--input-bg);
+    font: inherit; font-size: 16px; color: var(--text-primary); outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+  }
+  .field::placeholder { color: #64748B; }
+  .field:focus { border-color: var(--blue-mid); background: #fff; box-shadow: 0 0 0 4px rgba(56,189,248,.2); }
+  .field.invalid { border-color: var(--badge-red); }
+  .field-wrap { position: relative; display: flex; align-items: center; }
+  .field-wrap .icon-btn { position: absolute; right: 2px; }
 
-    /* --- HỆ THỐNG MÀN HÌNH & CHUYỂN ĐỘNG FLUID --- */
-    .screen {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
-      position: absolute;
-      inset: 0;
-      padding-top: var(--safe-top);
-      z-index: 2;
-      background: inherit;
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-      will-change: transform, opacity;
-      opacity: 0;
-      transform: translateX(30px);
-      pointer-events: none;
-    }
+  .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.45); border-top-color: #fff; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-    .screen.active {
-      display: flex;
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: auto;
-    }
+  /* ---------- 1. Đăng nhập ---------- */
+  .login-screen .scroll { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 20px 24px calc(var(--safe-bottom) + 24px); }
+  .login-hero { text-align: center; }
+  .hero-img {
+    width: 120px; height: 120px; margin: 0 auto 12px; border-radius: 50%; overflow: hidden;
+    border: 2px solid var(--blue-primary); background: #fff;
+    box-shadow: 0 12px 30px rgba(56,189,248,.22), 0 0 0 4px rgba(255,255,255,.95);
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .app-title { font-size: 30px; font-weight: 700; color: var(--blue-dark); line-height: 1.15; }
+  .app-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+  .card-glass { background: var(--glass); border: var(--shimmer); border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); }
+  .login-form { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .form-msg { font-size: 14px; font-weight: 600; min-height: 1.3em; padding: 0 6px; }
+  .form-msg.err { color: var(--badge-red); }
+  .pairing-card { padding: 14px; text-align: center; border: 1.5px dashed rgba(2,132,199,.45); background: rgba(224,242,254,.55); border-radius: var(--radius-lg); }
+  .pairing-title { font-size: 13px; font-weight: 700; color: var(--blue-dark); letter-spacing: .6px; margin-bottom: 10px; }
+  .pairing-row { display: flex; align-items: center; gap: 6px; background: #fff; border-radius: var(--radius-pill); padding: 4px 4px 4px 16px; border: 1px solid var(--blue-line); }
+  .pairing-row input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--text-primary); }
+  .pairing-row .btn-primary { width: auto; min-height: 44px; padding: 8px 18px; font-size: 14px; }
 
-    .screen::-webkit-scrollbar {
-      display: none;
-    }
+  /* ---------- 2. Trang chính ---------- */
+  .dash-pad { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+  .dash-header { display: flex; align-items: center; justify-content: space-between; }
+  .dash-title { font-size: 22px; font-weight: 700; color: var(--blue-dark); }
+  .bell { position: relative; background: var(--glass); border: var(--shimmer); box-shadow: var(--shadow-soft); }
+  .bell-dot { position: absolute; top: 9px; right: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--badge-red); border: 2px solid #fff; }
 
-    h1, h2, h3, .heading-font {
-      font-family: 'Quicksand', sans-serif;
-    }
+  .couple-banner { display: flex; align-items: center; gap: 14px; padding: 13px 16px; }
+  .avatar-frame { position: relative; width: 70px; height: 70px; flex-shrink: 0; border-radius: 50%; border: 2.5px solid var(--blue-primary); padding: 3px; background: #fff; box-shadow: 0 4px 12px rgba(56,189,248,.25); }
+  .avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+  .avatar-heart { position: absolute; right: -3px; bottom: -3px; width: 24px; height: 24px; border-radius: 50%; background: var(--blue-mid); color: #fff; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .couple-stats { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .days-count { font-size: 16px; font-weight: 700; }
+  .countdown-label { font-size: 12px; color: var(--text-secondary); }
+  .countdown-timer { font-size: 14px; font-weight: 700; color: var(--blue-dark); background: rgba(56,189,248,.14); padding: 2px 10px; border-radius: var(--radius-pill); width: fit-content; font-variant-numeric: tabular-nums; }
 
-    /* MÀN HÌNH 1: ĐĂNG NHẬP */
-    .login-screen {
-      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px);
-      justify-content: space-between;
-    }
-    .login-hero {
-      text-align: center;
-    }
-    .couple-illustration {
-      width: 128px;
-      height: 128px;
-      margin: 0 auto 12px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 100%);
-      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
-      overflow: hidden;
-      border: 2px solid var(--blue-primary);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .couple-illustration:hover {
-      transform: scale(1.05);
-    }
-    .couple-illustration img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .app-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-accent);
-      margin-bottom: 4px;
-    }
-    .app-subtitle {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
+  .chat-widget { position: relative; display: block; width: 100%; text-align: left; margin-top: 8px; padding: 14px 16px 16px; background: var(--glass-strong); border: var(--shimmer); border-radius: var(--radius-xl); box-shadow: var(--shadow-float); transition: transform .25s var(--ease-spring); }
+  .chat-widget:active { transform: scale(.98); }
+  .widget-title { display: flex; width: 100%; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--blue-dark); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 10px; }
+  .widget-title::before { content: '✦'; color: var(--blue-primary); font-size: 13px; }
+  .chat-banner { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-radius: var(--radius-lg); color: #fff; background: linear-gradient(110deg, var(--blue-action-from) 0%, var(--blue-action-to) 100%); box-shadow: 0 6px 18px -4px rgba(3,105,161,.4); }
+  .partner-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); object-fit: cover; flex-shrink: 0; }
+  .chat-preview { display: block; flex: 1; min-width: 0; padding-right: 14px; }
+  .partner-name { display: block; font-size: 16px; font-weight: 700; }
+  .last-msg { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .unread { position: absolute; top: -12px; right: 6px; min-width: 28px; height: 28px; padding: 0 7px; border-radius: var(--radius-pill); background: var(--badge-red); color: #fff; border: 2.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; box-shadow: 0 4px 12px rgba(225,29,72,.4); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
 
-    .login-form {
-      background: var(--bg-glass);
-      backdrop-filter: blur(16px);
-      border: var(--border-shimmer);
-      padding: 20px;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .input-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .input-box input {
-      width: 100%;
-      padding: 13px 40px 13px 18px;
-      border-radius: var(--radius-pill);
-      border: 1.5px solid rgba(186, 230, 253, 0.9);
-      background: var(--bg-input);
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--text-primary);
-      outline: none;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .input-box input:focus {
-      border-color: var(--blue-primary);
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
-      transform: scale(1.01);
-    }
-    .input-box .input-icon {
-      position: absolute;
-      right: 16px;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .feature { min-height: 96px; padding: 14px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; background: var(--glass); border: var(--shimmer); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); transition: transform .25s var(--ease-spring); }
+  .feature:active { transform: scale(.95); }
+  .feature-ico { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, var(--blue-light), var(--blue-soft)); color: var(--blue-mid); display: flex; align-items: center; justify-content: center; font-size: 21px; }
+  .feature-label { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
 
-    .btn-primary {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: var(--radius-pill);
-      background: var(--primary-gradient);
-      color: var(--text-white);
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px -4px rgba(56, 189, 248, 0.4);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
-    }
-    .btn-primary:hover {
-      filter: brightness(1.05);
-    }
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
+  .bottom-nav { flex-shrink: 0; display: flex; justify-content: space-around; align-items: center; height: calc(64px + var(--safe-bottom)); padding: 0 8px var(--safe-bottom); background: rgba(255,255,255,.92); border-top: 1px solid rgba(186,230,253,.8); position: relative; z-index: 3; }
+  .nav-tab { position: relative; flex: 1; min-width: var(--tap); min-height: var(--tap); padding: 4px 2px; white-space: nowrap; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); transition: transform .2s; }
+  .nav-tab .ico { font-size: 21px; }
+  .nav-tab:active { transform: scale(.9); }
+  .nav-tab[aria-current="page"] { color: var(--blue-dark); font-weight: 700; }
+  .nav-tab[aria-current="page"]::before { content: ''; position: absolute; top: -5px; width: 24px; height: 3px; border-radius: 3px; background: var(--blue-primary); }
 
-    .pairing-card {
-      background: rgba(224, 242, 254, 0.5);
-      backdrop-filter: blur(12px);
-      border: 1.5px dashed rgba(56, 189, 248, 0.45);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-    }
-    .pairing-title {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--text-accent);
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
-    }
-    .pairing-input-group {
-      display: flex;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: var(--radius-pill);
-      padding: 4px 4px 4px 16px;
-      border: 1px solid rgba(186, 230, 253, 0.9);
-      align-items: center;
-    }
-    .pairing-input-group input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 13px;
-      font-family: inherit;
-      color: var(--text-primary);
-      background: transparent;
-    }
-    .btn-pair {
-      padding: 8px 18px;
-      border: none;
-      border-radius: var(--radius-pill);
-      background: var(--primary-gradient);
-      color: #fff;
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .btn-pair:active {
-      transform: scale(0.94);
-    }
+  /* ---------- 3. Trò chuyện ---------- */
+  .chat-header { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; background: var(--glass); border-bottom: 1px solid rgba(186,230,253,.8); position: relative; z-index: 3; }
+  .chat-head-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
+  .head-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-primary); margin-left: 2px; }
+  .head-meta { margin-left: 8px; min-width: 0; }
+  .head-meta h2 { font-size: 16px; font-weight: 700; color: var(--blue-dark); line-height: 1.2; }
+  .online { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+  .online i { width: 8px; height: 8px; border-radius: 50%; background: var(--status-online); display: inline-block; }
+  .chat-head-actions { display: flex; }
 
-    .social-login {
-      text-align: center;
-    }
-    .social-divider {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-    }
-    .social-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: none;
-      color: #fff;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .social-btn:hover {
-      transform: translateY(-3px) scale(1.1);
-    }
+  .stream { flex: 1; overflow-y: auto; padding: 14px 14px 8px; display: flex; flex-direction: column; gap: 10px; background: linear-gradient(180deg, rgba(224,242,254,.3), rgba(240,249,255,.55)); -webkit-overflow-scrolling: touch; }
+  .stream::-webkit-scrollbar { display: none; }
+  .day-sep { align-self: center; font-size: 12px; font-weight: 600; color: var(--text-secondary); background: rgba(255,255,255,.8); border-radius: var(--radius-pill); padding: 2px 12px; }
+  .msg { display: flex; align-items: flex-end; gap: 8px; max-width: 84%; animation: pop .3s var(--ease-spring); }
+  .msg.partner { align-self: flex-start; }
+  .msg.me { align-self: flex-end; flex-direction: row-reverse; }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+  .msg-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+  .bubble-col { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .msg.me .bubble-col { align-items: flex-end; }
+  .bubble { padding: 10px 14px; font-size: 16px; line-height: 1.45; word-break: break-word; }
+  .msg.partner .bubble { background: rgba(255,255,255,.97); color: var(--text-primary); border: 1px solid var(--blue-line); border-radius: 18px 18px 18px 4px; box-shadow: 0 3px 8px rgba(100,116,139,.05); }
+  .msg.me .bubble { background: var(--action-gradient); color: #fff; border-radius: 18px 18px 4px 18px; box-shadow: 0 4px 12px rgba(3,105,161,.25); }
+  .msg-meta { font-size: 12px; color: var(--text-secondary); padding: 0 4px; }
+  .msg.failed .bubble { background: #fff; color: var(--badge-red); border: 1.5px solid var(--badge-red); }
+  .typing { align-self: flex-start; display: flex; gap: 5px; padding: 12px 14px; background: rgba(255,255,255,.97); border: 1px solid var(--blue-line); border-radius: 18px 18px 18px 4px; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-mid); opacity: .5; animation: dot 1.2s ease-in-out infinite; }
+  .typing span:nth-child(2) { animation-delay: .15s; } .typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes dot { 0%,80%,100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: .9; } }
 
-    /* MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (DASHBOARD) */
-    .dashboard-content {
-      flex: 1;
-      padding: 16px 20px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-    }
-    .dash-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .dash-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-accent);
-    }
-    .notif-bell {
-      position: relative;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--bg-glass);
-      border: var(--border-shimmer);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      color: var(--text-accent);
-      cursor: pointer;
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.2s;
-    }
-    .notif-bell:active {
-      transform: scale(0.9);
-    }
-    .bell-dot {
-      position: absolute;
-      top: 7px;
-      right: 8px;
-      width: 7px;
-      height: 7px;
-      background: var(--badge-red);
-      border-radius: 50%;
-      border: 1.5px solid #fff;
-    }
+  .quick-bar { flex-shrink: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 14px 4px; background: rgba(255,255,255,.9); border-top: 1px solid rgba(186,230,253,.8); }
+  .quick { min-height: 56px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: linear-gradient(180deg, #fff, var(--blue-light)); border: 1px solid var(--blue-line); border-radius: var(--radius-md); transition: transform .2s var(--ease-spring); }
+  .quick:active { transform: scale(.93); }
+  .quick .ico { font-size: 18px; color: var(--blue-mid); }
+  .quick b { font-size: 12px; }
+  .quick small { font-size: 11px; color: var(--text-secondary); }
 
-    .couple-banner {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(14px);
-      padding: 13px 16px;
-      border-radius: var(--radius-xl);
-      border: var(--border-shimmer);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.25s ease;
-    }
-    .couple-banner:hover {
-      transform: translateY(-2px);
-    }
-    .heart-avatar-frame {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 2.5px solid var(--blue-primary);
-      padding: 3px;
-      background: #fff;
-      position: relative;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
-    }
-    .heart-avatar-frame img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .heart-badge-icon {
-      position: absolute;
-      bottom: -3px;
-      right: -3px;
-      background: var(--blue-primary);
-      color: #fff;
-      width: 23px;
-      height: 23px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10.5px;
-      border: 2px solid #fff;
-    }
-    .couple-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .days-count {
-      font-size: 15.5px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .countdown-label {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-    }
-    .countdown-timer {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-accent);
-      letter-spacing: 0.6px;
-      background: rgba(56, 189, 248, 0.1);
-      padding: 2px 10px;
-      border-radius: var(--radius-pill);
-      width: fit-content;
-    }
+  .input-bar { flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 6px 12px calc(10px + var(--safe-bottom)); background: rgba(255,255,255,.94); }
+  .kb .input-bar, .kb .bottom-nav { padding-bottom: 8px; }
+  .input-wrap { flex: 1; min-width: 0; display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--blue-line); border-radius: var(--radius-pill); padding-left: 16px; transition: border-color .2s, box-shadow .2s; }
+  .input-wrap:focus-within { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(56,189,248,.2); }
+  .input-wrap input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--text-primary); }
+  .input-wrap input::placeholder { color: #64748B; }
+  .input-wrap .icon-btn { color: var(--text-secondary); }
+  .send { width: var(--tap); height: var(--tap); border-radius: 50%; background: var(--action-gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 4px 12px rgba(3,105,161,.35); transition: transform .2s var(--ease-spring), opacity .2s; }
+  .send:active { transform: scale(.9); }
+  .send[disabled] { opacity: .5; box-shadow: none; }
 
-    /* CHAT WIDGET */
-    .chat-widget-wrapper {
-      position: relative;
-      background: var(--bg-glass-strong);
-      backdrop-filter: blur(16px);
-      padding: 14px 16px 16px;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-floating);
-      border: var(--border-shimmer);
-      cursor: pointer;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
-      margin-top: 8px;
-    }
-    .chat-widget-wrapper:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.35);
-    }
-    .chat-widget-wrapper:active {
-      transform: scale(0.98);
-    }
-    .widget-section-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-accent);
-      margin-bottom: 10px;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .widget-section-title::before {
-      content: '✦';
-      color: var(--blue-primary);
-      font-size: 13px;
-    }
-    .chat-banner-box {
-      position: relative;
-      background: var(--chat-card-gradient);
-      border-radius: var(--radius-lg);
-      padding: 13px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      box-shadow: 0 6px 18px -4px rgba(2, 132, 199, 0.35);
-    }
-    .partner-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .chat-preview-info {
-      flex: 1;
-      overflow: hidden;
-      padding-right: 12px;
-    }
-    .partner-name {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-    .last-message {
-      font-size: 13px;
-      opacity: 0.92;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  /* ---------- Trạng thái: tải / lỗi / trống / mất mạng / hết phiên ---------- */
+  .skel { border-radius: var(--radius-lg); background: linear-gradient(90deg, rgba(186,230,253,.45) 25%, rgba(255,255,255,.85) 50%, rgba(186,230,253,.45) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .state-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 32px 28px; text-align: center; }
+  .state-ico { width: 72px; height: 72px; border-radius: 50%; background: var(--blue-light); color: var(--blue-dark); display: flex; align-items: center; justify-content: center; font-size: 32px; }
+  #dashError { min-height: calc(var(--app-h, 100dvh) - 220px); }
+  .state-view h3 { font-size: 19px; color: var(--text-primary); }
+  .state-view p { font-size: 15px; color: var(--text-secondary); max-width: 280px; }
+  .state-view .btn-ghost { margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; }
 
-    /* HUY HIỆU SỐ TIN NHẮN */
-    .unread-badge {
-      position: absolute;
-      top: -12px;
-      right: 4px;
-      background: var(--badge-red);
-      color: #fff;
-      min-width: 28px;
-      height: 28px;
-      padding: 0 7px;
-      border-radius: var(--radius-pill);
-      border: 2.5px solid #FFFFFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.45);
-      animation: pulseBadge 1.8s infinite;
-      z-index: 10;
-    }
-    .unread-badge.hidden {
-      display: none;
-    }
-    @keyframes pulseBadge {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
+  .offline-bar { position: absolute; left: 0; right: 0; top: 0; z-index: 90; display: flex; align-items: center; justify-content: center; gap: 8px; height: calc(var(--safe-top) + 36px); padding: var(--safe-top) 12px 0; background: var(--warn-bg); color: #78350F; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .has-offline .screen { padding-top: calc(var(--safe-top) + 36px); }
+  .overlay { position: absolute; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(15,23,42,.35); }
+  .sheet { width: 100%; max-width: 340px; padding: 24px 20px 20px; background: #fff; border-radius: var(--radius-xl); text-align: center; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 24px 60px rgba(15,23,42,.25); }
+  .sheet .state-ico { margin: 0 auto; }
+  .sheet p { font-size: 15px; color: var(--text-secondary); }
+  .sheet .btn-primary { margin-top: 8px; }
 
-    /* FEATURE GRID */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .feature-item {
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius-lg);
-      padding: 16px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 8px;
-      box-shadow: var(--shadow-soft);
-      border: var(--border-shimmer);
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .feature-item:hover {
-      transform: translateY(-4px) scale(1.03);
-      background: #FFFFFF;
-      box-shadow: 0 12px 25px -5px rgba(56, 189, 248, 0.22);
-      border-color: rgba(56, 189, 248, 0.4);
-    }
-    .feature-item:active {
-      transform: scale(0.95);
-    }
-    .feature-icon-box {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 100%);
-      color: var(--blue-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .feature-item:hover .feature-icon-box {
-      transform: scale(1.12) rotate(6deg);
-      color: var(--blue-dark);
-    }
-    .feature-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.25;
-    }
+  .toast { position: absolute; top: calc(var(--safe-top) + 14px); left: 50%; z-index: 100; max-width: calc(100% - 32px); padding: 10px 18px; border-radius: var(--radius-pill); background: #075985; color: #fff; font-size: 14px; font-weight: 700; text-align: center; opacity: 0; transform: translate(-50%, -16px); pointer-events: none; transition: opacity .25s, transform .25s var(--ease-spring); box-shadow: 0 8px 20px rgba(3,105,161,.35); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-    /* Bottom Navigation */
-    .bottom-nav {
-      height: calc(64px + var(--safe-bottom));
-      padding-bottom: var(--safe-bottom);
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(16px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding-left: 12px;
-      padding-right: 12px;
-      border-top: 1px solid rgba(224, 242, 254, 0.8);
-      flex-shrink: 0;
-      z-index: 10;
-    }
-    .nav-tab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: var(--text-secondary);
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      position: relative;
-      padding: 6px 12px;
-      transition: color 0.2s, transform 0.2s;
-    }
-    .nav-tab:active {
-      transform: scale(0.9);
-    }
-    .nav-tab:hover {
-      color: var(--blue-primary);
-    }
-    .nav-tab i {
-      font-size: 18px;
-    }
-    .nav-tab.active {
-      color: var(--blue-primary);
-      font-weight: 700;
-    }
-    .nav-tab.active::before {
-      content: '';
-      position: absolute;
-      top: -6px;
-      width: 22px;
-      height: 3px;
-      border-radius: 3px;
-      background: var(--blue-primary);
-    }
+  .fx-heart { position: absolute; bottom: 120px; z-index: 50; font-size: 22px; pointer-events: none; animation: heartUp 2.1s ease-out forwards; }
+  @keyframes heartUp { from { opacity: 1; transform: translateY(0) scale(.8); } to { opacity: 0; transform: translateY(-300px) scale(1.4) rotate(10deg); } }
+  .shake { animation: shake .45s ease-in-out; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-5px); } 40%,80% { transform: translateX(5px); } }
 
-    /* MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN */
-    .chat-header {
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(14px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(224, 242, 254, 0.8);
-      z-index: 10;
-    }
-    .chat-header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .back-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: var(--blue-primary);
-      cursor: pointer;
-      padding: 4px 6px;
-      transition: transform 0.2s;
-    }
-    .back-btn:active {
-      transform: scale(0.85);
-    }
-    .chat-header-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--blue-primary);
-    }
-    .chat-user-meta h4 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-accent);
-    }
-    .online-badge {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--text-secondary);
-    }
-    .online-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--status-online);
-      border-radius: 50%;
-    }
-    .chat-header-actions {
-      display: flex;
-      gap: 16px;
-      color: var(--blue-primary);
-      font-size: 17px;
-    }
-    .chat-header-actions i {
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .chat-header-actions i:hover {
-      transform: scale(1.15);
-      color: var(--blue-dark);
-    }
+  /* ---------- Hover chỉ khi thiết bị thật sự có chuột ---------- */
+  @media (hover: hover) {
+    .feature:hover, .chat-widget:hover { transform: translateY(-3px); }
+    .quick:hover { background: var(--blue-line); }
+    .icon-btn:hover { background: rgba(56,189,248,.14); }
+    .btn-primary:hover { filter: brightness(1.06); }
+  }
 
-    .message-stream {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: linear-gradient(180deg, rgba(224, 242, 254, 0.3) 0%, rgba(240, 249, 255, 0.5) 100%);
-    }
-    .msg-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      max-width: 82%;
-      animation: msgPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    @keyframes msgPop {
-      0% { opacity: 0; transform: translateY(12px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .msg-row.partner {
-      align-self: flex-start;
-    }
-    .msg-row.me {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-    .msg-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .msg-bubble {
-      padding: 11px 15px;
-      font-size: 15px;
-      line-height: 1.45;
-      word-break: break-word;
-    }
-    .msg-row.partner .msg-bubble {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--text-primary);
-      border: 1px solid rgba(186, 230, 253, 0.8);
-      border-radius: 18px 18px 18px 4px;
-      box-shadow: 0 3px 8px rgba(100, 116, 139, 0.04);
-    }
-    .msg-row.me .msg-bubble {
-      background: var(--primary-gradient);
-      color: #FFFFFF;
-      border-radius: 18px 18px 4px 18px;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
-    }
+  /* ---------- Giảm chuyển động ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    .ambient { display: none; }
+  }
 
-    .quick-actions-bar {
-      padding: 10px 14px 6px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      border-top: 1px solid rgba(224, 242, 254, 0.8);
-    }
-    .quick-action-card {
-      background: linear-gradient(180deg, #FFFFFF 0%, #E0F2FE 100%);
-      border: 1px solid rgba(186, 230, 253, 0.7);
-      border-radius: var(--radius-md);
-      padding: 8px 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s;
-    }
-    .quick-action-card:hover {
-      background: #BAE6FD;
-      transform: translateY(-2px);
-    }
-    .quick-action-card:active {
-      transform: scale(0.92);
-    }
-    .quick-action-card i {
-      font-size: 17px;
-      color: var(--blue-primary);
-    }
-    .quick-action-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-align: center;
-    }
-    .quick-action-sub {
-      font-size: 9.5px;
-      color: var(--text-secondary);
-    }
-
-    .chat-input-bar {
-      padding: 8px 14px calc(14px + var(--safe-bottom));
-      background: rgba(255, 255, 255, 0.92);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .chat-input-wrapper {
-      flex: 1;
-      background: var(--bg-input);
-      border: 1px solid rgba(186, 230, 253, 0.8);
-      border-radius: var(--radius-pill);
-      padding: 9px 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .chat-input-wrapper:focus-within {
-      border-color: var(--blue-primary);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
-    }
-    .chat-input-wrapper input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      outline: none;
-      font-family: inherit;
-      font-size: 14.5px;
-      color: var(--text-primary);
-    }
-    .chat-input-wrapper i {
-      color: var(--text-secondary);
-      cursor: pointer;
-      font-size: 16px;
-      transition: color 0.2s, transform 0.2s;
-    }
-    .chat-input-wrapper i:hover {
-      color: var(--blue-primary);
-      transform: scale(1.1);
-    }
-    .send-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: none;
-      background: var(--primary-gradient);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s;
-    }
-    .send-btn:hover {
-      filter: brightness(1.05);
-      transform: scale(1.08);
-    }
-    .send-btn:active {
-      transform: scale(0.9);
-    }
-
-    /* Animations & Toast */
-    .shake-anim {
-      animation: shakeView 0.45s ease-in-out;
-    }
-    @keyframes shakeView {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-5px); }
-      40%, 80% { transform: translateX(5px); }
-    }
-    .floating-heart {
-      position: absolute;
-      bottom: 80px;
-      font-size: 20px;
-      pointer-events: none;
-      animation: floatUp 2.1s ease-out forwards;
-      z-index: 50;
-    }
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0) scale(0.8); }
-      100% { opacity: 0; transform: translateY(-300px) scale(1.4) rotate(10deg); }
-    }
-
-    .toast-box {
-      position: absolute;
-      top: calc(var(--safe-top) + 16px);
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: var(--blue-dark);
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      font-weight: 600;
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(3, 105, 161, 0.35);
-    }
-    .toast-box.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  </style>
+  /* ---------- Bảng xem thử trạng thái (chỉ hiện trên màn hình rộng, không phải trong app) ---------- */
+  .dev-panel { display: none; }
+  @media (min-width: 860px) {
+    .dev-panel { display: flex; flex-direction: column; gap: 6px; position: fixed; top: 16px; left: calc(50% + 264px); width: 200px; padding: 12px; border-radius: 14px; background: #fff; border: 1px solid var(--blue-line); font-size: 13px; z-index: 200; -webkit-user-select: none; user-select: none; }
+    .dev-panel h4 { font-size: 12px; color: var(--text-secondary); margin: 6px 0 2px; letter-spacing: .5px; }
+    .dev-panel button { text-align: left; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--blue-line); background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; }
+    .dev-panel button[aria-pressed="true"] { background: var(--blue-dark); color: #fff; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="app-root" id="appRoot">
-    <div class="bubble-layer" id="bubbleLayer"></div>
-    <div class="sparkle-layer" id="sparkleLayer"></div>
-    <div class="toast-box" id="toastBox"></div>
+<div class="app-root" id="appRoot">
+  <div class="ambient" aria-hidden="true" id="ambient"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="offline-bar" id="offlineBar" role="status" hidden></div>
 
-    <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
-    <section class="screen login-screen active" id="screen-login">
+  <!-- 1. ĐĂNG NHẬP -->
+  <section class="screen login-screen active" id="screen-login" aria-label="Đăng nhập">
+    <div class="scroll">
       <div class="login-hero">
-        <div class="couple-illustration">
-          <img id="loginHeroImg" src="" alt="Couple Illustration">
-        </div>
-        <h1 class="app-title" id="loginAppTitle"></h1>
-        <p class="app-subtitle" id="loginAppSubtitle"></p>
+        <div class="hero-img"><img id="heroImg" alt=""></div>
+        <h1 class="app-title" id="appTitle"></h1>
+        <p class="app-subtitle" id="appSubtitle"></p>
       </div>
 
-      <form class="login-form" id="loginForm">
-        <div class="input-box">
-          <input type="text" id="inputAccount" required>
+      <form class="card-glass login-form" id="loginForm" novalidate>
+        <input class="field" id="inAccount" type="text" name="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="Tài khoản" required>
+        <div class="field-wrap">
+          <input class="field" id="inPassword" type="password" name="password" autocomplete="current-password" enterkeyhint="go" aria-label="Mật khẩu" required>
+          <button class="icon-btn" type="button" id="btnTogglePwd" aria-label="Hiện mật khẩu" aria-pressed="false"></button>
         </div>
-        <div class="input-box">
-          <input type="password" id="inputPassword" required>
-          <i class="fa-regular fa-eye-slash input-icon" id="togglePwdBtn"></i>
-        </div>
-        <button type="submit" class="btn-primary" id="btnLoginSubmit"></button>
+        <p class="form-msg" id="loginMsg" role="alert"></p>
+        <button class="btn-primary" type="submit" id="btnLogin"></button>
       </form>
 
       <div class="pairing-card">
-        <div class="pairing-title" id="pairingTitle"></div>
-        <div class="pairing-input-group">
-          <input type="text" id="inputPairCode">
-          <button type="button" class="btn-pair" id="btnPairSubmit"></button>
+        <div class="pairing-title" id="pairTitle"></div>
+        <div class="pairing-row">
+          <input id="inPair" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" aria-label="Mã của người ấy">
+          <button class="btn-primary" type="button" id="btnPair"></button>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="social-login">
-        <div class="social-divider" id="socialDividerText"></div>
-        <div class="social-icons" id="socialButtonsContainer"></div>
-      </div>
-    </section>
-
-    <!-- MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (MAIN DASHBOARD) -->
-    <section class="screen" id="screen-dashboard">
-      <div class="dashboard-content">
+  <!-- 2. TRANG CHÍNH -->
+  <section class="screen" id="screen-dashboard" aria-label="Góc nhỏ" inert>
+    <div class="scroll">
+      <div class="dash-pad" id="dashReady">
         <div class="dash-header">
-          <h2 class="dash-title" id="dashHeaderTitle"></h2>
-          <div class="notif-bell" id="notifBellBtn">
-            <i class="fa-regular fa-bell"></i>
-            <span class="bell-dot" id="bellDot"></span>
-          </div>
+          <h2 class="dash-title" id="dashTitle"></h2>
+          <button class="icon-btn bell" id="btnBell" aria-label="Thông báo"><span class="bell-dot" id="bellDot"></span></button>
         </div>
-
-        <div class="couple-banner">
-          <div class="heart-avatar-frame">
-            <img id="dashCoupleAvatar" src="" alt="Couple">
-            <div class="heart-badge-icon"><i class="fa-solid fa-heart"></i></div>
-          </div>
+        <div class="card-glass couple-banner">
+          <div class="avatar-frame"><img id="coupleImg" alt=""><span class="avatar-heart" id="coupleHeart"></span></div>
           <div class="couple-stats">
-            <div class="days-count" id="dashDaysTogether"></div>
-            <div class="countdown-label" id="dashCountdownLabel"></div>
-            <div class="countdown-timer" id="dashCountdownTimer"></div>
+            <div class="days-count" id="daysCount"></div>
+            <div class="countdown-label" id="cdLabel"></div>
+            <div class="countdown-timer" id="cdTimer"></div>
           </div>
         </div>
-
-        <!-- Mục Chat Nổi Bật + Huy Hiệu An Toàn Ở Góc Trên Bên Phải -->
-        <div class="chat-widget-wrapper" id="featuredChatCard">
-          <div class="widget-section-title" id="chatWidgetHeading"></div>
-          <div class="chat-banner-box">
-            <img class="partner-avatar" id="chatWidgetAvatar" src="" alt="Partner">
-            <div class="chat-preview-info">
-              <div class="partner-name" id="chatWidgetPartnerName"></div>
-              <div class="last-message" id="chatWidgetLastMsg"></div>
-            </div>
-            <div class="unread-badge" id="chatUnreadBadge"></div>
-          </div>
-        </div>
-
-        <div class="feature-grid" id="featureGridContainer"></div>
+        <button class="chat-widget" id="chatWidget" type="button">
+          <span class="widget-title" id="widgetTitle"></span>
+          <span class="chat-banner">
+            <img class="partner-avatar" id="widgetAvatar" alt="">
+            <span class="chat-preview">
+              <span class="partner-name" id="widgetName"></span>
+              <span class="last-msg" id="widgetLast"></span>
+            </span>
+          </span>
+          <span class="unread" id="unread" aria-label="Tin nhắn chưa đọc"></span>
+        </button>
+        <div class="feature-grid" id="featureGrid"></div>
       </div>
 
-      <nav class="bottom-nav" id="bottomNavContainer"></nav>
-    </section>
-
-    <!-- MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN (CÓ VUỐT TỪ TRÁI SANG PHẢI MƯỢT MÀ) -->
-    <section class="screen" id="screen-chat">
-      <header class="chat-header">
-        <div class="chat-header-left">
-          <button class="back-btn" id="btnBackToDash"><i class="fa-solid fa-chevron-left"></i></button>
-          <img class="chat-header-avatar" id="chatRoomAvatar" src="" alt="Avatar">
-          <div class="chat-user-meta">
-            <h4 id="chatRoomTitle"></h4>
-            <div class="online-badge">
-              <span class="online-dot"></span>
-              <span id="chatRoomStatus"></span>
-            </div>
-          </div>
+      <div class="dash-pad" id="dashLoading" hidden aria-busy="true">
+        <div class="skel" style="height:40px;width:60%"></div>
+        <div class="skel" style="height:96px"></div>
+        <div class="skel" style="height:120px"></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="skel" style="height:96px"></div><div class="skel" style="height:96px"></div><div class="skel" style="height:96px"></div>
         </div>
-        <div class="chat-header-actions">
-          <i class="fa-solid fa-phone" id="btnAudioCall"></i>
-          <i class="fa-solid fa-video" id="btnVideoCall"></i>
+      </div>
+
+      <div class="state-view" id="dashError" hidden></div>
+    </div>
+    <nav class="bottom-nav" id="bottomNav" aria-label="Điều hướng chính"></nav>
+  </section>
+
+  <!-- 3. TRÒ CHUYỆN -->
+  <section class="screen" id="screen-chat" aria-label="Trò chuyện" inert>
+    <header class="chat-header">
+      <div class="chat-head-left">
+        <button class="icon-btn" id="btnBack" aria-label="Quay lại"></button>
+        <img class="head-avatar" id="roomAvatar" alt="">
+        <div class="head-meta">
+          <h2 id="roomTitle"></h2>
+          <div class="online"><i></i><span id="roomStatus"></span></div>
         </div>
-      </header>
+      </div>
+      <div class="chat-head-actions">
+        <button class="icon-btn" id="btnAudio" aria-label="Gọi thoại"></button>
+        <button class="icon-btn" id="btnVideo" aria-label="Gọi video"></button>
+      </div>
+    </header>
 
-      <div class="message-stream" id="messageStream"></div>
-      <div class="quick-actions-bar" id="quickActionsContainer"></div>
+    <div class="stream selectable" id="stream" role="log" aria-live="polite" aria-label="Tin nhắn"></div>
+    <div class="state-view" id="chatLoading" hidden aria-busy="true">
+      <div class="skel" style="height:44px;width:70%;align-self:flex-start"></div>
+      <div class="skel" style="height:44px;width:55%;align-self:flex-end"></div>
+      <div class="skel" style="height:44px;width:65%;align-self:flex-start"></div>
+    </div>
+    <div class="state-view" id="chatError" hidden></div>
+    <div class="state-view" id="chatEmpty" hidden></div>
 
-      <form class="chat-input-bar" id="chatInputForm">
-        <div class="chat-input-wrapper">
-          <input type="text" id="chatMessageInput" autocomplete="off">
-          <i class="fa-regular fa-image"></i>
-        </div>
-        <button type="submit" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-      </form>
-    </section>
+    <div class="quick-bar" id="quickBar"></div>
+    <form class="input-bar" id="chatForm">
+      <div class="input-wrap">
+        <input id="chatInput" type="text" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Nhập tin nhắn">
+        <button class="icon-btn" type="button" id="btnImage" aria-label="Gửi ảnh"></button>
+      </div>
+      <button class="send" type="submit" id="btnSend" aria-label="Gửi" disabled></button>
+    </form>
+  </section>
 
+  <!-- Hết phiên đăng nhập (401) -->
+  <div class="overlay" id="expiredOverlay" hidden>
+    <div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="expTitle" aria-describedby="expText">
+      <div class="state-ico" id="expIco"></div>
+      <h3 id="expTitle"></h3>
+      <p id="expText"></p>
+      <button class="btn-primary" id="btnRelogin"></button>
+    </div>
   </div>
+</div>
 
-  <script>
-    const MOCK_BACKEND_RESPONSE = {
-      notifications: {
-        loginSuccess: "Đăng nhập thành công! ✨",
-        pairRequested: "Đã gửi lời mời ghép đôi tới mã: ",
-        featureOpened: "Mở tính năng: ",
-        touchSent: "👋 Đã gửi rung máy tới người ấy!",
-        heartbeatSent: "💓 Đang đồng bộ nhịp đập trái tim...",
-        incomingMsgAlert: "✨ Người ấy vừa nhắn tin cho bạn!"
-      },
-      authScreen: {
-        appTitle: "TPVT",
-        appSubtitle: "Không gian riêng tư chỉ dành cho hai ta",
-        heroImageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80",
-        accountPlaceholder: "Email / Số điện thoại",
-        passwordPlaceholder: "Mật khẩu",
-        defaultAccountValue: "",
-        defaultPasswordValue: "",
-        loginButtonText: "ĐĂNG NHẬP",
-        pairingSection: {
-          title: "KẾT NỐI ĐÔI",
-          inputPlaceholder: "Nhập mã của người ấy",
-          buttonText: "Kết nối"
-        },
-        socialSection: {
-          dividerText: "Đăng nhập mạng xã hội",
-          providers: [
-            { id: "facebook", icon: "fa-brands fa-facebook-f", bgColor: "#1877F2" },
-            { id: "twitter", icon: "fa-brands fa-twitter", bgColor: "#1DA1F2" },
-            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#38BDF8" },
-            { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#1E293B" }
-          ]
-        }
-      },
-      dashboardScreen: {
-        headerTitle: "Góc Nhỏ TPVT",
-        hasNotification: true,
-        coupleBanner: {
-          avatarUrl: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80",
-          daysTogetherPrefix: "Bên nhau:",
-          daysCount: 520,
-          daysUnit: "ngày",
-          countdownLabel: "Đếm ngược sự kiện:",
-          countdownInitialSeconds: 50400
-        },
-        featuredChatWidget: {
-          sectionHeading: "TRÒ CHUYỆN VỚI NGƯỜI ẤY",
-          partnerName: "Người ấy",
-          partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-          lastMessagePreview: "Anh sắp về đến nhà rồi...",
-          unreadCount: 5
-        },
-        featuresGrid: [
-          { id: "diary", title: "Nhật ký chung", icon: "fa-solid fa-book-medical" },
-          { id: "wishlist", title: "Danh sách mong ước", icon: "fa-solid fa-clipboard-check" },
-          { id: "calendar", title: "Lịch hẹn hò", icon: "fa-regular fa-calendar-check" },
-          { id: "games", title: "Trò chơi cặp đôi", icon: "fa-solid fa-gamepad" },
-          { id: "map", title: "Bản đồ cặp đôi", icon: "fa-solid fa-map-location-dot" },
-          { id: "bank", title: "Ngân hàng tình yêu", icon: "fa-solid fa-piggy-bank" }
-        ],
-        bottomNav: [
-          { id: "home", label: "Trang chủ", icon: "fa-solid fa-house", isActive: false },
-          { id: "corner", label: "Góc Nhỏ", icon: "fa-solid fa-book-open", isActive: true },
-          { id: "call", label: "Gọi nhanh", icon: "fa-solid fa-phone-volume", isActive: false },
-          { id: "moments", label: "Kỷ niệm", icon: "fa-regular fa-heart", isActive: false },
-          { id: "profile", label: "Cá nhân", icon: "fa-regular fa-user", isActive: false }
-        ]
-      },
-      chatScreen: {
-        roomTitle: "TPVT ✨",
-        onlineStatusText: "Đang hoạt động",
-        partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-        inputPlaceholder: "Gửi lời yêu thương...",
-        quickActions: [
-          { id: "heart", title: "Thả tim nhanh", subtitle: "(lấp lánh)", icon: "fa-solid fa-heart" },
-          { id: "touch", title: "Chạm tay", subtitle: "(rung máy)", icon: "fa-solid fa-hand-sparkles" },
-          { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
-        ],
-        messages: [
-          { id: 101, sender: "partner", text: "Tông màu xanh dương nhạt đơn sắc nhìn trong trẻo và rất dịu mắt anh nhỉ!" },
-          { id: 102, sender: "me", text: "Đúng rồi, không bị pha trộn nhiều màu gắt nữa, nhìn rất sang và đồng điệu ✨" },
-          { id: 103, sender: "partner", text: "Tối nay mình đi ăn lẩu nha?" },
-          { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
-          { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
-        ]
-      }
-    };
+<!-- Chỉ để xem thử trên máy tính -->
+<aside class="dev-panel" id="devPanel" aria-label="Xem thử trạng thái"></aside>
 
-    let appState = structuredClone(MOCK_BACKEND_RESPONSE);
-    let currentScreenId = 'screen-login';
+<script>
+(() => {
+  'use strict';
 
-    function initVisualEffects() {
-      const sparkleLayer = document.getElementById('sparkleLayer');
-      const bubbleLayer = document.getElementById('bubbleLayer');
-      
-      const sparkleSymbols = ['✦', '✧', '⋆', '♥'];
-      let sparkleHtml = '';
-      for (let i = 0; i < 15; i++) {
-        const top = Math.random() * 96;
-        const left = Math.random() * 94;
-        const delay = (Math.random() * 4).toFixed(1);
-        const duration = (3 + Math.random() * 2.5).toFixed(1);
-        const sym = sparkleSymbols[i % sparkleSymbols.length];
-        sparkleHtml += `<span class="sparkle-dot" style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${duration}s">${sym}</span>`;
-      }
-      sparkleLayer.innerHTML = sparkleHtml;
+  /* ================== Dữ liệu mẫu: cấu trúc giống phản hồi API thật ================== */
+  const MOCK = {
+    texts: {
+      loginSuccess: 'Đăng nhập thành công',
+      pairSent: 'Đã gửi lời mời ghép đôi tới mã: ',
+      featureOpened: 'Mở tính năng: ',
+      touchSent: 'Đã gửi rung máy tới người ấy',
+      pulseSent: 'Đang đồng bộ nhịp đập trái tim…',
+      incoming: 'Người ấy vừa nhắn tin cho bạn',
+      loginBad: 'Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.',
+      loginOffline: 'Không có kết nối mạng. Kiểm tra lại rồi thử lần nữa.',
+      loginEmpty: 'Nhập tài khoản và mật khẩu để tiếp tục.',
+      offline: 'Mất kết nối mạng. Đang chờ kết nối lại…'
+    },
+    auth: {
+      appTitle: 'TPVT', appSubtitle: 'Không gian riêng tư chỉ dành cho hai ta',
+      heroImageUrl: null,
+      accountPlaceholder: 'Email / Số điện thoại', passwordPlaceholder: 'Mật khẩu',
+      loginButton: 'Đăng nhập',
+      pairing: { title: 'Kết nối đôi', placeholder: 'Nhập mã của người ấy', button: 'Kết nối' }
+    },
+    dashboard: {
+      headerTitle: 'Góc Nhỏ TPVT', hasNotification: true,
+      couple: { avatarUrl: null, daysPrefix: 'Bên nhau:', days: 520, daysUnit: 'ngày', countdownLabel: 'Đếm ngược sự kiện:', countdownSeconds: 50400 },
+      chatWidget: { heading: 'Trò chuyện với người ấy', partnerName: 'Người ấy', partnerAvatarUrl: null, lastMessage: 'Anh sắp về đến nhà rồi...', unread: 5 },
+      features: [
+        { id: 'diary', title: 'Nhật ký chung', icon: 'book' },
+        { id: 'wishlist', title: 'Danh sách mong ước', icon: 'clipboardCheck' },
+        { id: 'calendar', title: 'Lịch hẹn hò', icon: 'calendarCheck' },
+        { id: 'games', title: 'Trò chơi cặp đôi', icon: 'gamepad' },
+        { id: 'map', title: 'Bản đồ cặp đôi', icon: 'mapPin' },
+        { id: 'bank', title: 'Ngân hàng tình yêu', icon: 'wallet' }
+      ],
+      nav: [
+        { id: 'home', label: 'Trang chủ', icon: 'home' },
+        { id: 'corner', label: 'Góc Nhỏ', icon: 'bookOpen', active: true },
+        { id: 'call', label: 'Gọi nhanh', icon: 'phone' },
+        { id: 'moments', label: 'Kỷ niệm', icon: 'heart' },
+        { id: 'profile', label: 'Cá nhân', icon: 'user' }
+      ]
+    },
+    chat: {
+      roomTitle: 'TPVT', onlineText: 'Đang hoạt động', partnerAvatarUrl: null,
+      inputPlaceholder: 'Gửi lời yêu thương...', partnerTyping: true,
+      quick: [
+        { id: 'heart', title: 'Thả tim', sub: 'lấp lánh', icon: 'heart' },
+        { id: 'touch', title: 'Chạm tay', sub: 'rung máy', icon: 'sparkles' },
+        { id: 'pulse', title: 'Cùng nhịp', sub: 'đồng bộ', icon: 'activity' }
+      ],
+      messages: [
+        { id: 101, from: 'partner', text: 'Tông màu xanh dương nhạt nhìn trong trẻo và dịu mắt ghê.', time: '20:36' },
+        { id: 102, from: 'me', text: 'Đúng rồi, nhìn rất sang và đồng điệu ✨', time: '20:37' },
+        { id: 103, from: 'partner', text: 'Tối nay mình đi ăn lẩu nha?', time: '20:39' },
+        { id: 104, from: 'me', text: 'Chốt luôn! Đợi anh tầm 15 phút nữa nhé.', time: '20:40' },
+        { id: 105, from: 'partner', text: 'Anh sắp về đến nhà rồi...', time: '20:41' }
+      ]
+    },
+    expired: { title: 'Phiên đăng nhập đã hết hạn', text: 'Vui lòng đăng nhập lại để tiếp tục.', button: 'Đăng nhập lại' },
+    errors: { title: 'Không tải được nội dung', text: 'Có lỗi xảy ra hoặc mạng đang chập chờn. Bạn thử lại nhé.', retry: 'Thử lại' },
+    empty: { title: 'Chưa có tin nhắn', text: 'Hãy gửi lời đầu tiên cho người ấy.' }
+  };
 
-      setInterval(() => {
-        if (bubbleLayer && bubbleLayer.childElementCount < 8) {
-          const bubble = document.createElement('div');
-          bubble.className = 'love-bubble';
-          const size = Math.floor(Math.random() * 24) + 16;
-          bubble.style.width = `${size}px`;
-          bubble.style.height = `${size}px`;
-          bubble.style.left = `${Math.random() * 88 + 6}%`;
-          bubble.style.animationDuration = `${Math.random() * 4 + 6}s`;
-          if (Math.random() > 0.6) bubble.innerHTML = '♥';
-          bubbleLayer.appendChild(bubble);
-          setTimeout(() => bubble.remove(), 10000);
-        }
-      }, 1200);
+  let data = structuredClone(MOCK);
+  const ui = { screen: 'screen-login', status: 'ready', offline: !navigator.onLine, expired: false, loginError: '' };
+
+  /* ================== Tiện ích ================== */
+  const $ = (id) => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const ICONS = {
+    eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    eyeOff: '<path d="M3 3l18 18"/><path d="M10.6 5.1A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A16.8 16.8 0 0 0 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+    bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+    heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+    chevronLeft: '<path d="m15 18-6-6 6-6"/>',
+    phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+    video: '<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+    image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
+    send: '<path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/>',
+    home: '<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+    bookOpen: '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+    user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+    clipboardCheck: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+    calendarCheck: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+    gamepad: '<rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4"/><path d="M15 13h.01M18 11h.01"/>',
+    mapPin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    wallet: '<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><path d="M16 13h.01"/>',
+    sparkles: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+    activity: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+    refresh: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+    wifiOff: '<path d="M2 2l20 20"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.8a15 15 0 0 1 4.2-2.6M10.7 5.1A15 15 0 0 1 22 8.8M5 12.9a10 10 0 0 1 5.2-2.7M15.2 10.4A10 10 0 0 1 19 12.9"/><path d="M12 20h.01"/>',
+    alert: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+    lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    messageHeart: '<path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'
+  };
+  function icon(name) {
+    const s = document.createElementNS(NS, 'svg');
+    s.setAttribute('viewBox', '0 0 24 24');
+    s.setAttribute('class', 'ico');
+    s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = ICONS[name] || '';   // ICONS là hằng số trong file, không nhận dữ liệu từ ngoài
+    return s;
+  }
+  /* Tạo DOM bằng textContent: dữ liệu từ máy chủ không bao giờ chạy như HTML */
+  function el(tag, props = {}, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+      if (v == null || v === false) continue;
+      if (k === 'class') n.className = v;
+      else if (k === 'text') n.textContent = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v === true ? '' : v);
     }
+    for (const c of kids.flat()) { if (c == null || c === false) continue; n.append(c.nodeType ? c : document.createTextNode(String(c))); }
+    return n;
+  }
+  function setIcon(node, name) { node.replaceChildren(icon(name)); }
 
-    function emitEventToHostApp(eventName, payload) {
-      window.parent.postMessage({ source: 'COUPLE_UI_EMBED', event: eventName, data: payload }, '*');
-      if (window.ReactNativeWebView) {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ event: eventName, data: payload }));
-      }
-    }
+  /* Ảnh giữ chỗ bằng SVG nội tuyến: không phụ thuộc mạng */
+  function svgUri(svg) { return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg); }
+  function avatarUri(kind) {
+    const [a, b] = kind === 'me' ? ['#7DD3FC', '#0284C7'] : ['#BAE6FD', '#0369A1'];
+    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><circle cx="48" cy="38" r="16" fill="#fff" fill-opacity=".92"/><path d="M16 96c2-22 16-34 32-34s30 12 32 34z" fill="#fff" fill-opacity=".92"/></svg>`);
+  }
+  function heroUri() {
+    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0F2FE"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><rect width="120" height="120" fill="url(#h)"/><circle cx="48" cy="60" r="26" fill="none" stroke="#38BDF8" stroke-width="4"/><circle cx="72" cy="60" r="26" fill="none" stroke="#0284C7" stroke-width="4"/><path d="M60 50c-3-5-10-4-10 2 0 5 6 8 10 12 4-4 10-7 10-12 0-6-7-7-10-2z" fill="#0369A1"/></svg>`);
+  }
+  const imgSrc = (url, kind) => url || (kind === 'hero' ? heroUri() : avatarUri(kind));
 
-    function showToast(message) {
-      const toast = document.getElementById('toastBox');
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2400);
-    }
+  const fmt2 = (n) => String(n).padStart(2, '0');
+  /* Phát sự kiện giao diện ra ngoài; cầu nối native (nếu có) thuộc Giai đoạn 2 */
+  function emit(event, detail) { window.dispatchEvent(new CustomEvent('ui:event', { detail: { v: 1, event, data: detail } })); }
 
-    function navigateTo(screenId) {
-      currentScreenId = screenId;
-      document.querySelectorAll('.screen').forEach(el => {
-        el.classList.remove('active');
-        el.style.transform = '';
-      });
-      document.getElementById(screenId).classList.add('active');
+  let toastTimer = 0;
+  function toast(msg) {
+    const t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
 
-      if (screenId === 'screen-chat') {
-        appState.dashboardScreen.featuredChatWidget.unreadCount = 0;
-        renderUnreadBadge();
-        scrollToBottomChat();
-      }
-      emitEventToHostApp('SCREEN_CHANGED', { screenId });
-    }
+  /* ================== Hiệu ứng nền (CSS thuần, số lượng nhỏ) ================== */
+  function buildAmbient() {
+    const a = $('ambient');
+    const bubs = [[22, 6, 0, 13], [64, 10, 4, 15], [38, 8, 8, 11], [82, 6, 2, 17]];
+    bubs.forEach(([left, size, delay, dur]) => a.append(el('span', { class: 'bub', style: `left:${left}%;width:${size * 3}px;height:${size * 3}px;--s:${delay}s;--d:${dur}s` })));
+    const spk = [[8, 12], [86, 22], [18, 58], [90, 70], [48, 8], [70, 90]];
+    spk.forEach(([l, t], i) => a.append(el('span', { class: 'spk', style: `left:${l}%;top:${t}%;--s:${i * 0.7}s`, text: ['✦', '✧', '⋆'][i % 3] })));
+  }
 
-    // --- CỬ CHỈ VUỐT MƯỢT MÀ NHƯ NATIVE APP ---
-    function initSwipeGesture() {
-      const chatScreen = document.getElementById('screen-chat');
-      let startX = 0;
-      let currentX = 0;
-      let isSwiping = false;
+  /* ================== Hiển thị ================== */
+  function renderLogin() {
+    const a = data.auth;
+    $('heroImg').src = imgSrc(a.heroImageUrl, 'hero');
+    $('appTitle').textContent = a.appTitle; $('appSubtitle').textContent = a.appSubtitle;
+    $('inAccount').placeholder = a.accountPlaceholder; $('inPassword').placeholder = a.passwordPlaceholder;
+    $('btnLogin').textContent = a.loginButton;
+    $('pairTitle').textContent = a.pairing.title; $('inPair').placeholder = a.pairing.placeholder; $('btnPair').textContent = a.pairing.button;
+    setIcon($('btnTogglePwd'), $('inPassword').type === 'password' ? 'eyeOff' : 'eye');
+    const msg = $('loginMsg'); msg.textContent = ui.loginError; msg.className = 'form-msg' + (ui.loginError ? ' err' : '');
+    $('inAccount').classList.toggle('invalid', !!ui.loginError);
+    $('inPassword').classList.toggle('invalid', !!ui.loginError);
+  }
 
-      chatScreen.addEventListener('touchstart', (e) => {
-        if (e.touches[0].clientX < 55) {
-          startX = e.touches[0].clientX;
-          isSwiping = true;
-          chatScreen.style.transition = 'none';
-        }
-      }, { passive: true });
+  function stateView(node, iconName, title, text, retry) {
+    const kids = [el('div', { class: 'state-ico' }, icon(iconName)), el('h3', { text: title }), el('p', { text })];
+    if (retry) kids.push(el('button', { class: 'btn-ghost', type: 'button', onclick: retry }, icon('refresh'), data.errors.retry));
+    node.replaceChildren(...kids);
+  }
 
-      chatScreen.addEventListener('touchmove', (e) => {
-        if (!isSwiping) return;
-        currentX = e.touches[0].clientX;
-        let diffX = currentX - startX;
-        if (diffX > 0) {
-          chatScreen.style.transform = `translateX(${diffX}px)`;
-          let dashScreen = document.getElementById('screen-dashboard');
-          dashScreen.classList.add('active');
-          dashScreen.style.transform = `translateX(${(diffX - window.innerWidth) * 0.3}px)`;
-        }
-      }, { passive: true });
+  let cdTarget = Date.now() + data.dashboard.couple.countdownSeconds * 1000;
+  function tickCountdown() {
+    const left = Math.max(0, Math.round((cdTarget - Date.now()) / 1000));
+    const t = $('cdTimer');
+    t.textContent = `${fmt2(Math.floor(left / 3600))} h ${fmt2(Math.floor((left % 3600) / 60))} m ${fmt2(left % 60)} s`;
+  }
 
-      chatScreen.addEventListener('touchend', (e) => {
-        if (!isSwiping) return;
-        isSwiping = false;
-        chatScreen.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
-        let dashScreen = document.getElementById('screen-dashboard');
-        dashScreen.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
-        
-        let diffX = currentX - startX;
-        if (diffX > 110) {
-          chatScreen.style.transform = `translateX(100%)`;
-          dashScreen.style.transform = `translateX(0px)`;
-          setTimeout(() => {
-            navigateTo('screen-dashboard');
-          }, 250);
-        } else {
-          chatScreen.style.transform = `translateX(0px)`;
-          dashScreen.style.transform = `translateX(-30px)`;
-        }
-      });
-    }
+  function renderDashboard() {
+    const d = data.dashboard;
+    $('dashTitle').textContent = d.headerTitle;
+    $('bellDot').hidden = !d.hasNotification;
+    const dot = $('bellDot');            // giữ tham chiếu trước khi replaceChildren gỡ nó ra
+    $('btnBell').replaceChildren(icon('bell'), dot);
+    $('coupleImg').src = imgSrc(d.couple.avatarUrl, 'me');
+    $('coupleHeart').replaceChildren(icon('heart'));
+    $('daysCount').textContent = `${d.couple.daysPrefix} ${d.couple.days} ${d.couple.daysUnit}`;
+    $('cdLabel').textContent = d.couple.countdownLabel;
+    tickCountdown();
+    $('widgetTitle').textContent = d.chatWidget.heading;
+    $('widgetAvatar').src = imgSrc(d.chatWidget.partnerAvatarUrl, 'partner');
+    $('widgetName').textContent = d.chatWidget.partnerName;
+    $('widgetLast').textContent = d.chatWidget.lastMessage;
+    renderUnread();
 
-    function hydrateUI(data) {
-      const auth = data.authScreen;
-      document.getElementById('loginHeroImg').src = auth.heroImageUrl;
-      document.getElementById('loginAppTitle').textContent = auth.appTitle;
-      document.getElementById('loginAppSubtitle').textContent = auth.appSubtitle;
-      document.getElementById('inputAccount').placeholder = auth.accountPlaceholder;
-      document.getElementById('inputAccount').value = auth.defaultAccountValue || '';
-      document.getElementById('inputPassword').placeholder = auth.passwordPlaceholder;
-      document.getElementById('inputPassword').value = auth.defaultPasswordValue || '';
-      document.getElementById('btnLoginSubmit').textContent = auth.loginButtonText;
-      document.getElementById('pairingTitle').textContent = auth.pairingSection.title;
-      document.getElementById('inputPairCode').placeholder = auth.pairingSection.inputPlaceholder;
-      document.getElementById('btnPairSubmit').textContent = auth.pairingSection.buttonText;
-      document.getElementById('socialDividerText').textContent = auth.socialSection.dividerText;
+    $('featureGrid').replaceChildren(...d.features.map((f) =>
+      el('button', { class: 'feature', type: 'button', onclick: () => { emit('feature', { id: f.id }); toast(data.texts.featureOpened + f.title); } },
+        el('span', { class: 'feature-ico' }, icon(f.icon)),
+        el('span', { class: 'feature-label', text: f.title }))));
 
-      document.getElementById('socialButtonsContainer').innerHTML = auth.socialSection.providers.map(p => `
-        <button type="button" class="social-btn" style="background: ${p.bgColor}" onclick="emitEventToHostApp('SOCIAL_LOGIN', '${p.id}')">
-          <i class="${p.icon}"></i>
-        </button>
-      `).join('');
+    $('bottomNav').replaceChildren(...d.nav.map((t) =>
+      el('button', { class: 'nav-tab', type: 'button', 'aria-current': t.active ? 'page' : null, onclick: () => {
+        d.nav.forEach((x) => { x.active = x.id === t.id; }); renderDashboard(); emit('nav', { id: t.id });
+      } }, icon(t.icon), el('span', { text: t.label }))));
+  }
 
-      const dash = data.dashboardScreen;
-      document.getElementById('dashHeaderTitle').textContent = dash.headerTitle;
-      document.getElementById('bellDot').style.display = dash.hasNotification ? 'block' : 'none';
-      document.getElementById('dashCoupleAvatar').src = dash.coupleBanner.avatarUrl;
-      document.getElementById('dashDaysTogether').textContent = 
-        `${dash.coupleBanner.daysTogetherPrefix} ${dash.coupleBanner.daysCount} ${dash.coupleBanner.daysUnit}`;
-      document.getElementById('dashCountdownLabel').textContent = dash.coupleBanner.countdownLabel;
+  function renderUnread() {
+    const n = data.dashboard.chatWidget.unread;
+    const b = $('unread');
+    b.hidden = n <= 0; b.textContent = n > 99 ? '99+' : String(n);
+    b.setAttribute('aria-label', `${n} tin nhắn chưa đọc`);
+  }
 
-      document.getElementById('chatWidgetHeading').textContent = dash.featuredChatWidget.sectionHeading;
-      document.getElementById('chatWidgetAvatar').src = dash.featuredChatWidget.partnerAvatarUrl;
-      document.getElementById('chatWidgetPartnerName').textContent = dash.featuredChatWidget.partnerName;
-      document.getElementById('chatWidgetLastMsg').textContent = dash.featuredChatWidget.lastMessagePreview;
-      renderUnreadBadge();
+  function renderChatHead() {
+    const c = data.chat;
+    setIcon($('btnBack'), 'chevronLeft'); setIcon($('btnAudio'), 'phone'); setIcon($('btnVideo'), 'video');
+    setIcon($('btnImage'), 'image'); setIcon($('btnSend'), 'send');
+    $('roomAvatar').src = imgSrc(c.partnerAvatarUrl, 'partner');
+    $('roomTitle').textContent = c.roomTitle; $('roomStatus').textContent = c.onlineText;
+    $('chatInput').placeholder = c.inputPlaceholder;
+    $('quickBar').replaceChildren(...c.quick.map((q) =>
+      el('button', { class: 'quick', type: 'button', onclick: () => quickAction(q.id) },
+        icon(q.icon), el('b', { text: q.title }), el('small', { text: q.sub }))));
+  }
 
-      document.getElementById('featureGridContainer').innerHTML = dash.featuresGrid.map(feat => `
-        <div class="feature-item" onclick="handleFeatureClick('${feat.id}', '${feat.title}')">
-          <div class="feature-icon-box"><i class="${feat.icon}"></i></div>
-          <div class="feature-label">${feat.title}</div>
-        </div>
-      `).join('');
-
-      document.getElementById('bottomNavContainer').innerHTML = dash.bottomNav.map(tab => `
-        <div class="nav-tab ${tab.isActive ? 'active' : ''}" onclick="handleNavClick('${tab.id}')">
-          <i class="${tab.icon}"></i>
-          <span>${tab.label}</span>
-        </div>
-      `).join('');
-
-      const chat = data.chatScreen;
-      document.getElementById('chatRoomAvatar').src = chat.partnerAvatarUrl;
-      document.getElementById('chatRoomTitle').textContent = chat.roomTitle;
-      document.getElementById('chatRoomStatus').textContent = chat.onlineStatusText;
-      document.getElementById('chatMessageInput').placeholder = chat.inputPlaceholder;
-
-      document.getElementById('quickActionsContainer').innerHTML = chat.quickActions.map(act => `
-        <div class="quick-action-card" onclick="triggerCoupleAction('${act.id}')">
-          <i class="${act.icon}"></i>
-          <div class="quick-action-title">${act.title}</div>
-          <div class="quick-action-sub">${act.subtitle}</div>
-        </div>
-      `).join('');
-
-      renderMessagesList();
-    }
-
-    function renderUnreadBadge() {
-      const badge = document.getElementById('chatUnreadBadge');
-      const count = appState.dashboardScreen.featuredChatWidget.unreadCount;
-      badge.textContent = count > 99 ? '99+' : count;
-      badge.classList.toggle('hidden', count <= 0);
-    }
-
-    function renderMessagesList() {
-      const stream = document.getElementById('messageStream');
-      const partnerAvatar = appState.chatScreen.partnerAvatarUrl;
-      stream.innerHTML = appState.chatScreen.messages.map(msg => `
-        <div class="msg-row ${msg.sender}">
-          ${msg.sender === 'partner' ? `<img class="msg-avatar" src="${partnerAvatar}" alt="p">` : ''}
-          <div class="msg-bubble">${msg.text}</div>
-        </div>
-      `).join('');
-    }
-
-    function scrollToBottomChat() {
-      const stream = document.getElementById('messageStream');
-      stream.scrollTop = stream.scrollHeight;
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const account = document.getElementById('inputAccount').value;
-      emitEventToHostApp('LOGIN_SUBMIT', { account });
-      showToast(appState.notifications.loginSuccess);
-      navigateTo('screen-dashboard');
+  function renderMessages() {
+    const c = data.chat, partnerSrc = imgSrc(c.partnerAvatarUrl, 'partner');
+    const nodes = [el('div', { class: 'day-sep', text: 'Hôm nay' })];
+    const lastMine = [...c.messages].reverse().find((m) => m.from === 'me');
+    c.messages.forEach((m) => {
+      const meta = m.status === 'sending' ? 'Đang gửi…' : m.status === 'failed' ? 'Gửi lỗi. Chạm để gửi lại' : (m === lastMine ? `Đã gửi · ${m.time}` : m.time);
+      nodes.push(el('div', { class: `msg ${m.from}${m.status === 'failed' ? ' failed' : ''}` },
+        m.from === 'partner' ? el('img', { class: 'msg-avatar', src: partnerSrc, alt: '' }) : null,
+        el('div', { class: 'bubble-col' }, el('div', { class: 'bubble selectable', text: m.text }), el('div', { class: 'msg-meta', text: meta }))));
     });
+    if (c.partnerTyping) nodes.push(el('div', { class: 'typing', 'aria-label': 'Người ấy đang soạn tin' }, el('span'), el('span'), el('span')));
+    $('stream').replaceChildren(...nodes);
+    $('stream').scrollTop = $('stream').scrollHeight;
+  }
 
-    document.getElementById('togglePwdBtn').addEventListener('click', function() {
-      const pwd = document.getElementById('inputPassword');
-      const isPwd = pwd.type === 'password';
-      pwd.type = isPwd ? 'text' : 'password';
-      this.className = isPwd ? 'fa-regular fa-eye input-icon' : 'fa-regular fa-eye-slash input-icon';
-    });
+  /* Gom mọi trạng thái hiển thị vào một chỗ để dễ thử và dễ bảo trì */
+  function applyStatus() {
+    const s = ui.status, e = data.errors;
+    $('dashReady').hidden = !(s === 'ready' || s === 'empty'); $('dashLoading').hidden = s !== 'loading'; $('dashError').hidden = s !== 'error';
+    if (s === 'error') stateView($('dashError'), 'alert', e.title, e.text, () => setStatus('loading', true));
 
-    document.getElementById('btnPairSubmit').addEventListener('click', () => {
-      const code = document.getElementById('inputPairCode').value.trim();
-      emitEventToHostApp('PAIR_SUBMIT', { code });
-      showToast(appState.notifications.pairRequested + (code || 'TPVT520'));
-    });
+    const empty = s === 'empty';
+    $('stream').hidden = s !== 'ready';
+    $('chatLoading').hidden = s !== 'loading'; $('chatError').hidden = s !== 'error'; $('chatEmpty').hidden = !empty;
+    if (s === 'error') stateView($('chatError'), 'alert', e.title, e.text, () => setStatus('loading', true));
+    if (empty) stateView($('chatEmpty'), 'messageHeart', data.empty.title, data.empty.text);
+    $('quickBar').hidden = s === 'loading' || s === 'error';
+    $('chatForm').hidden = s === 'loading' || s === 'error';
 
-    document.getElementById('featuredChatCard').addEventListener('click', () => navigateTo('screen-chat'));
-    document.getElementById('btnBackToDash').addEventListener('click', () => navigateTo('screen-dashboard'));
+    const ob = $('offlineBar');
+    ob.hidden = !ui.offline; $('appRoot').classList.toggle('has-offline', ui.offline);
+    if (ui.offline) ob.replaceChildren(icon('wifiOff'), el('span', { text: data.texts.offline }));
 
-    function handleFeatureClick(featureId, featureTitle) {
-      emitEventToHostApp('FEATURE_CLICKED', { featureId, featureTitle });
-      showToast(appState.notifications.featureOpened + featureTitle);
+    $('expiredOverlay').hidden = !ui.expired;
+    if (ui.expired) {
+      setIcon($('expIco'), 'lock');
+      $('expTitle').textContent = data.expired.title; $('expText').textContent = data.expired.text; $('btnRelogin').textContent = data.expired.button;
     }
+    document.querySelectorAll('.dev-panel [data-state]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.state === currentDevState)));
+  }
 
-    function handleNavClick(tabId) {
-      appState.dashboardScreen.bottomNav.forEach(t => t.isActive = (t.id === tabId));
-      hydrateUI(appState);
-      emitEventToHostApp('NAV_TAB_CHANGED', { tabId });
-    }
+  let currentDevState = 'ready';
+  function setStatus(s, simulateLoad) {
+    if (simulateLoad) { ui.status = 'loading'; applyStatus(); setTimeout(() => { ui.status = 'ready'; currentDevState = 'ready'; applyStatus(); }, 900); return; }
+    ui.status = s; applyStatus();
+  }
 
-    document.getElementById('chatInputForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = document.getElementById('chatMessageInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const newMsg = { id: Date.now(), sender: 'me', text };
-      appState.chatScreen.messages.push(newMsg);
-      appState.dashboardScreen.featuredChatWidget.lastMessagePreview = text;
-      input.value = '';
-      renderMessagesList();
-      document.getElementById('chatWidgetLastMsg').textContent = text;
-      scrollToBottomChat();
-      emitEventToHostApp('MESSAGE_SENT', newMsg);
+  /* ================== Điều hướng ================== */
+  function navigateTo(id) {
+    ui.screen = id;
+    document.querySelectorAll('.screen').forEach((s) => {
+      const on = s.id === id;
+      s.classList.toggle('active', on); s.classList.remove('peek'); s.style.transform = '';
+      if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
     });
+    if (id === 'screen-chat') { data.dashboard.chatWidget.unread = 0; renderUnread(); $('stream').scrollTop = $('stream').scrollHeight; }
+    emit('screen', { id });
+    updateDevPanel();
+  }
 
-    function triggerCoupleAction(actionId) {
-      const root = document.getElementById('appRoot');
-      if (actionId === 'heart') {
-        const icons = ['❤️', '✨', '💖', '♥'];
-        for (let i = 0; i < 9; i++) {
-          setTimeout(() => createFloatingHeart(root, icons[i % icons.length]), i * 90);
-        }
-      } else if (actionId === 'touch') {
-        root.classList.remove('shake-anim');
-        void root.offsetWidth;
-        root.classList.add('shake-anim');
-        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-        showToast(appState.notifications.touchSent);
-      } else if (actionId === 'pulse') {
-        createFloatingHeart(root, '💓');
-        showToast(appState.notifications.heartbeatSent);
-      }
-      emitEventToHostApp('COUPLE_QUICK_ACTION', { actionId });
-    }
-
-    function createFloatingHeart(container, symbol = '❤️') {
-      const heart = document.createElement('div');
-      heart.className = 'floating-heart';
-      heart.textContent = symbol;
-      heart.style.left = Math.floor(Math.random() * 75 + 12) + '%';
-      container.appendChild(heart);
-      setTimeout(() => heart.remove(), 2100);
-    }
-
-    function startCountdownTimer() {
-      let totalSeconds = appState.dashboardScreen.coupleBanner.countdownInitialSeconds;
-      setInterval(() => {
-        if (totalSeconds > 0) totalSeconds--;
-        const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-        const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-        const secs = String(totalSeconds % 60).padStart(2, '0');
-        const timerEl = document.getElementById('dashCountdownTimer');
-        if (timerEl) {
-          timerEl.textContent = `${hrs} h ${mins} m ${secs} s`;
-        }
-      }, 1000);
-    }
-
-    window.CoupleApp = {
-      setBackendData: function(newBackendData) {
-        appState = { ...appState, ...newBackendData };
-        hydrateUI(appState);
-      },
-      navigate: function(screenId) {
-        navigateTo(screenId);
-      },
-      pushIncomingMessage: function(text) {
-        appState.chatScreen.messages.push({ id: Date.now(), sender: 'partner', text });
-        appState.dashboardScreen.featuredChatWidget.lastMessagePreview = text;
-        document.getElementById('chatWidgetLastMsg').textContent = text;
-
-        if (currentScreenId !== 'screen-chat') {
-          appState.dashboardScreen.featuredChatWidget.unreadCount += 1;
-          renderUnreadBadge();
-        } else {
-          renderMessagesList();
-          scrollToBottomChat();
-        }
-        showToast(appState.notifications.incomingMsgAlert);
-      }
-    };
-
-    window.addEventListener('message', (event) => {
-      const { action, payload } = event.data || {};
-      if (action === 'SET_DATA') window.CoupleApp.setBackendData(payload);
-      if (action === 'NAVIGATE') window.CoupleApp.navigate(payload);
-      if (action === 'INCOMING_MSG') window.CoupleApp.pushIncomingMessage(payload);
+  /* Vuốt từ mép trái để quay lại, giống app native */
+  function initSwipeBack() {
+    const chat = $('screen-chat'), dash = $('screen-dashboard');
+    let startX = 0, dx = 0, on = false;
+    chat.addEventListener('touchstart', (e) => { if (e.touches[0].clientX < 28) { startX = e.touches[0].clientX; dx = 0; on = true; chat.style.transition = 'none'; dash.style.transition = 'none'; dash.classList.add('peek'); } }, { passive: true });
+    chat.addEventListener('touchmove', (e) => {
+      if (!on) return;
+      dx = Math.max(0, e.touches[0].clientX - startX);
+      chat.style.transform = `translateX(${dx}px)`;
+      dash.style.transform = `translateX(${(dx - innerWidth) * 0.3}px)`;
+    }, { passive: true });
+    chat.addEventListener('touchend', () => {
+      if (!on) return; on = false;
+      chat.style.transition = ''; dash.style.transition = '';
+      if (dx > 100) navigateTo('screen-dashboard');
+      else { chat.style.transform = ''; dash.style.transform = ''; dash.classList.remove('peek'); }
     });
+  }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      initVisualEffects();
-      initSwipeGesture();
-      const params = new URLSearchParams(window.location.search);
-      const initScreen = params.get('screen');
-      hydrateUI(appState);
-      startCountdownTimer();
-      if (initScreen && document.getElementById(`screen-${initScreen}`)) {
-        navigateTo(`screen-${initScreen}`);
-      }
-    });
-  </script>
+  /* ================== Hành động ================== */
+  $('btnTogglePwd').addEventListener('click', () => {
+    const p = $('inPassword'), show = p.type === 'password';
+    p.type = show ? 'text' : 'password';
+    $('btnTogglePwd').setAttribute('aria-pressed', String(show));
+    $('btnTogglePwd').setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    setIcon($('btnTogglePwd'), show ? 'eye' : 'eyeOff');
+  });
+
+  $('loginForm').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const acc = $('inAccount').value.trim(), pwd = $('inPassword').value;
+    if (!acc || !pwd) { ui.loginError = data.texts.loginEmpty; renderLogin(); return; }
+    if (ui.offline) { ui.loginError = data.texts.loginOffline; renderLogin(); return; }
+    ui.loginError = ''; renderLogin();
+    const btn = $('btnLogin'); btn.disabled = true; btn.replaceChildren(el('span', { class: 'spinner', 'aria-hidden': 'true' }), 'Đang đăng nhập…');
+    emit('login', { account: acc });
+    setTimeout(() => {
+      btn.disabled = false; btn.textContent = data.auth.loginButton;
+      if (pwd === 'wrong') { ui.loginError = data.texts.loginBad; renderLogin(); return; }   // chỉ để xem thử lỗi
+      toast(data.texts.loginSuccess); navigateTo('screen-dashboard');
+    }, 800);
+  });
+
+  $('btnPair').addEventListener('click', () => {
+    const code = $('inPair').value.trim().toUpperCase();
+    emit('pair', { code }); toast(data.texts.pairSent + (code || 'TPVT520'));
+  });
+  $('chatWidget').addEventListener('click', () => navigateTo('screen-chat'));
+  $('btnBack').addEventListener('click', () => navigateTo('screen-dashboard'));
+  $('btnBell').addEventListener('click', () => { data.dashboard.hasNotification = false; $('bellDot').hidden = true; emit('bell', {}); });
+  $('btnAudio').addEventListener('click', () => emit('call', { kind: 'audio' }));
+  $('btnVideo').addEventListener('click', () => emit('call', { kind: 'video' }));
+  $('btnImage').addEventListener('click', () => emit('pickImage', {}));
+  $('btnRelogin').addEventListener('click', () => { ui.expired = false; currentDevState = 'ready'; applyStatus(); navigateTo('screen-login'); });
+
+  $('chatInput').addEventListener('input', () => { $('btnSend').disabled = !$('chatInput').value.trim(); });
+  $('chatForm').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const input = $('chatInput'), text = input.value.trim();
+    if (!text) return;
+    const m = { id: Date.now(), from: 'me', text, time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false }), status: ui.offline ? 'failed' : 'sending' };
+    data.chat.messages.push(m); data.dashboard.chatWidget.lastMessage = text;
+    input.value = ''; $('btnSend').disabled = true;
+    renderMessages(); $('widgetLast').textContent = text;
+    emit('send', { id: m.id });
+    if (!ui.offline) setTimeout(() => { delete m.status; renderMessages(); }, 700);
+  });
+
+  function quickAction(id) {
+    const root = $('appRoot');
+    if (id === 'heart') {
+      ['❤️', '✨', '💙', '♥'].forEach((s, i) => { for (let k = 0; k < 2; k++) setTimeout(() => floatHeart(root, s), (i * 2 + k) * 90); });
+    } else if (id === 'touch') {
+      root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake');
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+      toast(data.texts.touchSent);
+    } else if (id === 'pulse') { floatHeart(root, '💓'); toast(data.texts.pulseSent); }
+    emit('quick', { id });
+  }
+  function floatHeart(root, sym) {
+    const h = el('div', { class: 'fx-heart', 'aria-hidden': 'true', text: sym, style: `left:${Math.floor(Math.random() * 70 + 12)}%` });
+    root.append(h); setTimeout(() => h.remove(), 2100);
+  }
+
+  /* API cho phía native gọi qua evaluateJavaScript (không nhận postMessage từ nguồn lạ) */
+  window.CoupleApp = {
+    setData(next) { data = { ...data, ...next }; renderAll(); },
+    navigate(id) { navigateTo(id); },
+    setStatus(s) { currentDevState = s; ui.status = ['ready', 'loading', 'error', 'empty'].includes(s) ? s : 'ready'; applyStatus(); },
+    sessionExpired() { ui.expired = true; applyStatus(); },
+    pushIncomingMessage(text) {
+      const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
+      data.chat.messages.push({ id: Date.now(), from: 'partner', text: String(text), time });
+      data.dashboard.chatWidget.lastMessage = String(text); $('widgetLast').textContent = String(text);
+      if (ui.screen !== 'screen-chat') { data.dashboard.chatWidget.unread += 1; renderUnread(); } else renderMessages();
+      toast(data.texts.incoming);
+    }
+  };
+
+  /* ================== Mạng, bàn phím, vòng đời ================== */
+  window.addEventListener('online', () => { ui.offline = false; applyStatus(); });
+  window.addEventListener('offline', () => { ui.offline = true; applyStatus(); });
+
+  const vv = window.visualViewport, root = $('appRoot');
+  function syncViewport() {
+    const h = vv ? vv.height : innerHeight;
+    document.documentElement.style.setProperty('--app-h', h + 'px');
+    root.classList.toggle('kb', vv ? innerHeight - vv.height > 120 : false);   // bàn phím đang mở
+    if (vv && vv.offsetTop) window.scrollTo(0, 0);
+  }
+  if (vv) { vv.addEventListener('resize', syncViewport); vv.addEventListener('scroll', syncViewport); }
+  syncViewport();
+
+  setInterval(() => { if (!document.hidden) tickCountdown(); }, 1000);
+
+  /* ================== Bảng xem thử (chỉ máy tính) ================== */
+  function buildDevPanel() {
+    const p = $('devPanel');
+    const screens = [['screen-login', 'Đăng nhập'], ['screen-dashboard', 'Trang chính'], ['screen-chat', 'Trò chuyện']];
+    const states = [['ready', 'Bình thường'], ['loading', 'Đang tải'], ['error', 'Lỗi + thử lại'], ['empty', 'Chat trống'], ['offline', 'Mất mạng'], ['expired', 'Hết phiên (401)'], ['loginerror', 'Lỗi đăng nhập']];
+    p.append(el('h4', { text: 'MÀN HÌNH' }), ...screens.map(([id, label]) => el('button', { type: 'button', 'data-screen': id, onclick: () => navigateTo(id) }, label)));
+    p.append(el('h4', { text: 'TRẠNG THÁI' }), ...states.map(([id, label]) => el('button', { type: 'button', 'data-state': id, 'aria-pressed': 'false', onclick: () => devState(id) }, label)));
+  }
+  function devState(id) {
+    currentDevState = id;
+    ui.offline = id === 'offline'; ui.expired = id === 'expired'; ui.loginError = id === 'loginerror' ? data.texts.loginBad : '';
+    ui.status = ['loading', 'error', 'empty'].includes(id) ? id : 'ready';
+    if (id === 'empty') data.chat = { ...data.chat, messages: [], partnerTyping: false }; else if (data.chat.messages.length === 0) data.chat = structuredClone(MOCK.chat);
+    renderLogin(); renderMessages(); applyStatus();
+  }
+  function updateDevPanel() { document.querySelectorAll('.dev-panel [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === ui.screen))); }
+
+  /* ================== Khởi động ================== */
+  function renderAll() { renderLogin(); renderDashboard(); renderChatHead(); renderMessages(); applyStatus(); }
+  buildAmbient(); buildDevPanel(); renderAll(); initSwipeBack();
+
+  const q = new URLSearchParams(location.search);
+  if (q.get('state')) devState(q.get('state'));
+  if (q.get('screen') && $('screen-' + q.get('screen'))) navigateTo('screen-' + q.get('screen'));
+  updateDevPanel();
+})();
+</script>
 </body>
 </html>
