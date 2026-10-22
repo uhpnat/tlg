@@ -2,329 +2,328 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<!-- Không khóa zoom (maximum-scale/user-scalable) để giữ khả năng truy cập; input đủ 16px nên iOS không tự phóng to -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#E0F2FE">
-<title>TPVT - Ice Blue (v2)</title>
+<meta name="theme-color" content="#EAF6FF">
+<title>TPVT - Ice Blue Bright (v3)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+<!-- Be Vietnam Pro: phông thiết kế riêng cho tiếng Việt, dấu rõ, hiện đại -->
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* ---------- Design tokens: Ice Blue monotone ---------- */
-    --blue-primary: #38BDF8;   /* trang trí: viền, vạch, ánh sáng (không dùng làm chữ) */
-    --blue-action-from: #0A78B5;
-    --blue-action-to: #0369A1; /* chữ trắng trên nền này đạt AA (4,8 – 5,9) */
-    --blue-dark: #0369A1;      /* chữ nhấn, icon có nghĩa */
-    --blue-mid: #0284C7;
-    --blue-light: #E0F2FE;
-    --blue-soft: #F0F9FF;
-    --blue-line: #BAE6FD;
+    /* ---------- Design tokens v3: Ice Blue sáng + điểm nhấn xanh dương/chàm/ngọc ---------- */
+    --sky-50: #F5FBFF;
+    --sky-100: #E0F2FE;
+    --sky-200: #BAE6FD;
+    --sky-300: #7DD3FC;
+    --sky-400: #38BDF8;
+    --blue-600: #2563EB;
 
-    --text-primary: #0F172A;
-    --text-secondary: #475569; /* 7,6:1 trên trắng, 6,6:1 trên blue-light */
-    --text-on-action: #FFFFFF;
+    --action-from: #1A73D9;     /* chữ trắng 4,7:1 */
+    --action-to: #2563EB;       /* chữ trắng 5,2:1 */
+    --hero-from: #0B94E0;       /* chữ lớn/icon trắng ≥3:1 */
+    --hero-to: #2563EB;
+
+    --ink: #0B1B33;             /* chữ chính */
+    --ink-2: #475569;           /* chữ phụ 7,6:1 */
+    --brand-ink: #075985;       /* chữ nhấn 7,6:1 */
 
     --badge-red: #E11D48;
-    --status-online: #10B981;
-    --warn: #B45309;
-    --warn-bg: #FEF3C7;
+    --online: #10B981;
+    --warn-bg: #FEF3C7; --warn-ink: #78350F;
 
-    --glass: rgba(255, 255, 255, 0.86);
-    --glass-strong: rgba(255, 255, 255, 0.96);
-    --input-bg: rgba(224, 242, 254, 0.55);
+    --glass: rgba(255, 255, 255, 0.72);
+    --glass-strong: rgba(255, 255, 255, 0.9);
+    --line: rgba(147, 197, 253, 0.55);
 
-    --action-gradient: linear-gradient(135deg, var(--blue-action-from) 0%, var(--blue-action-to) 100%);
-
-    --radius-xl: 24px; --radius-lg: 18px; --radius-md: 14px; --radius-pill: 9999px;
-    --shadow-soft: 0 10px 25px -5px rgba(56, 189, 248, 0.14), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-    --shadow-float: 0 16px 35px -8px rgba(56, 189, 248, 0.24), 0 0 20px rgba(224, 242, 254, 0.8);
-    --shimmer: 1px solid rgba(255, 255, 255, 0.95);
+    --r-xl: 28px; --r-lg: 22px; --r-md: 16px; --r-pill: 9999px;
+    --sh-1: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px -10px rgba(37, 99, 235, .22);
+    --sh-2: 0 2px 4px rgba(15, 23, 42, .05), 0 18px 40px -14px rgba(37, 99, 235, .35);
+    --inner: inset 0 1px 0 rgba(255, 255, 255, .95);
 
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --tap: 44px;
-    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
   html, body {
-    width: 100%; height: 100%; overflow: hidden; overscroll-behavior: none;
-    font-family: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    color: var(--text-primary);
-    background: linear-gradient(160deg, #E0F2FE 0%, #F0F9FF 55%, #F8FAFC 100%);
-    -webkit-text-size-adjust: 100%;
+    width: 100%; height: 100%; overflow: hidden; overscroll-behavior: none; -webkit-text-size-adjust: 100%;
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--ink);
+    background: linear-gradient(180deg, #F5FBFF 0%, #EAF6FF 100%);
   }
-  /* Chặn chọn chữ ở phần giao diện, nhưng vẫn cho gõ và chọn nội dung tin nhắn */
   body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
   input, textarea, .selectable { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
-
-  h1, h2, h3, h4, .heading { font-family: 'Quicksand', 'Nunito', system-ui, sans-serif; }
   button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
   [hidden] { display: none !important; }
-  :focus-visible { outline: 3px solid var(--blue-mid); outline-offset: 2px; }
-
+  :focus-visible { outline: 3px solid var(--blue-600); outline-offset: 2px; }
   .ico { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  /* ---------- Khung ứng dụng ---------- */
-  .app-root {
-    position: relative; width: 100%; max-width: 480px; margin: 0 auto; overflow: hidden;
-    height: var(--app-h, 100dvh);   /* JS cập nhật theo visualViewport để bàn phím không che ô nhập */
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.2);
-  }
-
-  /* Hiệu ứng nền nhẹ, chỉ bằng CSS (không timer JS) */
-  .ambient { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-  .ambient .bub {
-    position: absolute; bottom: -60px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(56,189,248,.12));
-    border: 1px solid rgba(255,255,255,.7);
-    animation: floatUp var(--d, 12s) linear infinite; animation-delay: var(--s, 0s);
-  }
-  .ambient .spk { position: absolute; color: var(--blue-primary); font-size: 11px; opacity: .55; animation: twinkle 4s ease-in-out infinite; animation-delay: var(--s, 0s); }
-  @keyframes floatUp { 0% { transform: translateY(0) scale(.6); opacity: 0; } 15% { opacity: .55; } 85% { opacity: .55; } 100% { transform: translateY(-105dvh) scale(1.1); opacity: 0; } }
-  @keyframes twinkle { 0%,100% { opacity: .15; transform: scale(.7); } 50% { opacity: .8; transform: scale(1.25); } }
+  /* ---------- Khung app + nền Aurora (chỉ gradient, không dùng blur nặng) ---------- */
+  .app-root { position: relative; width: 100%; max-width: 480px; margin: 0 auto; overflow: hidden; height: var(--app-h, 100dvh); background: linear-gradient(180deg, #F5FBFF, #EAF6FF); box-shadow: 0 30px 60px -20px rgba(37, 99, 235, .3); }
+  .aurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .aurora i { position: absolute; border-radius: 50%; will-change: transform; animation: drift 20s ease-in-out infinite alternate; }
+  .aurora .a1 { width: 380px; height: 380px; left: -120px; top: -90px; background: radial-gradient(circle at 40% 40%, rgba(56,189,248,.55), rgba(56,189,248,0) 68%); }
+  .aurora .a2 { width: 360px; height: 360px; right: -140px; top: 22%; background: radial-gradient(circle at 50% 50%, rgba(129,140,248,.42), rgba(129,140,248,0) 68%); animation-duration: 26s; animation-delay: -6s; }
+  .aurora .a3 { width: 420px; height: 420px; left: -80px; bottom: -160px; background: radial-gradient(circle at 50% 50%, rgba(45,212,191,.38), rgba(45,212,191,0) 68%); animation-duration: 23s; animation-delay: -12s; }
+  @keyframes drift { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(36px, 28px, 0) scale(1.12); } }
+  .aurora .spk { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px 3px rgba(56,189,248,.65); opacity: .0; animation: twinkle 5s ease-in-out infinite; animation-delay: var(--s, 0s); }
+  @keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.5); } 50% { opacity: .9; transform: scale(1.1); } }
 
   /* ---------- Màn hình ---------- */
   .screen {
-    position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
-    padding-top: var(--safe-top); overflow: hidden;
-    background: linear-gradient(180deg, rgba(240,249,255,.9), rgba(224,242,254,.65));
-    visibility: hidden; opacity: 0; transform: translateX(28px); pointer-events: none;
-    transition: transform .35s var(--ease-out), opacity .3s ease, visibility 0s linear .35s;
+    position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; padding-top: var(--safe-top); overflow: hidden;
+    background: rgba(245, 251, 255, .55);
+    visibility: hidden; opacity: 0; transform: translateX(34px) scale(.99); pointer-events: none;
+    transition: opacity .18s ease, transform .35s var(--out), visibility 0s linear .35s;
   }
-  .screen.active { visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
+  .screen.active { visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition: opacity .3s ease .06s, transform .45s var(--out); }
   .screen.peek { visibility: visible; opacity: 1; }
   .scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
   .scroll::-webkit-scrollbar { display: none; }
 
-  /* ---------- Nút & ô nhập dùng chung ---------- */
+  /* Hiện dần từng khối khi vào màn hình */
+  .screen.active .reveal { animation: reveal .65s var(--out) both; animation-delay: calc(var(--i, 0) * 65ms); }
+  @keyframes reveal { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Thành phần dùng chung ---------- */
+  .glass { background: var(--glass); backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%); border: 1px solid rgba(255,255,255,.85); box-shadow: var(--inner), var(--sh-1); }
   .btn-primary {
-    width: 100%; min-height: 48px; padding: 12px 18px; border-radius: var(--radius-pill);
-    background: var(--action-gradient); color: var(--text-on-action);
-    font-family: 'Quicksand', system-ui, sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .4px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 6px 18px -4px rgba(3, 105, 161, 0.4);
-    transition: transform .2s var(--ease-spring), filter .2s, opacity .2s;
+    position: relative; overflow: hidden; width: 100%; min-height: 54px; padding: 13px 20px; border-radius: var(--r-pill);
+    background: linear-gradient(135deg, var(--action-from), var(--action-to)); color: #fff;
+    font-weight: 700; font-size: 16px; letter-spacing: .2px; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 10px 24px -8px rgba(37,99,235,.65), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: transform .25s var(--spring), box-shadow .25s, opacity .2s;
   }
+  .btn-primary::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); transform: translateX(-120%); }
   .btn-primary:active { transform: scale(.97); }
-  .btn-primary[disabled] { opacity: .65; cursor: default; }
-  .btn-ghost {
-    min-height: var(--tap); padding: 10px 18px; border-radius: var(--radius-pill);
-    border: 1.5px solid var(--blue-line); background: var(--glass-strong); color: var(--blue-dark); font-weight: 700;
-  }
-  .icon-btn {
-    width: var(--tap); height: var(--tap); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-    color: var(--blue-dark); font-size: 20px; transition: transform .2s var(--ease-spring), background .2s;
-  }
-  .icon-btn:active { transform: scale(.88); }
-
-  .field {
-    width: 100%; min-height: 48px; padding: 12px 48px 12px 18px; border-radius: var(--radius-pill);
-    border: 1.5px solid var(--blue-line); background: var(--input-bg);
-    font: inherit; font-size: 16px; color: var(--text-primary); outline: none;
-    transition: border-color .2s, box-shadow .2s, background .2s;
-  }
-  .field::placeholder { color: #64748B; }
-  .field:focus { border-color: var(--blue-mid); background: #fff; box-shadow: 0 0 0 4px rgba(56,189,248,.2); }
-  .field.invalid { border-color: var(--badge-red); }
-  .field-wrap { position: relative; display: flex; align-items: center; }
-  .field-wrap .icon-btn { position: absolute; right: 2px; }
-
-  .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.45); border-top-color: #fff; animation: spin .8s linear infinite; }
+  .btn-primary:active::after { transform: translateX(120%); transition: transform .6s ease; }
+  .btn-primary[disabled] { opacity: .7; cursor: default; }
+  .btn-primary .ico { font-size: 20px; }
+  .btn-ghost { min-height: var(--tap); padding: 10px 20px; border-radius: var(--r-pill); background: var(--glass-strong); border: 1.5px solid var(--line); color: var(--brand-ink); font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+  .icon-btn { width: var(--tap); height: var(--tap); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 21px; color: var(--brand-ink); transition: transform .25s var(--spring), background .2s; }
+  .icon-btn:active { transform: scale(.86); }
+  .spinner { width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .75s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Ô nhập nhãn nổi */
+  .fl { position: relative; }
+  .fl-input { width: 100%; min-height: 58px; padding: 24px 52px 8px 18px; border-radius: var(--r-md); border: 1.5px solid var(--line); background: rgba(255,255,255,.75); font: inherit; font-size: 16px; color: var(--ink); outline: none; transition: border-color .2s, box-shadow .25s, background .2s; }
+  .fl-input:focus { border-color: var(--blue-600); background: #fff; box-shadow: 0 0 0 4px rgba(37,99,235,.15); }
+  .fl-input.invalid { border-color: var(--badge-red); }
+  .fl label { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #64748B; pointer-events: none; transition: top .18s var(--out), font-size .18s var(--out), color .18s, transform .18s var(--out); }
+  .fl-input:focus + label, .fl-input:not(:placeholder-shown) + label { top: 11px; transform: none; font-size: 12px; font-weight: 600; color: var(--brand-ink); }
+  .fl .icon-btn { position: absolute; right: 4px; top: 7px; }
+
   /* ---------- 1. Đăng nhập ---------- */
-  .login-screen .scroll { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 20px 24px calc(var(--safe-bottom) + 24px); }
-  .login-hero { text-align: center; }
-  .hero-img {
-    width: 120px; height: 120px; margin: 0 auto 12px; border-radius: 50%; overflow: hidden;
-    border: 2px solid var(--blue-primary); background: #fff;
-    box-shadow: 0 12px 30px rgba(56,189,248,.22), 0 0 0 4px rgba(255,255,255,.95);
-  }
-  .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .app-title { font-size: 30px; font-weight: 700; color: var(--blue-dark); line-height: 1.15; }
-  .app-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-  .card-glass { background: var(--glass); border: var(--shimmer); border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); }
-  .login-form { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-  .form-msg { font-size: 14px; font-weight: 600; min-height: 1.3em; padding: 0 6px; }
+  .login-screen .scroll { display: flex; flex-direction: column; gap: 18px; padding: 24px 22px calc(var(--safe-bottom) + 22px); }
+  .login-hero { text-align: center; padding-top: 6px; }
+  .orb { position: relative; width: 132px; height: 132px; margin: 0 auto 16px; border-radius: 50%; box-shadow: 0 18px 40px -10px rgba(37,99,235,.45); }
+  .orb::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, #38BDF8, #818CF8, #2DD4BF, #38BDF8); animation: spin 9s linear infinite; }
+  .orb-in { position: absolute; inset: 5px; border-radius: 50%; overflow: hidden; background: #fff; }
+  .orb-in img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .app-title { font-size: 34px; font-weight: 700; letter-spacing: -.5px; line-height: 1.1; color: #0369A1; background: linear-gradient(90deg, #0369A1, #2563EB); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .app-subtitle { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .login-form { padding: 20px; border-radius: var(--r-xl); display: flex; flex-direction: column; gap: 12px; }
+  .form-msg { font-size: 14px; font-weight: 600; min-height: 1.3em; padding: 0 4px; }
   .form-msg.err { color: var(--badge-red); }
-  .pairing-card { padding: 14px; text-align: center; border: 1.5px dashed rgba(2,132,199,.45); background: rgba(224,242,254,.55); border-radius: var(--radius-lg); }
-  .pairing-title { font-size: 13px; font-weight: 700; color: var(--blue-dark); letter-spacing: .6px; margin-bottom: 10px; }
-  .pairing-row { display: flex; align-items: center; gap: 6px; background: #fff; border-radius: var(--radius-pill); padding: 4px 4px 4px 16px; border: 1px solid var(--blue-line); }
-  .pairing-row input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--text-primary); }
-  .pairing-row .btn-primary { width: auto; min-height: 44px; padding: 8px 18px; font-size: 14px; }
+  .pairing { margin-top: auto; padding: 14px; border-radius: var(--r-lg); text-align: center; border: 1.5px dashed rgba(37,99,235,.4); background: rgba(255,255,255,.5); }
+  .pairing-title { font-size: 12.5px; font-weight: 700; color: var(--brand-ink); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 10px; }
+  .pairing-row { display: flex; align-items: center; gap: 6px; background: #fff; border-radius: var(--r-pill); padding: 4px 4px 4px 18px; border: 1px solid var(--line); }
+  .pairing-row input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--ink); }
+  .pairing-row .btn-primary { width: auto; min-height: 44px; padding: 8px 20px; font-size: 14px; }
 
   /* ---------- 2. Trang chính ---------- */
-  .dash-pad { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
-  .dash-header { display: flex; align-items: center; justify-content: space-between; }
-  .dash-title { font-size: 22px; font-weight: 700; color: var(--blue-dark); }
-  .bell { position: relative; background: var(--glass); border: var(--shimmer); box-shadow: var(--shadow-soft); }
-  .bell-dot { position: absolute; top: 9px; right: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--badge-red); border: 2px solid #fff; }
+  .dash-pad { padding: 14px 18px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .dash-header { display: flex; align-items: center; justify-content: space-between; padding: 2px 2px 0; }
+  .greeting { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .dash-title { font-size: 24px; font-weight: 700; letter-spacing: -.3px; color: var(--brand-ink); line-height: 1.2; }
+  .bell { position: relative; }
+  .bell-dot { position: absolute; top: 10px; right: 11px; width: 10px; height: 10px; border-radius: 50%; background: var(--badge-red); border: 2px solid #fff; animation: ping 2.4s ease-out infinite; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(225,29,72,.5); } 70%,100% { box-shadow: 0 0 0 8px rgba(225,29,72,0); } }
 
-  .couple-banner { display: flex; align-items: center; gap: 14px; padding: 13px 16px; }
-  .avatar-frame { position: relative; width: 70px; height: 70px; flex-shrink: 0; border-radius: 50%; border: 2.5px solid var(--blue-primary); padding: 3px; background: #fff; box-shadow: 0 4px 12px rgba(56,189,248,.25); }
-  .avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
-  .avatar-heart { position: absolute; right: -3px; bottom: -3px; width: 24px; height: 24px; border-radius: 50%; background: var(--blue-mid); color: #fff; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-  .couple-stats { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .days-count { font-size: 16px; font-weight: 700; }
-  .countdown-label { font-size: 12px; color: var(--text-secondary); }
-  .countdown-timer { font-size: 14px; font-weight: 700; color: var(--blue-dark); background: rgba(56,189,248,.14); padding: 2px 10px; border-radius: var(--radius-pill); width: fit-content; font-variant-numeric: tabular-nums; }
+  .hero-card { position: relative; overflow: hidden; padding: 18px; border-radius: var(--r-xl); color: #fff; background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%); box-shadow: 0 22px 44px -18px rgba(37,99,235,.7), inset 0 1px 0 rgba(255,255,255,.4); }
+  .hero-card::before, .hero-card::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; }
+  .hero-card::before { width: 220px; height: 220px; right: -70px; top: -90px; background: radial-gradient(circle, rgba(255,255,255,.38), rgba(255,255,255,0) 70%); }
+  .hero-card::after { width: 180px; height: 180px; left: -50px; bottom: -90px; background: radial-gradient(circle, rgba(45,212,191,.5), rgba(45,212,191,0) 70%); }
+  .hero-top { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: var(--r-pill); background: rgba(255,255,255,.92); color: var(--brand-ink); font-size: 12.5px; font-weight: 700; }
+  .hero-num { position: relative; z-index: 1; display: flex; align-items: baseline; gap: 8px; margin: 10px 0 14px; }
+  .hero-num b { font-size: 56px; font-weight: 700; letter-spacing: -2px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .hero-num span { font-size: 20px; font-weight: 700; }
+  .avatars { display: flex; }
+  .avatars img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 6px 14px -4px rgba(15,23,42,.35); background: #fff; }
+  .avatars img + img { margin-left: -16px; }
+  .hero-bottom { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 8px 14px; border-radius: var(--r-pill); background: rgba(255,255,255,.92); color: var(--brand-ink); }
+  .hero-bottom .lbl { font-size: 12.5px; font-weight: 600; }
+  .timer { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 4px 12px; border-radius: var(--r-pill); background: var(--sky-100); }
 
-  .chat-widget { position: relative; display: block; width: 100%; text-align: left; margin-top: 8px; padding: 14px 16px 16px; background: var(--glass-strong); border: var(--shimmer); border-radius: var(--radius-xl); box-shadow: var(--shadow-float); transition: transform .25s var(--ease-spring); }
+  .chat-widget { position: relative; display: block; width: 100%; text-align: left; padding: 14px; border-radius: var(--r-xl); transition: transform .3s var(--spring), box-shadow .3s; }
   .chat-widget:active { transform: scale(.98); }
-  .widget-title { display: flex; width: 100%; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--blue-dark); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 10px; }
-  .widget-title::before { content: '✦'; color: var(--blue-primary); font-size: 13px; }
-  .chat-banner { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-radius: var(--radius-lg); color: #fff; background: linear-gradient(110deg, var(--blue-action-from) 0%, var(--blue-action-to) 100%); box-shadow: 0 6px 18px -4px rgba(3,105,161,.4); }
-  .partner-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); object-fit: cover; flex-shrink: 0; }
-  .chat-preview { display: block; flex: 1; min-width: 0; padding-right: 14px; }
+  .widget-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .widget-title { font-size: 12.5px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; color: var(--brand-ink); display: inline-flex; align-items: center; gap: 6px; }
+  .widget-title::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--online); box-shadow: 0 0 0 3px rgba(16,185,129,.2); }
+  .widget-body { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--r-lg); background: rgba(255,255,255,.85); border: 1px solid rgba(186,230,253,.8); }
+  .partner-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--sky-300); }
+  .chat-preview { display: block; flex: 1; min-width: 0; }
   .partner-name { display: block; font-size: 16px; font-weight: 700; }
-  .last-msg { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .unread { position: absolute; top: -12px; right: 6px; min-width: 28px; height: 28px; padding: 0 7px; border-radius: var(--radius-pill); background: var(--badge-red); color: #fff; border: 2.5px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; box-shadow: 0 4px 12px rgba(225,29,72,.4); animation: pulse 2s ease-in-out infinite; }
+  .last-msg { display: block; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .unread { min-width: 28px; height: 28px; padding: 0 8px; border-radius: var(--r-pill); background: var(--badge-red); color: #fff; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px -4px rgba(225,29,72,.6); animation: pulse 2.2s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
 
   .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .feature { min-height: 96px; padding: 14px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; background: var(--glass); border: var(--shimmer); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); transition: transform .25s var(--ease-spring); }
-  .feature:active { transform: scale(.95); }
-  .feature-ico { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, var(--blue-light), var(--blue-soft)); color: var(--blue-mid); display: flex; align-items: center; justify-content: center; font-size: 21px; }
-  .feature-label { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+  .feature { min-height: 108px; padding: 14px 6px 12px; border-radius: var(--r-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; transition: transform .3s var(--spring); }
+  .feature:active { transform: scale(.94); }
+  .tile { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; box-shadow: 0 10px 18px -8px var(--tc, #2563EB), inset 0 1px 0 rgba(255,255,255,.4); }
+  .tone-sky { --tc: #1A73D9; background: linear-gradient(135deg, #0B94E0, #1A73D9); }
+  .tone-cyan { --tc: #0E7490; background: linear-gradient(135deg, #0891B2, #0E7490); }
+  .tone-indigo { --tc: #4F46E5; background: linear-gradient(135deg, #6366F1, #4F46E5); }
+  .tone-violet { --tc: #7C3AED; background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+  .tone-teal { --tc: #0F766E; background: linear-gradient(135deg, #0D9488, #0F766E); }
+  .tone-blue { --tc: #2563EB; background: linear-gradient(135deg, #3B82F6, #2563EB); }
+  .feature-label { font-size: 12.5px; font-weight: 600; line-height: 1.25; }
 
-  .bottom-nav { flex-shrink: 0; display: flex; justify-content: space-around; align-items: center; height: calc(64px + var(--safe-bottom)); padding: 0 8px var(--safe-bottom); background: rgba(255,255,255,.92); border-top: 1px solid rgba(186,230,253,.8); position: relative; z-index: 3; }
-  .nav-tab { position: relative; flex: 1; min-width: var(--tap); min-height: var(--tap); padding: 4px 2px; white-space: nowrap; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); transition: transform .2s; }
-  .nav-tab .ico { font-size: 21px; }
+  /* Thanh điều hướng nổi, vạch chỉ báo trượt mượt */
+  .bottom-nav { flex-shrink: 0; padding: 6px 14px calc(8px + var(--safe-bottom)); position: relative; z-index: 3; }
+  .nav-pill { --n: 5; --idx: 0; position: relative; display: flex; padding: 6px; border-radius: 28px; box-shadow: var(--inner), var(--sh-2); }
+  .nav-ind { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc((100% - 12px) / var(--n)); border-radius: 22px; background: linear-gradient(135deg, rgba(56,189,248,.3), rgba(37,99,235,.2)); transform: translateX(calc(var(--idx) * 100%)); transition: transform .5s var(--spring); }
+  .nav-tab { position: relative; flex: 1; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px 2px; white-space: nowrap; font-size: 11.5px; font-weight: 600; color: var(--ink-2); transition: color .25s, transform .25s var(--spring); }
+  .nav-tab .ico { font-size: 22px; transition: transform .4s var(--spring), color .25s; }
   .nav-tab:active { transform: scale(.9); }
-  .nav-tab[aria-current="page"] { color: var(--blue-dark); font-weight: 700; }
-  .nav-tab[aria-current="page"]::before { content: ''; position: absolute; top: -5px; width: 24px; height: 3px; border-radius: 3px; background: var(--blue-primary); }
+  .nav-tab[aria-current="page"] { color: var(--brand-ink); font-weight: 700; }
+  .nav-tab[aria-current="page"] .ico { color: var(--blue-600); transform: translateY(-1px) scale(1.12); }
 
   /* ---------- 3. Trò chuyện ---------- */
-  .chat-header { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; background: var(--glass); border-bottom: 1px solid rgba(186,230,253,.8); position: relative; z-index: 3; }
-  .chat-head-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
-  .head-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-primary); margin-left: 2px; }
-  .head-meta { margin-left: 8px; min-width: 0; }
-  .head-meta h2 { font-size: 16px; font-weight: 700; color: var(--blue-dark); line-height: 1.2; }
-  .online { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
-  .online i { width: 8px; height: 8px; border-radius: 50%; background: var(--status-online); display: inline-block; }
+  .chat-header { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; margin: 8px 12px 0; padding: 6px 6px 6px 4px; border-radius: var(--r-xl); position: relative; z-index: 3; }
+  .chat-head-left { display: flex; align-items: center; gap: 2px; min-width: 0; }
+  .head-ava { position: relative; width: 42px; height: 42px; margin-left: 2px; }
+  .head-ava img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--sky-300); }
+  .head-ava i { position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 50%; background: var(--online); border: 2px solid #fff; }
+  .head-meta { margin-left: 10px; min-width: 0; }
+  .head-meta h2 { font-size: 16px; font-weight: 700; color: var(--brand-ink); line-height: 1.2; }
+  .head-meta span { font-size: 12.5px; color: var(--ink-2); }
   .chat-head-actions { display: flex; }
 
-  .stream { flex: 1; overflow-y: auto; padding: 14px 14px 8px; display: flex; flex-direction: column; gap: 10px; background: linear-gradient(180deg, rgba(224,242,254,.3), rgba(240,249,255,.55)); -webkit-overflow-scrolling: touch; }
+  .stream { flex: 1; overflow-y: auto; padding: 14px 16px 8px; display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
   .stream::-webkit-scrollbar { display: none; }
-  .day-sep { align-self: center; font-size: 12px; font-weight: 600; color: var(--text-secondary); background: rgba(255,255,255,.8); border-radius: var(--radius-pill); padding: 2px 12px; }
-  .msg { display: flex; align-items: flex-end; gap: 8px; max-width: 84%; animation: pop .3s var(--ease-spring); }
+  .day-sep { align-self: center; font-size: 12px; font-weight: 600; color: var(--ink-2); padding: 3px 14px; border-radius: var(--r-pill); }
+  .msg { display: flex; align-items: flex-end; gap: 8px; max-width: 84%; animation: pop .4s var(--spring); }
   .msg.partner { align-self: flex-start; }
   .msg.me { align-self: flex-end; flex-direction: row-reverse; }
-  @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.92); } to { opacity: 1; transform: none; } }
   .msg-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-  .bubble-col { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .bubble-col { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
   .msg.me .bubble-col { align-items: flex-end; }
-  .bubble { padding: 10px 14px; font-size: 16px; line-height: 1.45; word-break: break-word; }
-  .msg.partner .bubble { background: rgba(255,255,255,.97); color: var(--text-primary); border: 1px solid var(--blue-line); border-radius: 18px 18px 18px 4px; box-shadow: 0 3px 8px rgba(100,116,139,.05); }
-  .msg.me .bubble { background: var(--action-gradient); color: #fff; border-radius: 18px 18px 4px 18px; box-shadow: 0 4px 12px rgba(3,105,161,.25); }
-  .msg-meta { font-size: 12px; color: var(--text-secondary); padding: 0 4px; }
-  .msg.failed .bubble { background: #fff; color: var(--badge-red); border: 1.5px solid var(--badge-red); }
-  .typing { align-self: flex-start; display: flex; gap: 5px; padding: 12px 14px; background: rgba(255,255,255,.97); border: 1px solid var(--blue-line); border-radius: 18px 18px 18px 4px; }
-  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-mid); opacity: .5; animation: dot 1.2s ease-in-out infinite; }
+  .bubble { padding: 11px 15px; font-size: 16px; line-height: 1.45; word-break: break-word; }
+  .msg.partner .bubble { background: rgba(255,255,255,.95); border: 1px solid rgba(186,230,253,.9); border-radius: 20px 20px 20px 6px; box-shadow: 0 6px 16px -8px rgba(37,99,235,.25); }
+  .msg.me .bubble { background: linear-gradient(135deg, var(--action-from), var(--action-to)); color: #fff; border-radius: 20px 20px 6px 20px; box-shadow: 0 10px 20px -8px rgba(37,99,235,.55); }
+  .msg-meta { font-size: 12px; color: var(--ink-2); padding: 0 4px; }
+  .msg.failed .bubble { background: #fff; color: var(--badge-red); border: 1.5px solid var(--badge-red); box-shadow: none; }
+  .typing { align-self: flex-start; display: flex; gap: 5px; padding: 13px 15px; background: rgba(255,255,255,.95); border: 1px solid rgba(186,230,253,.9); border-radius: 20px 20px 20px 6px; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-600); opacity: .5; animation: dot 1.2s ease-in-out infinite; }
   .typing span:nth-child(2) { animation-delay: .15s; } .typing span:nth-child(3) { animation-delay: .3s; }
-  @keyframes dot { 0%,80%,100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: .9; } }
+  @keyframes dot { 0%,80%,100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-5px); opacity: 1; } }
 
-  .quick-bar { flex-shrink: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 14px 4px; background: rgba(255,255,255,.9); border-top: 1px solid rgba(186,230,253,.8); }
-  .quick { min-height: 56px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: linear-gradient(180deg, #fff, var(--blue-light)); border: 1px solid var(--blue-line); border-radius: var(--radius-md); transition: transform .2s var(--ease-spring); }
+  .quick-bar { flex-shrink: 0; display: flex; gap: 8px; overflow-x: auto; padding: 6px 16px 8px; scrollbar-width: none; }
+  .quick-bar::-webkit-scrollbar { display: none; }
+  .quick { flex-shrink: 0; min-height: var(--tap); padding: 8px 16px 8px 12px; border-radius: var(--r-pill); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--brand-ink); transition: transform .25s var(--spring); }
+  .quick .ico { font-size: 18px; color: var(--blue-600); }
   .quick:active { transform: scale(.93); }
-  .quick .ico { font-size: 18px; color: var(--blue-mid); }
-  .quick b { font-size: 12px; }
-  .quick small { font-size: 11px; color: var(--text-secondary); }
 
-  .input-bar { flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 6px 12px calc(10px + var(--safe-bottom)); background: rgba(255,255,255,.94); }
+  .input-bar { flex-shrink: 0; padding: 4px 12px calc(10px + var(--safe-bottom)); }
   .kb .input-bar, .kb .bottom-nav { padding-bottom: 8px; }
-  .input-wrap { flex: 1; min-width: 0; display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--blue-line); border-radius: var(--radius-pill); padding-left: 16px; transition: border-color .2s, box-shadow .2s; }
-  .input-wrap:focus-within { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(56,189,248,.2); }
-  .input-wrap input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--text-primary); }
-  .input-wrap input::placeholder { color: #64748B; }
-  .input-wrap .icon-btn { color: var(--text-secondary); }
-  .send { width: var(--tap); height: var(--tap); border-radius: 50%; background: var(--action-gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 4px 12px rgba(3,105,161,.35); transition: transform .2s var(--ease-spring), opacity .2s; }
-  .send:active { transform: scale(.9); }
-  .send[disabled] { opacity: .5; box-shadow: none; }
+  .input-capsule { display: flex; align-items: center; gap: 4px; padding: 5px 5px 5px 8px; border-radius: var(--r-pill); transition: box-shadow .25s, border-color .25s; }
+  .input-capsule:focus-within { box-shadow: var(--inner), 0 0 0 3px rgba(37,99,235,.18), var(--sh-1); border-color: rgba(37,99,235,.5); }
+  .input-capsule input { flex: 1; min-width: 0; min-height: 44px; padding: 0 6px; border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--ink); }
+  .input-capsule input::placeholder { color: #64748B; }
+  .input-capsule .icon-btn { color: var(--ink-2); }
+  .send { width: var(--tap); height: var(--tap); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; background: linear-gradient(135deg, var(--action-from), var(--action-to)); box-shadow: 0 8px 16px -6px rgba(37,99,235,.7); transition: transform .3s var(--spring), opacity .2s; }
+  .send:active { transform: scale(.88) rotate(-8deg); }
+  .send[disabled] { opacity: .45; box-shadow: none; }
+  .send:not([disabled]) { animation: sendIn .35s var(--spring); }
+  @keyframes sendIn { from { transform: scale(.8); } to { transform: none; } }
 
-  /* ---------- Trạng thái: tải / lỗi / trống / mất mạng / hết phiên ---------- */
-  .skel { border-radius: var(--radius-lg); background: linear-gradient(90deg, rgba(186,230,253,.45) 25%, rgba(255,255,255,.85) 50%, rgba(186,230,253,.45) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+  /* ---------- Trạng thái ---------- */
+  .skel { border-radius: var(--r-lg); background: linear-gradient(90deg, rgba(186,230,253,.5) 25%, rgba(255,255,255,.9) 50%, rgba(186,230,253,.5) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
   @keyframes shimmer { to { background-position: -200% 0; } }
   .state-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 32px 28px; text-align: center; }
-  .state-ico { width: 72px; height: 72px; border-radius: 50%; background: var(--blue-light); color: var(--blue-dark); display: flex; align-items: center; justify-content: center; font-size: 32px; }
-  #dashError { min-height: calc(var(--app-h, 100dvh) - 220px); }
-  .state-view h3 { font-size: 19px; color: var(--text-primary); }
-  .state-view p { font-size: 15px; color: var(--text-secondary); max-width: 280px; }
-  .state-view .btn-ghost { margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; }
+  #dashError { min-height: calc(var(--app-h, 100dvh) - 240px); }
+  .state-ico { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; color: var(--blue-600); background: radial-gradient(circle at 30% 30%, #fff, var(--sky-100)); box-shadow: var(--inner), var(--sh-2); }
+  .state-view h3 { font-size: 19px; font-weight: 700; }
+  .state-view p { font-size: 15px; color: var(--ink-2); max-width: 280px; }
+  .state-view .btn-ghost { margin-top: 6px; }
 
-  .offline-bar { position: absolute; left: 0; right: 0; top: 0; z-index: 90; display: flex; align-items: center; justify-content: center; gap: 8px; height: calc(var(--safe-top) + 36px); padding: var(--safe-top) 12px 0; background: var(--warn-bg); color: #78350F; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .offline-bar { position: absolute; left: 0; right: 0; top: 0; z-index: 90; display: flex; align-items: center; justify-content: center; gap: 8px; height: calc(var(--safe-top) + 36px); padding: var(--safe-top) 12px 0; background: var(--warn-bg); color: var(--warn-ink); font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .has-offline .screen { padding-top: calc(var(--safe-top) + 36px); }
-  .overlay { position: absolute; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(15,23,42,.35); }
-  .sheet { width: 100%; max-width: 340px; padding: 24px 20px 20px; background: #fff; border-radius: var(--radius-xl); text-align: center; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 24px 60px rgba(15,23,42,.25); }
+  .overlay { position: absolute; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(11,27,51,.4); animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .sheet { width: 100%; max-width: 340px; padding: 26px 20px 20px; border-radius: var(--r-xl); background: #fff; text-align: center; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 30px 70px rgba(11,27,51,.3); animation: pop .45s var(--spring); }
   .sheet .state-ico { margin: 0 auto; }
-  .sheet p { font-size: 15px; color: var(--text-secondary); }
+  .sheet h3 { font-size: 19px; font-weight: 700; }
+  .sheet p { font-size: 15px; color: var(--ink-2); }
   .sheet .btn-primary { margin-top: 8px; }
 
-  .toast { position: absolute; top: calc(var(--safe-top) + 14px); left: 50%; z-index: 100; max-width: calc(100% - 32px); padding: 10px 18px; border-radius: var(--radius-pill); background: #075985; color: #fff; font-size: 14px; font-weight: 700; text-align: center; opacity: 0; transform: translate(-50%, -16px); pointer-events: none; transition: opacity .25s, transform .25s var(--ease-spring); box-shadow: 0 8px 20px rgba(3,105,161,.35); }
-  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast { position: absolute; top: calc(var(--safe-top) + 14px); left: 50%; z-index: 100; max-width: calc(100% - 32px); padding: 11px 20px; border-radius: var(--r-pill); background: rgba(11,27,51,.92); color: #fff; font-size: 14px; font-weight: 600; text-align: center; opacity: 0; transform: translate(-50%, -18px) scale(.95); pointer-events: none; transition: opacity .25s, transform .35s var(--spring); box-shadow: 0 14px 30px -8px rgba(11,27,51,.5); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
-  .fx-heart { position: absolute; bottom: 120px; z-index: 50; font-size: 22px; pointer-events: none; animation: heartUp 2.1s ease-out forwards; }
-  @keyframes heartUp { from { opacity: 1; transform: translateY(0) scale(.8); } to { opacity: 0; transform: translateY(-300px) scale(1.4) rotate(10deg); } }
+  .fx { position: absolute; bottom: 130px; z-index: 50; pointer-events: none; font-size: 22px; animation: fxUp 2.2s ease-out forwards; }
+  @keyframes fxUp { from { opacity: 1; transform: translate(0, 0) scale(.7) rotate(0); } to { opacity: 0; transform: translate(var(--dx, 0px), -320px) scale(1.5) rotate(var(--rot, 12deg)); } }
   .shake { animation: shake .45s ease-in-out; }
   @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-5px); } 40%,80% { transform: translateX(5px); } }
 
-  /* ---------- Hover chỉ khi thiết bị thật sự có chuột ---------- */
   @media (hover: hover) {
-    .feature:hover, .chat-widget:hover { transform: translateY(-3px); }
-    .quick:hover { background: var(--blue-line); }
-    .icon-btn:hover { background: rgba(56,189,248,.14); }
-    .btn-primary:hover { filter: brightness(1.06); }
+    .feature:hover, .chat-widget:hover { transform: translateY(-3px); box-shadow: var(--inner), var(--sh-2); }
+    .quick:hover { background: #fff; }
+    .icon-btn:hover { background: rgba(56,189,248,.16); }
+    .btn-primary:hover { box-shadow: 0 14px 28px -8px rgba(37,99,235,.75), inset 0 1px 0 rgba(255,255,255,.35); }
   }
-
-  /* ---------- Giảm chuyển động ---------- */
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    .ambient { display: none; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+    .aurora .spk { display: none; }
   }
 
-  /* ---------- Bảng xem thử trạng thái (chỉ hiện trên màn hình rộng, không phải trong app) ---------- */
   .dev-panel { display: none; }
   @media (min-width: 860px) {
-    .dev-panel { display: flex; flex-direction: column; gap: 6px; position: fixed; top: 16px; left: calc(50% + 264px); width: 200px; padding: 12px; border-radius: 14px; background: #fff; border: 1px solid var(--blue-line); font-size: 13px; z-index: 200; -webkit-user-select: none; user-select: none; }
-    .dev-panel h4 { font-size: 12px; color: var(--text-secondary); margin: 6px 0 2px; letter-spacing: .5px; }
-    .dev-panel button { text-align: left; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--blue-line); background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; }
-    .dev-panel button[aria-pressed="true"] { background: var(--blue-dark); color: #fff; }
+    .dev-panel { display: flex; flex-direction: column; gap: 6px; position: fixed; top: 16px; left: calc(50% + 264px); width: 200px; padding: 12px; border-radius: 16px; background: #fff; border: 1px solid var(--line); font-size: 13px; z-index: 200; box-shadow: var(--sh-1); }
+    .dev-panel h4 { font-size: 12px; color: var(--ink-2); margin: 6px 0 2px; letter-spacing: .5px; }
+    .dev-panel button { text-align: left; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--sky-50); color: var(--brand-ink); font-weight: 600; }
+    .dev-panel button[aria-pressed="true"] { background: var(--brand-ink); color: #fff; }
   }
 </style>
 </head>
 <body>
 
 <div class="app-root" id="appRoot">
-  <div class="ambient" aria-hidden="true" id="ambient"></div>
+  <div class="aurora" id="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="offline-bar" id="offlineBar" role="status" hidden></div>
 
   <!-- 1. ĐĂNG NHẬP -->
   <section class="screen login-screen active" id="screen-login" aria-label="Đăng nhập">
     <div class="scroll">
-      <div class="login-hero">
-        <div class="hero-img"><img id="heroImg" alt=""></div>
+      <div class="login-hero reveal" style="--i:0">
+        <div class="orb"><div class="orb-in"><img id="heroImg" alt=""></div></div>
         <h1 class="app-title" id="appTitle"></h1>
         <p class="app-subtitle" id="appSubtitle"></p>
       </div>
 
-      <form class="card-glass login-form" id="loginForm" novalidate>
-        <input class="field" id="inAccount" type="text" name="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="Tài khoản" required>
-        <div class="field-wrap">
-          <input class="field" id="inPassword" type="password" name="password" autocomplete="current-password" enterkeyhint="go" aria-label="Mật khẩu" required>
+      <form class="glass login-form reveal" style="--i:2" id="loginForm" novalidate>
+        <div class="fl">
+          <input class="fl-input" id="inAccount" type="text" name="username" placeholder=" " autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" required>
+          <label for="inAccount" id="lblAccount"></label>
+        </div>
+        <div class="fl">
+          <input class="fl-input" id="inPassword" type="password" name="password" placeholder=" " autocomplete="current-password" enterkeyhint="go" required>
+          <label for="inPassword" id="lblPassword"></label>
           <button class="icon-btn" type="button" id="btnTogglePwd" aria-label="Hiện mật khẩu" aria-pressed="false"></button>
         </div>
         <p class="form-msg" id="loginMsg" role="alert"></p>
         <button class="btn-primary" type="submit" id="btnLogin"></button>
       </form>
 
-      <div class="pairing-card">
+      <div class="pairing reveal" style="--i:4">
         <div class="pairing-title" id="pairTitle"></div>
         <div class="pairing-row">
           <input id="inPair" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" aria-label="Mã của người ấy">
@@ -338,38 +337,47 @@
   <section class="screen" id="screen-dashboard" aria-label="Góc nhỏ" inert>
     <div class="scroll">
       <div class="dash-pad" id="dashReady">
-        <div class="dash-header">
-          <h2 class="dash-title" id="dashTitle"></h2>
-          <button class="icon-btn bell" id="btnBell" aria-label="Thông báo"><span class="bell-dot" id="bellDot"></span></button>
+        <div class="dash-header reveal" style="--i:0">
+          <div>
+            <div class="greeting" id="greeting"></div>
+            <h2 class="dash-title" id="dashTitle"></h2>
+          </div>
+          <button class="icon-btn glass bell" id="btnBell" aria-label="Thông báo"><span class="bell-dot" id="bellDot"></span></button>
         </div>
-        <div class="card-glass couple-banner">
-          <div class="avatar-frame"><img id="coupleImg" alt=""><span class="avatar-heart" id="coupleHeart"></span></div>
-          <div class="couple-stats">
-            <div class="days-count" id="daysCount"></div>
-            <div class="countdown-label" id="cdLabel"></div>
-            <div class="countdown-timer" id="cdTimer"></div>
+
+        <div class="hero-card reveal" style="--i:1">
+          <div class="hero-top">
+            <span class="chip" id="heroChip"></span>
+            <div class="avatars"><img id="coupleImg1" alt=""><img id="coupleImg2" alt=""></div>
+          </div>
+          <div class="hero-num"><b id="daysNum">0</b><span id="daysUnit"></span></div>
+          <div class="hero-bottom">
+            <span class="lbl" id="cdLabel"></span>
+            <span class="timer" id="cdTimer"></span>
           </div>
         </div>
-        <button class="chat-widget" id="chatWidget" type="button">
-          <span class="widget-title" id="widgetTitle"></span>
-          <span class="chat-banner">
+
+        <button class="glass chat-widget reveal" style="--i:2" id="chatWidget" type="button">
+          <span class="widget-top"><span class="widget-title" id="widgetTitle"></span></span>
+          <span class="widget-body">
             <img class="partner-avatar" id="widgetAvatar" alt="">
             <span class="chat-preview">
               <span class="partner-name" id="widgetName"></span>
               <span class="last-msg" id="widgetLast"></span>
             </span>
+            <span class="unread" id="unread"></span>
           </span>
-          <span class="unread" id="unread" aria-label="Tin nhắn chưa đọc"></span>
         </button>
+
         <div class="feature-grid" id="featureGrid"></div>
       </div>
 
       <div class="dash-pad" id="dashLoading" hidden aria-busy="true">
-        <div class="skel" style="height:40px;width:60%"></div>
-        <div class="skel" style="height:96px"></div>
-        <div class="skel" style="height:120px"></div>
+        <div class="skel" style="height:44px;width:58%"></div>
+        <div class="skel" style="height:190px"></div>
+        <div class="skel" style="height:112px"></div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-          <div class="skel" style="height:96px"></div><div class="skel" style="height:96px"></div><div class="skel" style="height:96px"></div>
+          <div class="skel" style="height:108px"></div><div class="skel" style="height:108px"></div><div class="skel" style="height:108px"></div>
         </div>
       </div>
 
@@ -380,14 +388,11 @@
 
   <!-- 3. TRÒ CHUYỆN -->
   <section class="screen" id="screen-chat" aria-label="Trò chuyện" inert>
-    <header class="chat-header">
+    <header class="glass chat-header">
       <div class="chat-head-left">
         <button class="icon-btn" id="btnBack" aria-label="Quay lại"></button>
-        <img class="head-avatar" id="roomAvatar" alt="">
-        <div class="head-meta">
-          <h2 id="roomTitle"></h2>
-          <div class="online"><i></i><span id="roomStatus"></span></div>
-        </div>
+        <div class="head-ava"><img id="roomAvatar" alt=""><i></i></div>
+        <div class="head-meta"><h2 id="roomTitle"></h2><span id="roomStatus"></span></div>
       </div>
       <div class="chat-head-actions">
         <button class="icon-btn" id="btnAudio" aria-label="Gọi thoại"></button>
@@ -397,20 +402,20 @@
 
     <div class="stream selectable" id="stream" role="log" aria-live="polite" aria-label="Tin nhắn"></div>
     <div class="state-view" id="chatLoading" hidden aria-busy="true">
-      <div class="skel" style="height:44px;width:70%;align-self:flex-start"></div>
-      <div class="skel" style="height:44px;width:55%;align-self:flex-end"></div>
-      <div class="skel" style="height:44px;width:65%;align-self:flex-start"></div>
+      <div class="skel" style="height:46px;width:70%;align-self:flex-start"></div>
+      <div class="skel" style="height:46px;width:55%;align-self:flex-end"></div>
+      <div class="skel" style="height:46px;width:65%;align-self:flex-start"></div>
     </div>
     <div class="state-view" id="chatError" hidden></div>
     <div class="state-view" id="chatEmpty" hidden></div>
 
     <div class="quick-bar" id="quickBar"></div>
     <form class="input-bar" id="chatForm">
-      <div class="input-wrap">
-        <input id="chatInput" type="text" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Nhập tin nhắn">
+      <div class="glass input-capsule">
         <button class="icon-btn" type="button" id="btnImage" aria-label="Gửi ảnh"></button>
+        <input id="chatInput" type="text" autocomplete="off" autocapitalize="sentences" enterkeyhint="send" aria-label="Nhập tin nhắn">
+        <button class="send" type="submit" id="btnSend" aria-label="Gửi" disabled></button>
       </div>
-      <button class="send" type="submit" id="btnSend" aria-label="Gửi" disabled></button>
     </form>
   </section>
 
@@ -425,7 +430,6 @@
   </div>
 </div>
 
-<!-- Chỉ để xem thử trên máy tính -->
 <aside class="dev-panel" id="devPanel" aria-label="Xem thử trạng thái"></aside>
 
 <script>
@@ -435,35 +439,27 @@
   /* ================== Dữ liệu mẫu: cấu trúc giống phản hồi API thật ================== */
   const MOCK = {
     texts: {
-      loginSuccess: 'Đăng nhập thành công',
-      pairSent: 'Đã gửi lời mời ghép đôi tới mã: ',
-      featureOpened: 'Mở tính năng: ',
-      touchSent: 'Đã gửi rung máy tới người ấy',
-      pulseSent: 'Đang đồng bộ nhịp đập trái tim…',
-      incoming: 'Người ấy vừa nhắn tin cho bạn',
-      loginBad: 'Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.',
-      loginOffline: 'Không có kết nối mạng. Kiểm tra lại rồi thử lần nữa.',
-      loginEmpty: 'Nhập tài khoản và mật khẩu để tiếp tục.',
-      offline: 'Mất kết nối mạng. Đang chờ kết nối lại…'
+      loginSuccess: 'Đăng nhập thành công', pairSent: 'Đã gửi lời mời ghép đôi tới mã: ', featureOpened: 'Mở tính năng: ',
+      touchSent: 'Đã gửi rung máy tới người ấy', pulseSent: 'Đang đồng bộ nhịp đập trái tim…', incoming: 'Người ấy vừa nhắn tin cho bạn',
+      loginBad: 'Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.', loginOffline: 'Không có kết nối mạng. Kiểm tra lại rồi thử lần nữa.',
+      loginEmpty: 'Nhập tài khoản và mật khẩu để tiếp tục.', offline: 'Mất kết nối mạng. Đang chờ kết nối lại…'
     },
     auth: {
-      appTitle: 'TPVT', appSubtitle: 'Không gian riêng tư chỉ dành cho hai ta',
-      heroImageUrl: null,
-      accountPlaceholder: 'Email / Số điện thoại', passwordPlaceholder: 'Mật khẩu',
-      loginButton: 'Đăng nhập',
+      appTitle: 'TPVT', appSubtitle: 'Không gian riêng tư chỉ dành cho hai ta', heroImageUrl: null,
+      accountLabel: 'Email / Số điện thoại', passwordLabel: 'Mật khẩu', loginButton: 'Đăng nhập',
       pairing: { title: 'Kết nối đôi', placeholder: 'Nhập mã của người ấy', button: 'Kết nối' }
     },
     dashboard: {
       headerTitle: 'Góc Nhỏ TPVT', hasNotification: true,
-      couple: { avatarUrl: null, daysPrefix: 'Bên nhau:', days: 520, daysUnit: 'ngày', countdownLabel: 'Đếm ngược sự kiện:', countdownSeconds: 50400 },
+      couple: { chip: 'Bên nhau', avatarUrl: null, partnerAvatarUrl: null, days: 520, daysUnit: 'ngày', countdownLabel: 'Đếm ngược sự kiện', countdownSeconds: 50400 },
       chatWidget: { heading: 'Trò chuyện với người ấy', partnerName: 'Người ấy', partnerAvatarUrl: null, lastMessage: 'Anh sắp về đến nhà rồi...', unread: 5 },
       features: [
-        { id: 'diary', title: 'Nhật ký chung', icon: 'book' },
-        { id: 'wishlist', title: 'Danh sách mong ước', icon: 'clipboardCheck' },
-        { id: 'calendar', title: 'Lịch hẹn hò', icon: 'calendarCheck' },
-        { id: 'games', title: 'Trò chơi cặp đôi', icon: 'gamepad' },
-        { id: 'map', title: 'Bản đồ cặp đôi', icon: 'mapPin' },
-        { id: 'bank', title: 'Ngân hàng tình yêu', icon: 'wallet' }
+        { id: 'diary', title: 'Nhật ký chung', icon: 'book', tone: 'sky' },
+        { id: 'wishlist', title: 'Danh sách mong ước', icon: 'clipboardCheck', tone: 'cyan' },
+        { id: 'calendar', title: 'Lịch hẹn hò', icon: 'calendarCheck', tone: 'indigo' },
+        { id: 'games', title: 'Trò chơi cặp đôi', icon: 'gamepad', tone: 'violet' },
+        { id: 'map', title: 'Bản đồ cặp đôi', icon: 'mapPin', tone: 'teal' },
+        { id: 'bank', title: 'Ngân hàng tình yêu', icon: 'wallet', tone: 'blue' }
       ],
       nav: [
         { id: 'home', label: 'Trang chủ', icon: 'home' },
@@ -474,12 +470,11 @@
       ]
     },
     chat: {
-      roomTitle: 'TPVT', onlineText: 'Đang hoạt động', partnerAvatarUrl: null,
-      inputPlaceholder: 'Gửi lời yêu thương...', partnerTyping: true,
+      roomTitle: 'TPVT', onlineText: 'Đang hoạt động', partnerAvatarUrl: null, inputPlaceholder: 'Gửi lời yêu thương...', partnerTyping: true,
       quick: [
-        { id: 'heart', title: 'Thả tim', sub: 'lấp lánh', icon: 'heart' },
-        { id: 'touch', title: 'Chạm tay', sub: 'rung máy', icon: 'sparkles' },
-        { id: 'pulse', title: 'Cùng nhịp', sub: 'đồng bộ', icon: 'activity' }
+        { id: 'heart', title: 'Thả tim', icon: 'heart' },
+        { id: 'touch', title: 'Chạm tay', icon: 'sparkles' },
+        { id: 'pulse', title: 'Cùng nhịp đập', icon: 'activity' }
       ],
       messages: [
         { id: 101, from: 'partner', text: 'Tông màu xanh dương nhạt nhìn trong trẻo và dịu mắt ghê.', time: '20:36' },
@@ -496,17 +491,18 @@
 
   let data = structuredClone(MOCK);
   const ui = { screen: 'screen-login', status: 'ready', offline: !navigator.onLine, expired: false, loginError: '' };
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ================== Tiện ích ================== */
   const $ = (id) => document.getElementById(id);
   const NS = 'http://www.w3.org/2000/svg';
-
   const ICONS = {
     eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     eyeOff: '<path d="M3 3l18 18"/><path d="M10.6 5.1A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A16.8 16.8 0 0 0 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
     bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
     heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
     chevronLeft: '<path d="m15 18-6-6 6-6"/>',
+    arrowRight: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
     phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
     video: '<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
@@ -530,55 +526,45 @@
   };
   function icon(name) {
     const s = document.createElementNS(NS, 'svg');
-    s.setAttribute('viewBox', '0 0 24 24');
-    s.setAttribute('class', 'ico');
-    s.setAttribute('aria-hidden', 'true');
+    s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('class', 'ico'); s.setAttribute('aria-hidden', 'true');
     s.innerHTML = ICONS[name] || '';   // ICONS là hằng số trong file, không nhận dữ liệu từ ngoài
     return s;
   }
-  /* Tạo DOM bằng textContent: dữ liệu từ máy chủ không bao giờ chạy như HTML */
+  /* Dựng DOM bằng textContent: dữ liệu từ máy chủ không bao giờ chạy như HTML */
   function el(tag, props = {}, ...kids) {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(props)) {
       if (v == null || v === false) continue;
-      if (k === 'class') n.className = v;
-      else if (k === 'text') n.textContent = v;
-      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
-      else n.setAttribute(k, v === true ? '' : v);
+      if (k === 'class') n.className = v; else if (k === 'text') n.textContent = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else n.setAttribute(k, v === true ? '' : v);
     }
     for (const c of kids.flat()) { if (c == null || c === false) continue; n.append(c.nodeType ? c : document.createTextNode(String(c))); }
     return n;
   }
-  function setIcon(node, name) { node.replaceChildren(icon(name)); }
+  const setIcon = (node, name) => node.replaceChildren(icon(name));
 
-  /* Ảnh giữ chỗ bằng SVG nội tuyến: không phụ thuộc mạng */
-  function svgUri(svg) { return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg); }
+  /* Ảnh giữ chỗ bằng SVG nội tuyến, không phụ thuộc mạng */
+  const svgUri = (svg) => 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
   function avatarUri(kind) {
-    const [a, b] = kind === 'me' ? ['#7DD3FC', '#0284C7'] : ['#BAE6FD', '#0369A1'];
-    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><circle cx="48" cy="38" r="16" fill="#fff" fill-opacity=".92"/><path d="M16 96c2-22 16-34 32-34s30 12 32 34z" fill="#fff" fill-opacity=".92"/></svg>`);
+    const [a, b] = kind === 'me' ? ['#7DD3FC', '#2563EB'] : ['#A5B4FC', '#0891B2'];
+    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><circle cx="48" cy="38" r="16" fill="#fff" fill-opacity=".94"/><path d="M16 96c2-22 16-34 32-34s30 12 32 34z" fill="#fff" fill-opacity=".94"/></svg>`);
   }
   function heroUri() {
-    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0F2FE"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><rect width="120" height="120" fill="url(#h)"/><circle cx="48" cy="60" r="26" fill="none" stroke="#38BDF8" stroke-width="4"/><circle cx="72" cy="60" r="26" fill="none" stroke="#0284C7" stroke-width="4"/><path d="M60 50c-3-5-10-4-10 2 0 5 6 8 10 12 4-4 10-7 10-12 0-6-7-7-10-2z" fill="#0369A1"/></svg>`);
+    return svgUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0F2FE"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><rect width="120" height="120" fill="url(#h)"/><circle cx="48" cy="60" r="26" fill="none" stroke="#38BDF8" stroke-width="4"/><circle cx="72" cy="60" r="26" fill="none" stroke="#2563EB" stroke-width="4"/><path d="M60 50c-3-5-10-4-10 2 0 5 6 8 10 12 4-4 10-7 10-12 0-6-7-7-10-2z" fill="#1A73D9"/></svg>`);
   }
   const imgSrc = (url, kind) => url || (kind === 'hero' ? heroUri() : avatarUri(kind));
-
   const fmt2 = (n) => String(n).padStart(2, '0');
+  const nowHM = () => new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
   /* Phát sự kiện giao diện ra ngoài; cầu nối native (nếu có) thuộc Giai đoạn 2 */
-  function emit(event, detail) { window.dispatchEvent(new CustomEvent('ui:event', { detail: { v: 1, event, data: detail } })); }
+  const emit = (event, detail) => window.dispatchEvent(new CustomEvent('ui:event', { detail: { v: 1, event, data: detail } }));
 
   let toastTimer = 0;
-  function toast(msg) {
-    const t = $('toast'); t.textContent = msg; t.classList.add('show');
-    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
-  }
+  function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
 
-  /* ================== Hiệu ứng nền (CSS thuần, số lượng nhỏ) ================== */
-  function buildAmbient() {
-    const a = $('ambient');
-    const bubs = [[22, 6, 0, 13], [64, 10, 4, 15], [38, 8, 8, 11], [82, 6, 2, 17]];
-    bubs.forEach(([left, size, delay, dur]) => a.append(el('span', { class: 'bub', style: `left:${left}%;width:${size * 3}px;height:${size * 3}px;--s:${delay}s;--d:${dur}s` })));
-    const spk = [[8, 12], [86, 22], [18, 58], [90, 70], [48, 8], [70, 90]];
-    spk.forEach(([l, t], i) => a.append(el('span', { class: 'spk', style: `left:${l}%;top:${t}%;--s:${i * 0.7}s`, text: ['✦', '✧', '⋆'][i % 3] })));
+  function buildAurora() {
+    const a = $('aurora');
+    [[12, 18, 0], [82, 12, 1.4], [70, 46, 2.8], [20, 72, 4.2], [90, 84, 0.7], [50, 30, 3.5]].forEach(([l, t, s]) =>
+      a.append(el('i', { class: 'spk', style: `left:${l}%;top:${t}%;--s:${s}s` })));
   }
 
   /* ================== Hiển thị ================== */
@@ -586,13 +572,13 @@
     const a = data.auth;
     $('heroImg').src = imgSrc(a.heroImageUrl, 'hero');
     $('appTitle').textContent = a.appTitle; $('appSubtitle').textContent = a.appSubtitle;
-    $('inAccount').placeholder = a.accountPlaceholder; $('inPassword').placeholder = a.passwordPlaceholder;
-    $('btnLogin').textContent = a.loginButton;
+    $('lblAccount').textContent = a.accountLabel; $('lblPassword').textContent = a.passwordLabel;
+    const btn = $('btnLogin');
+    if (!btn.disabled) btn.replaceChildren(a.loginButton, icon('arrowRight'));
     $('pairTitle').textContent = a.pairing.title; $('inPair').placeholder = a.pairing.placeholder; $('btnPair').textContent = a.pairing.button;
     setIcon($('btnTogglePwd'), $('inPassword').type === 'password' ? 'eyeOff' : 'eye');
     const msg = $('loginMsg'); msg.textContent = ui.loginError; msg.className = 'form-msg' + (ui.loginError ? ' err' : '');
-    $('inAccount').classList.toggle('invalid', !!ui.loginError);
-    $('inPassword').classList.toggle('invalid', !!ui.loginError);
+    $('inAccount').classList.toggle('invalid', !!ui.loginError); $('inPassword').classList.toggle('invalid', !!ui.loginError);
   }
 
   function stateView(node, iconName, title, text, retry) {
@@ -604,60 +590,70 @@
   let cdTarget = Date.now() + data.dashboard.couple.countdownSeconds * 1000;
   function tickCountdown() {
     const left = Math.max(0, Math.round((cdTarget - Date.now()) / 1000));
-    const t = $('cdTimer');
-    t.textContent = `${fmt2(Math.floor(left / 3600))} h ${fmt2(Math.floor((left % 3600) / 60))} m ${fmt2(left % 60)} s`;
+    $('cdTimer').textContent = `${fmt2(Math.floor(left / 3600))} h ${fmt2(Math.floor((left % 3600) / 60))} m ${fmt2(left % 60)} s`;
+  }
+  let counted = false;
+  function countUp(node, to) {
+    if (reduceMotion || counted) { node.textContent = String(to); return; }
+    counted = true;
+    const t0 = performance.now(), dur = 1100;
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
+      node.textContent = String(Math.round(to * eased));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function greetingText() {
+    const h = new Date().getHours();
+    return h < 11 ? 'Chào buổi sáng ☀️' : h < 14 ? 'Chào buổi trưa 🌤️' : h < 18 ? 'Chào buổi chiều 🌷' : 'Chào buổi tối 🌙';
+  }
+
+  function renderNav() {
+    const d = data.dashboard, idx = Math.max(0, d.nav.findIndex((t) => t.active));
+    const pill = el('div', { class: 'glass nav-pill', style: `--n:${d.nav.length};--idx:${idx}` },
+      el('span', { class: 'nav-ind', 'aria-hidden': 'true' }),
+      ...d.nav.map((t) => el('button', { class: 'nav-tab', type: 'button', 'aria-current': t.active ? 'page' : null, onclick: () => {
+        const prev = pill.style.getPropertyValue('--idx');
+        d.nav.forEach((x) => { x.active = x.id === t.id; });
+        pill.style.setProperty('--idx', String(d.nav.findIndex((x) => x.active)));
+        pill.querySelectorAll('.nav-tab').forEach((b, i) => b.toggleAttribute('aria-current', false) || (i === d.nav.findIndex((x) => x.active) && b.setAttribute('aria-current', 'page')));
+        if (prev !== pill.style.getPropertyValue('--idx')) emit('nav', { id: t.id });
+      } }, icon(t.icon), el('span', { text: t.label }))));
+    $('bottomNav').replaceChildren(pill);
   }
 
   function renderDashboard() {
-    const d = data.dashboard;
-    $('dashTitle').textContent = d.headerTitle;
-    $('bellDot').hidden = !d.hasNotification;
-    const dot = $('bellDot');            // giữ tham chiếu trước khi replaceChildren gỡ nó ra
+    const d = data.dashboard, c = d.couple;
+    $('greeting').textContent = greetingText(); $('dashTitle').textContent = d.headerTitle;
+    const dot = $('bellDot'); dot.hidden = !d.hasNotification;
     $('btnBell').replaceChildren(icon('bell'), dot);
-    $('coupleImg').src = imgSrc(d.couple.avatarUrl, 'me');
-    $('coupleHeart').replaceChildren(icon('heart'));
-    $('daysCount').textContent = `${d.couple.daysPrefix} ${d.couple.days} ${d.couple.daysUnit}`;
-    $('cdLabel').textContent = d.couple.countdownLabel;
-    tickCountdown();
-    $('widgetTitle').textContent = d.chatWidget.heading;
-    $('widgetAvatar').src = imgSrc(d.chatWidget.partnerAvatarUrl, 'partner');
-    $('widgetName').textContent = d.chatWidget.partnerName;
-    $('widgetLast').textContent = d.chatWidget.lastMessage;
-    renderUnread();
-
-    $('featureGrid').replaceChildren(...d.features.map((f) =>
-      el('button', { class: 'feature', type: 'button', onclick: () => { emit('feature', { id: f.id }); toast(data.texts.featureOpened + f.title); } },
-        el('span', { class: 'feature-ico' }, icon(f.icon)),
-        el('span', { class: 'feature-label', text: f.title }))));
-
-    $('bottomNav').replaceChildren(...d.nav.map((t) =>
-      el('button', { class: 'nav-tab', type: 'button', 'aria-current': t.active ? 'page' : null, onclick: () => {
-        d.nav.forEach((x) => { x.active = x.id === t.id; }); renderDashboard(); emit('nav', { id: t.id });
-      } }, icon(t.icon), el('span', { text: t.label }))));
+    $('heroChip').textContent = c.chip; $('daysUnit').textContent = c.daysUnit; $('cdLabel').textContent = c.countdownLabel;
+    $('coupleImg1').src = imgSrc(c.avatarUrl, 'me'); $('coupleImg2').src = imgSrc(c.partnerAvatarUrl, 'partner');
+    countUp($('daysNum'), c.days); tickCountdown();
+    const w = d.chatWidget;
+    $('widgetTitle').textContent = w.heading; $('widgetAvatar').src = imgSrc(w.partnerAvatarUrl, 'partner');
+    $('widgetName').textContent = w.partnerName; $('widgetLast').textContent = w.lastMessage; renderUnread();
+    $('featureGrid').replaceChildren(...d.features.map((f, i) =>
+      el('button', { class: 'glass feature reveal', style: `--i:${i + 3}`, type: 'button', onclick: () => { emit('feature', { id: f.id }); toast(data.texts.featureOpened + f.title); } },
+        el('span', { class: `tile tone-${f.tone}` }, icon(f.icon)), el('span', { class: 'feature-label', text: f.title }))));
+    renderNav();
   }
-
   function renderUnread() {
-    const n = data.dashboard.chatWidget.unread;
-    const b = $('unread');
-    b.hidden = n <= 0; b.textContent = n > 99 ? '99+' : String(n);
-    b.setAttribute('aria-label', `${n} tin nhắn chưa đọc`);
+    const n = data.dashboard.chatWidget.unread, b = $('unread');
+    b.hidden = n <= 0; b.textContent = n > 99 ? '99+' : String(n); b.setAttribute('aria-label', `${n} tin nhắn chưa đọc`);
   }
 
   function renderChatHead() {
     const c = data.chat;
-    setIcon($('btnBack'), 'chevronLeft'); setIcon($('btnAudio'), 'phone'); setIcon($('btnVideo'), 'video');
-    setIcon($('btnImage'), 'image'); setIcon($('btnSend'), 'send');
-    $('roomAvatar').src = imgSrc(c.partnerAvatarUrl, 'partner');
-    $('roomTitle').textContent = c.roomTitle; $('roomStatus').textContent = c.onlineText;
+    setIcon($('btnBack'), 'chevronLeft'); setIcon($('btnAudio'), 'phone'); setIcon($('btnVideo'), 'video'); setIcon($('btnImage'), 'image'); setIcon($('btnSend'), 'send');
+    $('roomAvatar').src = imgSrc(c.partnerAvatarUrl, 'partner'); $('roomTitle').textContent = c.roomTitle; $('roomStatus').textContent = c.onlineText;
     $('chatInput').placeholder = c.inputPlaceholder;
-    $('quickBar').replaceChildren(...c.quick.map((q) =>
-      el('button', { class: 'quick', type: 'button', onclick: () => quickAction(q.id) },
-        icon(q.icon), el('b', { text: q.title }), el('small', { text: q.sub }))));
+    $('quickBar').replaceChildren(...c.quick.map((q) => el('button', { class: 'glass quick', type: 'button', onclick: () => quickAction(q.id) }, icon(q.icon), q.title)));
   }
-
   function renderMessages() {
     const c = data.chat, partnerSrc = imgSrc(c.partnerAvatarUrl, 'partner');
-    const nodes = [el('div', { class: 'day-sep', text: 'Hôm nay' })];
+    const nodes = [el('div', { class: 'glass day-sep', text: 'Hôm nay' })];
     const lastMine = [...c.messages].reverse().find((m) => m.from === 'me');
     c.messages.forEach((m) => {
       const meta = m.status === 'sending' ? 'Đang gửi…' : m.status === 'failed' ? 'Gửi lỗi. Chạm để gửi lại' : (m === lastMine ? `Đã gửi · ${m.time}` : m.time);
@@ -666,37 +662,27 @@
         el('div', { class: 'bubble-col' }, el('div', { class: 'bubble selectable', text: m.text }), el('div', { class: 'msg-meta', text: meta }))));
     });
     if (c.partnerTyping) nodes.push(el('div', { class: 'typing', 'aria-label': 'Người ấy đang soạn tin' }, el('span'), el('span'), el('span')));
-    $('stream').replaceChildren(...nodes);
-    $('stream').scrollTop = $('stream').scrollHeight;
+    $('stream').replaceChildren(...nodes); $('stream').scrollTop = $('stream').scrollHeight;
   }
 
-  /* Gom mọi trạng thái hiển thị vào một chỗ để dễ thử và dễ bảo trì */
+  let currentDevState = 'ready';
   function applyStatus() {
-    const s = ui.status, e = data.errors;
-    $('dashReady').hidden = !(s === 'ready' || s === 'empty'); $('dashLoading').hidden = s !== 'loading'; $('dashError').hidden = s !== 'error';
+    const s = ui.status, e = data.errors, empty = s === 'empty';
+    $('dashReady').hidden = !(s === 'ready' || empty); $('dashLoading').hidden = s !== 'loading'; $('dashError').hidden = s !== 'error';
     if (s === 'error') stateView($('dashError'), 'alert', e.title, e.text, () => setStatus('loading', true));
-
-    const empty = s === 'empty';
     $('stream').hidden = s !== 'ready';
     $('chatLoading').hidden = s !== 'loading'; $('chatError').hidden = s !== 'error'; $('chatEmpty').hidden = !empty;
     if (s === 'error') stateView($('chatError'), 'alert', e.title, e.text, () => setStatus('loading', true));
     if (empty) stateView($('chatEmpty'), 'messageHeart', data.empty.title, data.empty.text);
-    $('quickBar').hidden = s === 'loading' || s === 'error';
-    $('chatForm').hidden = s === 'loading' || s === 'error';
+    $('quickBar').hidden = s === 'loading' || s === 'error'; $('chatForm').hidden = s === 'loading' || s === 'error';
 
-    const ob = $('offlineBar');
-    ob.hidden = !ui.offline; $('appRoot').classList.toggle('has-offline', ui.offline);
+    const ob = $('offlineBar'); ob.hidden = !ui.offline; $('appRoot').classList.toggle('has-offline', ui.offline);
     if (ui.offline) ob.replaceChildren(icon('wifiOff'), el('span', { text: data.texts.offline }));
 
     $('expiredOverlay').hidden = !ui.expired;
-    if (ui.expired) {
-      setIcon($('expIco'), 'lock');
-      $('expTitle').textContent = data.expired.title; $('expText').textContent = data.expired.text; $('btnRelogin').textContent = data.expired.button;
-    }
+    if (ui.expired) { setIcon($('expIco'), 'lock'); $('expTitle').textContent = data.expired.title; $('expText').textContent = data.expired.text; $('btnRelogin').textContent = data.expired.button; }
     document.querySelectorAll('.dev-panel [data-state]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.state === currentDevState)));
   }
-
-  let currentDevState = 'ready';
   function setStatus(s, simulateLoad) {
     if (simulateLoad) { ui.status = 'loading'; applyStatus(); setTimeout(() => { ui.status = 'ready'; currentDevState = 'ready'; applyStatus(); }, 900); return; }
     ui.status = s; applyStatus();
@@ -711,26 +697,17 @@
       if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
     });
     if (id === 'screen-chat') { data.dashboard.chatWidget.unread = 0; renderUnread(); $('stream').scrollTop = $('stream').scrollHeight; }
-    emit('screen', { id });
-    updateDevPanel();
+    emit('screen', { id }); updateDevPanel();
   }
-
   /* Vuốt từ mép trái để quay lại, giống app native */
   function initSwipeBack() {
     const chat = $('screen-chat'), dash = $('screen-dashboard');
     let startX = 0, dx = 0, on = false;
     chat.addEventListener('touchstart', (e) => { if (e.touches[0].clientX < 28) { startX = e.touches[0].clientX; dx = 0; on = true; chat.style.transition = 'none'; dash.style.transition = 'none'; dash.classList.add('peek'); } }, { passive: true });
-    chat.addEventListener('touchmove', (e) => {
-      if (!on) return;
-      dx = Math.max(0, e.touches[0].clientX - startX);
-      chat.style.transform = `translateX(${dx}px)`;
-      dash.style.transform = `translateX(${(dx - innerWidth) * 0.3}px)`;
-    }, { passive: true });
+    chat.addEventListener('touchmove', (e) => { if (!on) return; dx = Math.max(0, e.touches[0].clientX - startX); chat.style.transform = `translateX(${dx}px)`; dash.style.transform = `translateX(${(dx - innerWidth) * 0.3}px)`; }, { passive: true });
     chat.addEventListener('touchend', () => {
-      if (!on) return; on = false;
-      chat.style.transition = ''; dash.style.transition = '';
-      if (dx > 100) navigateTo('screen-dashboard');
-      else { chat.style.transform = ''; dash.style.transform = ''; dash.classList.remove('peek'); }
+      if (!on) return; on = false; chat.style.transition = ''; dash.style.transition = '';
+      if (dx > 100) navigateTo('screen-dashboard'); else { chat.style.transform = ''; dash.style.transform = ''; dash.classList.remove('peek'); }
     });
   }
 
@@ -738,11 +715,9 @@
   $('btnTogglePwd').addEventListener('click', () => {
     const p = $('inPassword'), show = p.type === 'password';
     p.type = show ? 'text' : 'password';
-    $('btnTogglePwd').setAttribute('aria-pressed', String(show));
-    $('btnTogglePwd').setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    $('btnTogglePwd').setAttribute('aria-pressed', String(show)); $('btnTogglePwd').setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
     setIcon($('btnTogglePwd'), show ? 'eye' : 'eyeOff');
   });
-
   $('loginForm').addEventListener('submit', (ev) => {
     ev.preventDefault();
     const acc = $('inAccount').value.trim(), pwd = $('inPassword').value;
@@ -752,16 +727,12 @@
     const btn = $('btnLogin'); btn.disabled = true; btn.replaceChildren(el('span', { class: 'spinner', 'aria-hidden': 'true' }), 'Đang đăng nhập…');
     emit('login', { account: acc });
     setTimeout(() => {
-      btn.disabled = false; btn.textContent = data.auth.loginButton;
+      btn.disabled = false; renderLogin();
       if (pwd === 'wrong') { ui.loginError = data.texts.loginBad; renderLogin(); return; }   // chỉ để xem thử lỗi
       toast(data.texts.loginSuccess); navigateTo('screen-dashboard');
     }, 800);
   });
-
-  $('btnPair').addEventListener('click', () => {
-    const code = $('inPair').value.trim().toUpperCase();
-    emit('pair', { code }); toast(data.texts.pairSent + (code || 'TPVT520'));
-  });
+  $('btnPair').addEventListener('click', () => { const code = $('inPair').value.trim().toUpperCase(); emit('pair', { code }); toast(data.texts.pairSent + (code || 'TPVT520')); });
   $('chatWidget').addEventListener('click', () => navigateTo('screen-chat'));
   $('btnBack').addEventListener('click', () => navigateTo('screen-dashboard'));
   $('btnBell').addEventListener('click', () => { data.dashboard.hasNotification = false; $('bellDot').hidden = true; emit('bell', {}); });
@@ -775,28 +746,25 @@
     ev.preventDefault();
     const input = $('chatInput'), text = input.value.trim();
     if (!text) return;
-    const m = { id: Date.now(), from: 'me', text, time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false }), status: ui.offline ? 'failed' : 'sending' };
+    const m = { id: Date.now(), from: 'me', text, time: nowHM(), status: ui.offline ? 'failed' : 'sending' };
     data.chat.messages.push(m); data.dashboard.chatWidget.lastMessage = text;
-    input.value = ''; $('btnSend').disabled = true;
-    renderMessages(); $('widgetLast').textContent = text;
-    emit('send', { id: m.id });
+    input.value = ''; $('btnSend').disabled = true; renderMessages(); $('widgetLast').textContent = text; emit('send', { id: m.id });
     if (!ui.offline) setTimeout(() => { delete m.status; renderMessages(); }, 700);
   });
 
+  function burst(root, symbols, count) {
+    for (let i = 0; i < count; i++) setTimeout(() => {
+      const n = el('div', { class: 'fx', 'aria-hidden': 'true', text: symbols[i % symbols.length],
+        style: `left:${Math.floor(Math.random() * 70 + 12)}%;--dx:${Math.round(Math.random() * 80 - 40)}px;--rot:${Math.round(Math.random() * 50 - 25)}deg` });
+      root.append(n); setTimeout(() => n.remove(), 2300);
+    }, i * 70);
+  }
   function quickAction(id) {
     const root = $('appRoot');
-    if (id === 'heart') {
-      ['❤️', '✨', '💙', '♥'].forEach((s, i) => { for (let k = 0; k < 2; k++) setTimeout(() => floatHeart(root, s), (i * 2 + k) * 90); });
-    } else if (id === 'touch') {
-      root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake');
-      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-      toast(data.texts.touchSent);
-    } else if (id === 'pulse') { floatHeart(root, '💓'); toast(data.texts.pulseSent); }
+    if (id === 'heart') burst(root, ['❤️', '💙', '✨', '💖'], reduceMotion ? 2 : 10);
+    else if (id === 'touch') { root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake'); if (navigator.vibrate) navigator.vibrate([100, 50, 100]); toast(data.texts.touchSent); }
+    else if (id === 'pulse') { burst(root, ['💓'], 3); toast(data.texts.pulseSent); }
     emit('quick', { id });
-  }
-  function floatHeart(root, sym) {
-    const h = el('div', { class: 'fx-heart', 'aria-hidden': 'true', text: sym, style: `left:${Math.floor(Math.random() * 70 + 12)}%` });
-    root.append(h); setTimeout(() => h.remove(), 2100);
   }
 
   /* API cho phía native gọi qua evaluateJavaScript (không nhận postMessage từ nguồn lạ) */
@@ -806,8 +774,7 @@
     setStatus(s) { currentDevState = s; ui.status = ['ready', 'loading', 'error', 'empty'].includes(s) ? s : 'ready'; applyStatus(); },
     sessionExpired() { ui.expired = true; applyStatus(); },
     pushIncomingMessage(text) {
-      const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
-      data.chat.messages.push({ id: Date.now(), from: 'partner', text: String(text), time });
+      data.chat.messages.push({ id: Date.now(), from: 'partner', text: String(text), time: nowHM() });
       data.dashboard.chatWidget.lastMessage = String(text); $('widgetLast').textContent = String(text);
       if (ui.screen !== 'screen-chat') { data.dashboard.chatWidget.unread += 1; renderUnread(); } else renderMessages();
       toast(data.texts.incoming);
@@ -817,17 +784,14 @@
   /* ================== Mạng, bàn phím, vòng đời ================== */
   window.addEventListener('online', () => { ui.offline = false; applyStatus(); });
   window.addEventListener('offline', () => { ui.offline = true; applyStatus(); });
-
-  const vv = window.visualViewport, root = $('appRoot');
+  const vv = window.visualViewport, rootEl = $('appRoot');
   function syncViewport() {
-    const h = vv ? vv.height : innerHeight;
-    document.documentElement.style.setProperty('--app-h', h + 'px');
-    root.classList.toggle('kb', vv ? innerHeight - vv.height > 120 : false);   // bàn phím đang mở
+    document.documentElement.style.setProperty('--app-h', (vv ? vv.height : innerHeight) + 'px');
+    rootEl.classList.toggle('kb', vv ? innerHeight - vv.height > 120 : false);   // bàn phím đang mở
     if (vv && vv.offsetTop) window.scrollTo(0, 0);
   }
   if (vv) { vv.addEventListener('resize', syncViewport); vv.addEventListener('scroll', syncViewport); }
   syncViewport();
-
   setInterval(() => { if (!document.hidden) tickCountdown(); }, 1000);
 
   /* ================== Bảng xem thử (chỉ máy tính) ================== */
@@ -839,18 +803,16 @@
     p.append(el('h4', { text: 'TRẠNG THÁI' }), ...states.map(([id, label]) => el('button', { type: 'button', 'data-state': id, 'aria-pressed': 'false', onclick: () => devState(id) }, label)));
   }
   function devState(id) {
-    currentDevState = id;
-    ui.offline = id === 'offline'; ui.expired = id === 'expired'; ui.loginError = id === 'loginerror' ? data.texts.loginBad : '';
+    currentDevState = id; ui.offline = id === 'offline'; ui.expired = id === 'expired'; ui.loginError = id === 'loginerror' ? data.texts.loginBad : '';
     ui.status = ['loading', 'error', 'empty'].includes(id) ? id : 'ready';
     if (id === 'empty') data.chat = { ...data.chat, messages: [], partnerTyping: false }; else if (data.chat.messages.length === 0) data.chat = structuredClone(MOCK.chat);
     renderLogin(); renderMessages(); applyStatus();
   }
-  function updateDevPanel() { document.querySelectorAll('.dev-panel [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === ui.screen))); }
+  const updateDevPanel = () => document.querySelectorAll('.dev-panel [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === ui.screen)));
 
   /* ================== Khởi động ================== */
   function renderAll() { renderLogin(); renderDashboard(); renderChatHead(); renderMessages(); applyStatus(); }
-  buildAmbient(); buildDevPanel(); renderAll(); initSwipeBack();
-
+  buildAurora(); buildDevPanel(); renderAll(); initSwipeBack();
   const q = new URLSearchParams(location.search);
   if (q.get('state')) devState(q.get('state'));
   if (q.get('screen') && $('screen-' + q.get('screen'))) navigateTo('screen-' + q.get('screen'));
