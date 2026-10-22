@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Yêu Thương UI - Fluid Mobile Motion</title>
+  <title>TPVT - Monotone Ice Blue</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,29 +13,29 @@
 
   <style>
     :root {
-      /* --- TÔNG MÀU TÌNH YÊU HIỆN ĐẠI (MONOTONE ROSE & SOFT BLUSH) --- */
-      --love-primary: #D946EF;    
-      --love-dark: #831843;       
-      --love-soft: #FCE7F3;       
-      --love-accent: #FB7185;     
+      /* --- TÔNG MÀU ĐƠN SẮC XANH DƯƠNG NHẠT (ICE BLUE MONOTONE) --- */
+      --blue-primary: #38BDF8;    /* Xanh dương nhạt chủ đạo */
+      --blue-light: #E0F2FE;      /* Xanh băng giá */
+      --blue-dark: #0369A1;       /* Xanh dương trầm sang trọng */
+      --blue-soft: #F0F9FF;       /* Nền xanh cực nhạt */
 
-      /* Hệ thống nền & Kính mờ */
-      --bg-main: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 50%, #FCE7F3 100%);
-      --bg-glass: rgba(255, 255, 255, 0.82);
+      /* Hệ thống nền & Kính mờ đồng điệu */
+      --bg-main: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      --bg-glass: rgba(255, 255, 255, 0.85);
       --bg-glass-strong: rgba(255, 255, 255, 0.95);
-      --bg-input: rgba(255, 241, 242, 0.85);
+      --bg-input: rgba(224, 242, 254, 0.5);
 
-      /* Gradient mượt mà, đồng điệu màu tình yêu */
-      --primary-gradient: linear-gradient(105deg, #E11D48 0%, #F43F5E 50%, #FB7185 100%);
-      --chat-card-gradient: linear-gradient(105deg, #831843 0%, #BE123C 50%, #E11D48 100%);
+      /* Gradient đơn sắc xanh nhạt mượt mà */
+      --primary-gradient: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+      --chat-card-gradient: linear-gradient(110deg, #0284C7 0%, #0369A1 100%);
 
       /* Trạng thái */
-      --badge-red: #E11D48;
+      --badge-red: #F43F5E;
       --status-online: #10B981;
 
       /* Typography */
-      --text-primary: #1E293B;
-      --text-accent: #9F1239;
+      --text-primary: #0F172A;
+      --text-accent: #0284C7;
       --text-secondary: #64748B;
       --text-white: #FFFFFF;
 
@@ -45,9 +45,9 @@
       --radius-md: 14px;
       --radius-pill: 9999px;
 
-      --shadow-soft: 0 10px 25px -5px rgba(225, 29, 72, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-      --shadow-floating: 0 16px 35px -8px rgba(225, 29, 72, 0.22), 0 0 20px rgba(254, 205, 211, 0.6);
-      --border-shimmer: 1px solid rgba(255, 255, 255, 0.9);
+      --shadow-soft: 0 10px 25px -5px rgba(56, 189, 248, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --shadow-floating: 0 16px 35px -8px rgba(56, 189, 248, 0.22), 0 0 20px rgba(224, 242, 254, 0.8);
+      --border-shimmer: 1px solid rgba(255, 255, 255, 0.95);
 
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -67,9 +67,9 @@
       overflow: hidden;
       font-family: 'Nunito', sans-serif;
       color: var(--text-primary);
-      background: linear-gradient(-45deg, #FFF1F2, #FFE4E6, #FCE7F3, #FDF2F8);
+      background: linear-gradient(-45deg, #E0F2FE, #F0F9FF, #EFF6FF, #F8FAFC);
       background-size: 400% 400%;
-      animation: gradientBG 20s ease infinite;
+      animation: gradientBG 22s ease infinite;
     }
 
     @keyframes gradientBG {
@@ -87,13 +87,13 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 50px -12px rgba(131, 24, 67, 0.25);
+      box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.2);
     }
 
-    /* --- HIỆU ỨNG BONG BÓNG TÌNH YÊU & LẤP LÁNH --- */
+    /* --- HIỆU ỨNG BONG BÓNG & TUYẾT LẤP LÁNH --- */
     .bubble-layer, .sparkle-layer {
       position: absolute;
       inset: 0;
@@ -104,7 +104,7 @@
 
     .love-bubble {
       position: absolute;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(244, 63, 94, 0.15));
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(56, 189, 248, 0.12));
       border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: 50%;
       animation: floatBubble 9s infinite ease-in-out;
@@ -112,7 +112,7 @@
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      color: #E11D48;
+      color: #38BDF8;
       box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.9);
     }
     @keyframes floatBubble {
@@ -124,8 +124,8 @@
 
     .sparkle-dot {
       position: absolute;
-      color: #F43F5E;
-      text-shadow: 0 0 10px rgba(244, 63, 94, 0.8);
+      color: #38BDF8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
       animation: twinkle 3.5s infinite ease-in-out;
       font-size: 11px;
       opacity: 0.7;
@@ -147,7 +147,6 @@
       padding-top: var(--safe-top);
       z-index: 2;
       background: inherit;
-      /* Hiệu ứng chuyển động mượt mà kiểu Spring Physics */
       transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
       will-change: transform, opacity;
       opacity: 0;
@@ -183,10 +182,10 @@
       height: 128px;
       margin: 0 auto 12px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #FFE4E6 0%, #FFFFFF 100%);
-      box-shadow: 0 12px 30px rgba(225, 29, 72, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
+      background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 100%);
+      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
       overflow: hidden;
-      border: 2px solid var(--badge-red);
+      border: 2px solid var(--blue-primary);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .couple-illustration:hover {
@@ -228,7 +227,7 @@
       width: 100%;
       padding: 13px 40px 13px 18px;
       border-radius: var(--radius-pill);
-      border: 1.5px solid rgba(254, 205, 211, 0.9);
+      border: 1.5px solid rgba(186, 230, 253, 0.9);
       background: var(--bg-input);
       font-family: inherit;
       font-size: 14px;
@@ -237,9 +236,9 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .input-box input:focus {
-      border-color: var(--badge-red);
+      border-color: var(--blue-primary);
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
       transform: scale(1.01);
     }
     .input-box .input-icon {
@@ -261,7 +260,7 @@
       font-size: 15px;
       letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 6px 18px -4px rgba(225, 29, 72, 0.35);
+      box-shadow: 0 6px 18px -4px rgba(56, 189, 248, 0.4);
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
     }
     .btn-primary:hover {
@@ -272,9 +271,9 @@
     }
 
     .pairing-card {
-      background: rgba(254, 226, 226, 0.45);
+      background: rgba(224, 242, 254, 0.5);
       backdrop-filter: blur(12px);
-      border: 1.5px dashed rgba(225, 29, 72, 0.4);
+      border: 1.5px dashed rgba(56, 189, 248, 0.45);
       border-radius: var(--radius-lg);
       padding: 14px;
       text-align: center;
@@ -292,7 +291,7 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-pill);
       padding: 4px 4px 4px 16px;
-      border: 1px solid rgba(254, 205, 211, 0.9);
+      border: 1px solid rgba(186, 230, 253, 0.9);
       align-items: center;
     }
     .pairing-input-group input {
@@ -418,12 +417,12 @@
       width: 70px;
       height: 70px;
       border-radius: 50%;
-      border: 2.5px solid var(--badge-red);
+      border: 2.5px solid var(--blue-primary);
       padding: 3px;
       background: #fff;
       position: relative;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
     }
     .heart-avatar-frame img {
       width: 100%;
@@ -435,7 +434,7 @@
       position: absolute;
       bottom: -3px;
       right: -3px;
-      background: var(--badge-red);
+      background: var(--blue-primary);
       color: #fff;
       width: 23px;
       height: 23px;
@@ -465,7 +464,7 @@
       font-weight: 700;
       color: var(--text-accent);
       letter-spacing: 0.6px;
-      background: rgba(225, 29, 72, 0.1);
+      background: rgba(56, 189, 248, 0.1);
       padding: 2px 10px;
       border-radius: var(--radius-pill);
       width: fit-content;
@@ -486,10 +485,10 @@
     }
     .chat-widget-wrapper:hover {
       transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 20px 40px -10px rgba(225, 29, 72, 0.35);
+      box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.35);
     }
     .chat-widget-wrapper:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
     .widget-section-title {
       font-size: 11px;
@@ -503,8 +502,8 @@
       gap: 6px;
     }
     .widget-section-title::before {
-      content: '♥';
-      color: var(--badge-red);
+      content: '✦';
+      color: var(--blue-primary);
       font-size: 13px;
     }
     .chat-banner-box {
@@ -516,7 +515,7 @@
       align-items: center;
       gap: 12px;
       color: #fff;
-      box-shadow: 0 6px 18px -4px rgba(131, 24, 67, 0.35);
+      box-shadow: 0 6px 18px -4px rgba(2, 132, 199, 0.35);
     }
     .partner-avatar {
       width: 48px;
@@ -561,7 +560,7 @@
       justify-content: center;
       font-size: 13px;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.45);
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.45);
       animation: pulseBadge 1.8s infinite;
       z-index: 10;
     }
@@ -598,8 +597,8 @@
     .feature-item:hover {
       transform: translateY(-4px) scale(1.03);
       background: #FFFFFF;
-      box-shadow: 0 12px 25px -5px rgba(225, 29, 72, 0.22);
-      border-color: rgba(225, 29, 72, 0.4);
+      box-shadow: 0 12px 25px -5px rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.4);
     }
     .feature-item:active {
       transform: scale(0.95);
@@ -608,8 +607,8 @@
       width: 46px;
       height: 46px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #FFE4E6 0%, #FCE7F3 100%);
-      color: var(--badge-red);
+      background: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 100%);
+      color: var(--blue-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -619,7 +618,7 @@
     }
     .feature-item:hover .feature-icon-box {
       transform: scale(1.12) rotate(6deg);
-      color: var(--love-dark);
+      color: var(--blue-dark);
     }
     .feature-label {
       font-size: 12px;
@@ -639,7 +638,7 @@
       align-items: center;
       padding-left: 12px;
       padding-right: 12px;
-      border-top: 1px solid rgba(254, 205, 211, 0.7);
+      border-top: 1px solid rgba(224, 242, 254, 0.8);
       flex-shrink: 0;
       z-index: 10;
     }
@@ -660,13 +659,13 @@
       transform: scale(0.9);
     }
     .nav-tab:hover {
-      color: var(--badge-red);
+      color: var(--blue-primary);
     }
     .nav-tab i {
       font-size: 18px;
     }
     .nav-tab.active {
-      color: var(--badge-red);
+      color: var(--blue-primary);
       font-weight: 700;
     }
     .nav-tab.active::before {
@@ -676,7 +675,7 @@
       width: 22px;
       height: 3px;
       border-radius: 3px;
-      background: var(--badge-red);
+      background: var(--blue-primary);
     }
 
     /* MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN */
@@ -687,7 +686,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(254, 205, 211, 0.7);
+      border-bottom: 1px solid rgba(224, 242, 254, 0.8);
       z-index: 10;
     }
     .chat-header-left {
@@ -699,7 +698,7 @@
       background: none;
       border: none;
       font-size: 18px;
-      color: var(--badge-red);
+      color: var(--blue-primary);
       cursor: pointer;
       padding: 4px 6px;
       transition: transform 0.2s;
@@ -712,7 +711,7 @@
       height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--badge-red);
+      border: 2px solid var(--blue-primary);
     }
     .chat-user-meta h4 {
       font-size: 15px;
@@ -735,7 +734,7 @@
     .chat-header-actions {
       display: flex;
       gap: 16px;
-      color: var(--badge-red);
+      color: var(--blue-primary);
       font-size: 17px;
     }
     .chat-header-actions i {
@@ -744,7 +743,7 @@
     }
     .chat-header-actions i:hover {
       transform: scale(1.15);
-      color: var(--love-dark);
+      color: var(--blue-dark);
     }
 
     .message-stream {
@@ -754,7 +753,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: linear-gradient(180deg, rgba(255, 241, 242, 0.4) 0%, rgba(252, 231, 243, 0.4) 100%);
+      background: linear-gradient(180deg, rgba(224, 242, 254, 0.3) 0%, rgba(240, 249, 255, 0.5) 100%);
     }
     .msg-row {
       display: flex;
@@ -790,7 +789,7 @@
     .msg-row.partner .msg-bubble {
       background: rgba(255, 255, 255, 0.95);
       color: var(--text-primary);
-      border: 1px solid rgba(254, 205, 211, 0.8);
+      border: 1px solid rgba(186, 230, 253, 0.8);
       border-radius: 18px 18px 18px 4px;
       box-shadow: 0 3px 8px rgba(100, 116, 139, 0.04);
     }
@@ -798,7 +797,7 @@
       background: var(--primary-gradient);
       color: #FFFFFF;
       border-radius: 18px 18px 4px 18px;
-      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
     }
 
     .quick-actions-bar {
@@ -808,11 +807,11 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      border-top: 1px solid rgba(254, 205, 211, 0.7);
+      border-top: 1px solid rgba(224, 242, 254, 0.8);
     }
     .quick-action-card {
-      background: linear-gradient(180deg, #FFFFFF 0%, #FFF1F2 100%);
-      border: 1px solid rgba(254, 205, 211, 0.7);
+      background: linear-gradient(180deg, #FFFFFF 0%, #E0F2FE 100%);
+      border: 1px solid rgba(186, 230, 253, 0.7);
       border-radius: var(--radius-md);
       padding: 8px 4px;
       display: flex;
@@ -823,7 +822,7 @@
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s;
     }
     .quick-action-card:hover {
-      background: #FFE4E6;
+      background: #BAE6FD;
       transform: translateY(-2px);
     }
     .quick-action-card:active {
@@ -831,7 +830,7 @@
     }
     .quick-action-card i {
       font-size: 17px;
-      color: var(--badge-red);
+      color: var(--blue-primary);
     }
     .quick-action-title {
       font-size: 11px;
@@ -854,7 +853,7 @@
     .chat-input-wrapper {
       flex: 1;
       background: var(--bg-input);
-      border: 1px solid rgba(254, 205, 211, 0.8);
+      border: 1px solid rgba(186, 230, 253, 0.8);
       border-radius: var(--radius-pill);
       padding: 9px 14px;
       display: flex;
@@ -863,8 +862,8 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .chat-input-wrapper:focus-within {
-      border-color: var(--badge-red);
-      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
     }
     .chat-input-wrapper input {
       flex: 1;
@@ -882,7 +881,7 @@
       transition: color 0.2s, transform 0.2s;
     }
     .chat-input-wrapper i:hover {
-      color: var(--badge-red);
+      color: var(--blue-primary);
       transform: scale(1.1);
     }
     .send-btn {
@@ -897,7 +896,7 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s;
     }
     .send-btn:hover {
@@ -935,7 +934,7 @@
       top: calc(var(--safe-top) + 16px);
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
-      background: var(--love-dark);
+      background: var(--blue-dark);
       color: #fff;
       padding: 8px 18px;
       border-radius: var(--radius-pill);
@@ -946,7 +945,7 @@
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(131, 24, 67, 0.35);
+      box-shadow: 0 8px 20px rgba(3, 105, 161, 0.35);
     }
     .toast-box.show {
       opacity: 1;
@@ -1083,7 +1082,7 @@
         incomingMsgAlert: "✨ Người ấy vừa nhắn tin cho bạn!"
       },
       authScreen: {
-        appTitle: "Yêu Thương",
+        appTitle: "TPVT",
         appSubtitle: "Không gian riêng tư chỉ dành cho hai ta",
         heroImageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80",
         accountPlaceholder: "Email / Số điện thoại",
@@ -1101,13 +1100,13 @@
           providers: [
             { id: "facebook", icon: "fa-brands fa-facebook-f", bgColor: "#1877F2" },
             { id: "twitter", icon: "fa-brands fa-twitter", bgColor: "#1DA1F2" },
-            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#E11D48" },
+            { id: "google", icon: "fa-brands fa-youtube", bgColor: "#38BDF8" },
             { id: "tiktok", icon: "fa-brands fa-tiktok", bgColor: "#1E293B" }
           ]
         }
       },
       dashboardScreen: {
-        headerTitle: "Góc Nhỏ Của Tôi",
+        headerTitle: "Góc Nhỏ TPVT",
         hasNotification: true,
         coupleBanner: {
           avatarUrl: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80",
@@ -1141,7 +1140,7 @@
         ]
       },
       chatScreen: {
-        roomTitle: "Yêu Thương ✨",
+        roomTitle: "TPVT ✨",
         onlineStatusText: "Đang hoạt động",
         partnerAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
         inputPlaceholder: "Gửi lời yêu thương...",
@@ -1151,8 +1150,8 @@
           { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
         ],
         messages: [
-          { id: 101, sender: "partner", text: "Hiệu ứng chuyển cảnh và vuốt màn hình mượt như native app luôn anh ơi!" },
-          { id: 102, sender: "me", text: "Đúng rồi, các animation độ đàn hồi nhìn rất vừa mắt và hiện đại ✨" },
+          { id: 101, sender: "partner", text: "Tông màu xanh dương nhạt đơn sắc nhìn trong trẻo và rất dịu mắt anh nhỉ!" },
+          { id: 102, sender: "me", text: "Đúng rồi, không bị pha trộn nhiều màu gắt nữa, nhìn rất sang và đồng điệu ✨" },
           { id: 103, sender: "partner", text: "Tối nay mình đi ăn lẩu nha?" },
           { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
           { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
@@ -1380,7 +1379,7 @@
     document.getElementById('btnPairSubmit').addEventListener('click', () => {
       const code = document.getElementById('inputPairCode').value.trim();
       emitEventToHostApp('PAIR_SUBMIT', { code });
-      showToast(appState.notifications.pairRequested + (code || 'LOVE520'));
+      showToast(appState.notifications.pairRequested + (code || 'TPVT520'));
     });
 
     document.getElementById('featuredChatCard').addEventListener('click', () => navigateTo('screen-chat'));
@@ -1444,13 +1443,15 @@
 
     function startCountdownTimer() {
       let totalSeconds = appState.dashboardScreen.coupleBanner.countdownInitialSeconds;
-      const timerEl = document.getElementById('dashCountdownTimer');
       setInterval(() => {
         if (totalSeconds > 0) totalSeconds--;
         const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
         const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
         const secs = String(totalSeconds % 60).padStart(2, '0');
-        timerEl.textContent = `${hrs} h ${mins} m ${secs} s`;
+        const timerEl = document.getElementById('dashCountdownTimer');
+        if (timerEl) {
+          timerEl.textContent = `${hrs} h ${mins} m ${secs} s`;
+        }
       }, 1000);
     }
 
