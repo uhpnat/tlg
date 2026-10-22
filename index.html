@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Yêu Thương UI - Modern Love & Swipe Gesture</title>
+  <title>Yêu Thương UI - Fluid Mobile Motion</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,6 +90,7 @@
       background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 25px 50px -12px rgba(131, 24, 67, 0.25);
     }
 
     /* --- HIỆU ỨNG BONG BÓNG TÌNH YÊU & LẤP LÁNH --- */
@@ -103,21 +104,22 @@
 
     .love-bubble {
       position: absolute;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(244, 63, 94, 0.15));
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(244, 63, 94, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      animation: floatBubble 8s infinite ease-in-out;
+      animation: floatBubble 9s infinite ease-in-out;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
+      color: #E11D48;
       box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.9);
     }
     @keyframes floatBubble {
-      0% { transform: translateY(100dvh) scale(0.6); opacity: 0; }
-      20% { opacity: 0.6; }
-      80% { opacity: 0.6; }
-      100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
+      0% { transform: translateY(105dvh) scale(0.5); opacity: 0; }
+      20% { opacity: 0.5; }
+      80% { opacity: 0.5; }
+      100% { transform: translateY(-120px) scale(1.15); opacity: 0; }
     }
 
     .sparkle-dot {
@@ -133,28 +135,35 @@
       50% { opacity: 0.95; transform: scale(1.3) rotate(45deg); }
     }
 
+    /* --- HỆ THỐNG MÀN HÌNH & CHUYỂN ĐỘNG FLUID --- */
     .screen {
       flex: 1;
       display: none;
       flex-direction: column;
       overflow-y: auto;
       overflow-x: hidden;
-      position: relative;
+      position: absolute;
+      inset: 0;
       padding-top: var(--safe-top);
       z-index: 2;
-      animation: fadeIn 0.2s ease-out;
-      transition: transform 0.25s ease;
-    }
-    .screen.active {
-      display: flex;
-    }
-    .screen::-webkit-scrollbar {
-      display: none;
+      background: inherit;
+      /* Hiệu ứng chuyển động mượt mà kiểu Spring Physics */
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+      will-change: transform, opacity;
+      opacity: 0;
+      transform: translateX(30px);
+      pointer-events: none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    .screen.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
     }
 
     h1, h2, h3, .heading-font {
@@ -178,6 +187,10 @@
       box-shadow: 0 12px 30px rgba(225, 29, 72, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.95);
       overflow: hidden;
       border: 2px solid var(--badge-red);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .couple-illustration:hover {
+      transform: scale(1.05);
     }
     .couple-illustration img {
       width: 100%;
@@ -221,12 +234,13 @@
       font-size: 14px;
       color: var(--text-primary);
       outline: none;
-      transition: 0.2s;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .input-box input:focus {
       border-color: var(--badge-red);
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+      box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12);
+      transform: scale(1.01);
     }
     .input-box .input-icon {
       position: absolute;
@@ -248,13 +262,13 @@
       letter-spacing: 0.5px;
       cursor: pointer;
       box-shadow: 0 6px 18px -4px rgba(225, 29, 72, 0.35);
-      transition: transform 0.15s, filter 0.15s;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
     }
     .btn-primary:hover {
       filter: brightness(1.05);
     }
     .btn-primary:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
     .pairing-card {
@@ -299,6 +313,10 @@
       font-weight: 700;
       font-size: 12px;
       cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn-pair:active {
+      transform: scale(0.94);
     }
 
     .social-login {
@@ -326,10 +344,10 @@
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);
-      transition: transform 0.15s;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .social-btn:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.1);
     }
 
     /* MÀN HÌNH 2: GÓC NHỎ CỦA TÔI (DASHBOARD) */
@@ -365,6 +383,10 @@
       color: var(--text-accent);
       cursor: pointer;
       box-shadow: var(--shadow-soft);
+      transition: transform 0.2s;
+    }
+    .notif-bell:active {
+      transform: scale(0.9);
     }
     .bell-dot {
       position: absolute;
@@ -387,6 +409,10 @@
       border-radius: var(--radius-xl);
       border: var(--border-shimmer);
       box-shadow: var(--shadow-soft);
+      transition: transform 0.25s ease;
+    }
+    .couple-banner:hover {
+      transform: translateY(-2px);
     }
     .heart-avatar-frame {
       width: 70px;
@@ -455,15 +481,15 @@
       box-shadow: var(--shadow-floating);
       border: var(--border-shimmer);
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
       margin-top: 8px;
     }
     .chat-widget-wrapper:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 35px -10px rgba(225, 29, 72, 0.3);
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 20px 40px -10px rgba(225, 29, 72, 0.35);
     }
     .chat-widget-wrapper:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     .widget-section-title {
       font-size: 11px;
@@ -544,7 +570,7 @@
     }
     @keyframes pulseBadge {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.12); }
+      50% { transform: scale(1.15); }
     }
 
     /* FEATURE GRID */
@@ -567,20 +593,20 @@
       box-shadow: var(--shadow-soft);
       border: var(--border-shimmer);
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .feature-item:hover {
-      transform: translateY(-3px) scale(1.02);
+      transform: translateY(-4px) scale(1.03);
       background: #FFFFFF;
-      box-shadow: 0 10px 22px -5px rgba(225, 29, 72, 0.2);
+      box-shadow: 0 12px 25px -5px rgba(225, 29, 72, 0.22);
       border-color: rgba(225, 29, 72, 0.4);
     }
     .feature-item:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
     .feature-icon-box {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 14px;
       background: linear-gradient(135deg, #FFE4E6 0%, #FCE7F3 100%);
       color: var(--badge-red);
@@ -589,10 +615,10 @@
       justify-content: center;
       font-size: 19px;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-      transition: transform 0.25s;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .feature-item:hover .feature-icon-box {
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.12) rotate(6deg);
       color: var(--love-dark);
     }
     .feature-label {
@@ -628,7 +654,10 @@
       cursor: pointer;
       position: relative;
       padding: 6px 12px;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .nav-tab:active {
+      transform: scale(0.9);
     }
     .nav-tab:hover {
       color: var(--badge-red);
@@ -673,6 +702,10 @@
       color: var(--badge-red);
       cursor: pointer;
       padding: 4px 6px;
+      transition: transform 0.2s;
+    }
+    .back-btn:active {
+      transform: scale(0.85);
     }
     .chat-header-avatar {
       width: 38px;
@@ -710,7 +743,7 @@
       transition: transform 0.2s;
     }
     .chat-header-actions i:hover {
-      transform: scale(1.12);
+      transform: scale(1.15);
       color: var(--love-dark);
     }
 
@@ -728,6 +761,11 @@
       align-items: flex-end;
       gap: 8px;
       max-width: 82%;
+      animation: msgPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes msgPop {
+      0% { opacity: 0; transform: translateY(12px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
     .msg-row.partner {
       align-self: flex-start;
@@ -743,7 +781,6 @@
       object-fit: cover;
       flex-shrink: 0;
     }
-    /* ĐÃ PHÓNG TO CỠ CHỮ CHAT TỪ 13.5px LÊN 15px CHO DỄ ĐỌC */
     .msg-bubble {
       padding: 11px 15px;
       font-size: 15px;
@@ -783,14 +820,14 @@
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      transition: transform 0.15s, background 0.15s;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s;
     }
     .quick-action-card:hover {
       background: #FFE4E6;
       transform: translateY(-2px);
     }
     .quick-action-card:active {
-      transform: scale(0.94);
+      transform: scale(0.92);
     }
     .quick-action-card i {
       font-size: 17px;
@@ -823,6 +860,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .chat-input-wrapper:focus-within {
+      border-color: var(--badge-red);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
     }
     .chat-input-wrapper input {
       flex: 1;
@@ -837,10 +879,11 @@
       color: var(--text-secondary);
       cursor: pointer;
       font-size: 16px;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
     }
     .chat-input-wrapper i:hover {
       color: var(--badge-red);
+      transform: scale(1.1);
     }
     .send-btn {
       width: 38px;
@@ -855,11 +898,14 @@
       cursor: pointer;
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
-      transition: transform 0.15s, filter 0.15s;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s;
     }
     .send-btn:hover {
       filter: brightness(1.05);
-      transform: scale(1.05);
+      transform: scale(1.08);
+    }
+    .send-btn:active {
+      transform: scale(0.9);
     }
 
     /* Animations & Toast */
@@ -888,7 +934,7 @@
       position: absolute;
       top: calc(var(--safe-top) + 16px);
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(-20px);
       background: var(--love-dark);
       color: #fff;
       padding: 8px 18px;
@@ -898,19 +944,19 @@
       z-index: 100;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s;
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       white-space: nowrap;
       box-shadow: 0 8px 20px rgba(131, 24, 67, 0.35);
     }
     .toast-box.show {
       opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
 <body>
 
   <div class="app-root" id="appRoot">
-    <!-- Các lớp hiệu ứng bong bóng và lấp lánh -->
     <div class="bubble-layer" id="bubbleLayer"></div>
     <div class="sparkle-layer" id="sparkleLayer"></div>
     <div class="toast-box" id="toastBox"></div>
@@ -992,7 +1038,7 @@
       <nav class="bottom-nav" id="bottomNavContainer"></nav>
     </section>
 
-    <!-- MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN (CÓ HỖ TRỢ VUỐT TRÁI SANG PHẢI ĐỂ QUAY LẠI) -->
+    <!-- MÀN HÌNH 3: CHI TIẾT TRÒ CHUYỆN (CÓ VUỐT TỪ TRÁI SANG PHẢI MƯỢT MÀ) -->
     <section class="screen" id="screen-chat">
       <header class="chat-header">
         <div class="chat-header-left">
@@ -1105,8 +1151,8 @@
           { id: "pulse", title: "Cùng nhịp đập", subtitle: "(đồng bộ)", icon: "fa-solid fa-heart-pulse" }
         ],
         messages: [
-          { id: 101, sender: "partner", text: "Cỡ chữ trong khung chat đã được phóng to dễ đọc hơn nhiều rồi nè anh!" },
-          { id: 102, sender: "me", text: "Đúng rồi, lại còn thêm tính năng vuốt từ trái sang phải để quay lại mượt mà nữa ✨" },
+          { id: 101, sender: "partner", text: "Hiệu ứng chuyển cảnh và vuốt màn hình mượt như native app luôn anh ơi!" },
+          { id: 102, sender: "me", text: "Đúng rồi, các animation độ đàn hồi nhìn rất vừa mắt và hiện đại ✨" },
           { id: 103, sender: "partner", text: "Tối nay mình đi ăn lẩu nha?" },
           { id: 104, sender: "me", text: "Chốt luôn! Đợi anh tầm 15 phút nữa nhé." },
           { id: 105, sender: "partner", text: "Anh sắp về đến nhà rồi..." }
@@ -1179,7 +1225,7 @@
       emitEventToHostApp('SCREEN_CHANGED', { screenId });
     }
 
-    // --- TÍCH HỢP CỬ CHỈ VUỐT TỪ TRÁI SANG PHẢI ĐỂ QUAY LẠI ---
+    // --- CỬ CHỈ VUỐT MƯỢT MÀ NHƯ NATIVE APP ---
     function initSwipeGesture() {
       const chatScreen = document.getElementById('screen-chat');
       let startX = 0;
@@ -1187,8 +1233,7 @@
       let isSwiping = false;
 
       chatScreen.addEventListener('touchstart', (e) => {
-        // Chỉ bắt sự kiện vuốt khi bắt đầu chạm gần mép trái màn hình (trong khoảng 40px đầu)
-        if (e.touches[0].clientX < 50) {
+        if (e.touches[0].clientX < 55) {
           startX = e.touches[0].clientX;
           isSwiping = true;
           chatScreen.style.transition = 'none';
@@ -1201,22 +1246,29 @@
         let diffX = currentX - startX;
         if (diffX > 0) {
           chatScreen.style.transform = `translateX(${diffX}px)`;
+          let dashScreen = document.getElementById('screen-dashboard');
+          dashScreen.classList.add('active');
+          dashScreen.style.transform = `translateX(${(diffX - window.innerWidth) * 0.3}px)`;
         }
       }, { passive: true });
 
       chatScreen.addEventListener('touchend', (e) => {
         if (!isSwiping) return;
         isSwiping = false;
-        chatScreen.style.transition = 'transform 0.25s ease';
+        chatScreen.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+        let dashScreen = document.getElementById('screen-dashboard');
+        dashScreen.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+        
         let diffX = currentX - startX;
-        // Nếu vuốt sang phải quá 100px thì thực hiện lệnh quay lại Dashboard
-        if (diffX > 100) {
+        if (diffX > 110) {
           chatScreen.style.transform = `translateX(100%)`;
+          dashScreen.style.transform = `translateX(0px)`;
           setTimeout(() => {
             navigateTo('screen-dashboard');
-          }, 200);
+          }, 250);
         } else {
           chatScreen.style.transform = `translateX(0px)`;
+          dashScreen.style.transform = `translateX(-30px)`;
         }
       });
     }
@@ -1366,7 +1418,7 @@
       if (actionId === 'heart') {
         const icons = ['❤️', '✨', '💖', '♥'];
         for (let i = 0; i < 9; i++) {
-          setTimeout(() => createFloatingHeart(root, icons[i % icons.length]), i * 100);
+          setTimeout(() => createFloatingHeart(root, icons[i % icons.length]), i * 90);
         }
       } else if (actionId === 'touch') {
         root.classList.remove('shake-anim');
